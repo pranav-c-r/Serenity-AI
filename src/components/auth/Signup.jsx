@@ -4,68 +4,43 @@ import { useAuth } from '../../context/AuthContext';
 import './Auth.scss';
 
 const Signup = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
-  const { signup } = useAuth();
+  const { signInWithGoogle } = useAuth();
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    
-    if (password !== confirmPassword) {
-      return setError('Passwords do not match');
-    }
-
+  const handleGoogleSignIn = async () => {
     try {
-      await signup(email, password);
+      await signInWithGoogle();
       navigate('/');
     } catch (err) {
-      setError('Failed to create an account');
+      setError('Failed to sign up with Google');
     }
   };
 
   return (
     <div className="auth-container">
       <div className="auth-card">
-        <h2>Create Account</h2>
+        <div className="auth-header">
+          <h1>Join Serenity</h1>
+          <p>Start your journey to better mental wellness</p>
+        </div>
+        
         {error && <div className="error-message">{error}</div>}
-        <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label htmlFor="email">Email</label>
-            <input
-              type="email"
-              id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="confirm-password">Confirm Password</label>
-            <input
-              type="password"
-              id="confirm-password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              required
-            />
-          </div>
-          <button type="submit" className="auth-button">Sign Up</button>
-        </form>
-        <div className="auth-links">
-          <Link to="/login">Already have an account? Login</Link>
+        
+        <button 
+          onClick={handleGoogleSignIn} 
+          className="google-button"
+        >
+          <img 
+            src="https://www.google.com/favicon.ico" 
+            alt="Google" 
+            className="google-icon"
+          />
+          Sign up with Google
+        </button>
+
+        <div className="auth-footer">
+          <p>Already have an account? <Link to="/login">Sign in</Link></p>
         </div>
       </div>
     </div>

@@ -4,53 +4,55 @@ import { useAuth } from '../../context/AuthContext';
 import './Auth.scss';
 
 const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const { login } = useAuth();
+  const [loading, setLoading] = useState(false);
+  const { signInWithGoogle } = useAuth();
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleGoogleSignIn = async () => {
     try {
-      await login(email, password);
+      setError('');
+      setLoading(true);
+      await signInWithGoogle();
       navigate('/');
     } catch (err) {
-      setError('Failed to log in');
+      setError(err.message || 'Failed to sign in with Google');
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div className="auth-container">
       <div className="auth-card">
-        <h2>Welcome Back</h2>
+        <div className="auth-header">
+          <h1>Welcome to Serenity</h1>
+          <p>Your personal mental wellness companion</p>
+        </div>
+        
         {error && <div className="error-message">{error}</div>}
-        <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label htmlFor="email">Email</label>
-            <input
-              type="email"
-              id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
-          <button type="submit" className="auth-button">Login</button>
-        </form>
-        <div className="auth-links">
-          <Link to="/forgot-password">Forgot Password?</Link>
-          <Link to="/signup">Create Account</Link>
+        
+        <button 
+          onClick={handleGoogleSignIn} 
+          className="google-button"
+          disabled={loading}
+        >
+          {loading ? (
+            <span className="loading-spinner"></span>
+          ) : (
+            <>
+              <img 
+                src="https://www.google.com/favicon.ico" 
+                alt="Google" 
+                className="google-icon"
+              />
+              Sign in with Google
+            </>
+          )}
+        </button>
+
+        <div className="auth-footer">
+          <p>Don't have an account? <Link to="/signup">Sign up</Link></p>
         </div>
       </div>
     </div>
