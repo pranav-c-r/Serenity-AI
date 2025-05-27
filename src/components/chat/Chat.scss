@@ -57,6 +57,12 @@
       margin: 0;
       font-size: 1rem;
       color: $secondary;
+
+      &.recording-status {
+        color: $accent;
+        font-weight: 500;
+        animation: pulse 1.5s infinite;
+      }
     }
   }
 }
@@ -269,9 +275,15 @@
 }
 
 @keyframes pulse {
-  0% { opacity: 1; }
-  50% { opacity: 0.5; }
-  100% { opacity: 1; }
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 // Add custom scrollbar styles
@@ -317,5 +329,12 @@
 
   .chat-input {
     border-radius: 0;
+  }
+}
+
+.voice-button {
+  &.recording {
+    color: $error;
+    animation: pulse 1.5s infinite;
   }
 }

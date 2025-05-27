@@ -1,0 +1,217 @@
+@import '../assets/styles/variables';
+
+.comfort-zone {
+  background: #181A20;
+  min-height: 100vh;
+  color: #fff;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+
+  .comfort-zone-header {
+    text-align: center;
+    margin-bottom: 2rem;
+
+    h1, p {
+      color: #fff;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    p {
+      font-size: 1.1rem;
+    }
+  }
+
+  .voice-interface {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 2rem;
+    background: #23242a;
+    border-radius: 1rem;
+    margin-bottom: 2rem;
+    color: #fff;
+
+    .voice-status {
+      text-align: center;
+      min-height: 2rem;
+      color: $secondary;
+
+      .error-message {
+        color: $error;
+        font-weight: 500;
+        padding: 0.5rem 1rem;
+        background: rgba($error, 0.1);
+        border-radius: 0.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+
+        span {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+        }
+      }
+
+      .recording-indicator,
+      .speaking-indicator {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        color: $accent;
+
+        .pulse-ring {
+          width: 1rem;
+          height: 1rem;
+          background: $accent;
+          border-radius: 50%;
+          animation: pulse 1.5s infinite;
+        }
+
+        .wave-animation {
+          width: 1rem;
+          height: 1rem;
+          background: $accent;
+          border-radius: 50%;
+          animation: wave 1.5s infinite;
+        }
+      }
+    }
+
+    .voice-button {
+      width: 4rem;
+      height: 4rem;
+      border-radius: 50%;
+      background: $primary;
+      color: white;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba($primary, 0.2);
+
+      &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: none;
+      }
+
+      svg {
+        width: 2rem;
+        height: 2rem;
+      }
+
+      &:hover:not(:disabled) {
+        transform: scale(1.05);
+        box-shadow: 0 6px 16px rgba($primary, 0.3);
+      }
+
+      &.recording {
+        background: $error;
+        animation: pulse 1.5s infinite;
+      }
+    }
+  }
+
+  .conversation-history {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+    background: #23242a;
+    border-radius: 1rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+    max-height: 400px;
+    color: #fff;
+
+    .message {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      max-width: 80%;
+
+      &.user-message {
+        align-self: flex-end;
+        .message-content {
+          background: #344966;
+          color: #fff;
+          border-radius: 1rem 1rem 0 1rem;
+        }
+      }
+
+      &.bot-message {
+        align-self: flex-start;
+        .message-content {
+          background: #23242a;
+          color: #fff;
+          border-radius: 1rem 1rem 1rem 0;
+        }
+      }
+
+      .message-content {
+        padding: 1rem;
+        position: relative;
+        color: #fff;
+
+        p {
+          margin: 0;
+          line-height: 1.5;
+        }
+
+        .message-timestamp {
+          font-size: 0.8rem;
+          opacity: 0.7;
+          margin-top: 0.5rem;
+          display: block;
+          color: #fff;
+        }
+      }
+    }
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes wave {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+} 
