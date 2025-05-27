@@ -1,0 +1,138 @@
+@import '../variables.scss';
+
+.settings {
+  padding: 2rem;
+
+  h1 {
+    color: $primary;
+    margin-bottom: 2rem;
+  }
+
+  h2 {
+    color: $primary;
+    margin-bottom: 1rem;
+  }
+}
+
+.settings-section {
+  background-color: $card-bg;
+  border-radius: $border-radius-md;
+  padding: $spacing-lg;
+  margin-bottom: $spacing-lg;
+  box-shadow: $shadow-sm;
+
+  h2 {
+    color: $primary;
+    margin-bottom: $spacing-md;
+    font-size: 1.5rem;
+  }
+}
+
+.settings-card {
+  background-color: $card-bg;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.settings-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: $spacing-md 0;
+  border-bottom: 1px solid rgba($secondary, 0.2);
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  label {
+    color: $primary;
+    font-size: 1rem;
+  }
+
+  input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+  }
+
+  select {
+    min-width: 150px;
+    background-color: $background;
+    color: $primary;
+    border: 1px solid $secondary;
+    padding: $spacing-sm;
+    border-radius: $border-radius-sm;
+    cursor: pointer;
+
+    &:focus {
+      border-color: $highlight;
+    }
+
+    option {
+      background-color: $background;
+      color: $primary;
+    }
+  }
+}
+
+.edit-button {
+  background-color: transparent;
+  color: $accent;
+  border: 1px solid $accent;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s;
+
+  &:hover {
+    background-color: $accent;
+    color: $background;
+  }
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px;
+
+  input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+
+    &:checked + .slider {
+      background-color: $accent;
+    }
+
+    &:checked + .slider:before {
+      transform: translateX(26px);
+    }
+  }
+
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba($primary, 0.2);
+    transition: .4s;
+    border-radius: 24px;
+
+    &:before {
+      position: absolute;
+      content: "";
+      height: 16px;
+      width: 16px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 50%;
+    }
+  }
+} 

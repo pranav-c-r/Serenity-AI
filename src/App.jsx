@@ -1,19 +1,52 @@
-import './App.css';
-import { UserProvider } from './components/usercontext';
-import { Route, Routes, BrowserRouter } from 'react-router-dom';
-import GetStarted from './pages/getstarted';
-import Home from './pages/home';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { AuthProvider } from './context/AuthContext';
+import { ThemeProvider } from './context/ThemeContext';
+import PrivateRoute from './components/common/PrivateRoute';
+import Layout from './components/layout/Layout';
+
+// Auth Pages
+import Login from './components/auth/Login';
+import Signup from './components/auth/Signup';
+import ForgotPassword from './components/auth/ForgotPassword';
+
+// Feature Pages
+import Dashboard from './pages/Dashboard';
+import Journal from './pages/Journal';
+import MoodTracker from './pages/MoodTracker';
+import Resources from './pages/Resources';
+import Settings from './pages/Settings';
+import NotFound from './pages/NotFound';
+
+// Global Styles
+import './main.scss';
 
 function App() {
   return (
-    <BrowserRouter>
-      <UserProvider>
-        <Routes>
-          <Route path='/' element={<GetStarted />} />
-          <Route path='/home' element={<Home />} />
-        </Routes>
-      </UserProvider>
-    </BrowserRouter>
+    <Router>
+      <ThemeProvider>
+        <AuthProvider>
+          <Routes>
+            {/* Public Routes */}
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+
+            {/* Protected Routes with Layout */}
+            <Route element={<PrivateRoute><Layout /></PrivateRoute>}>
+              <Route path="/" element={<Dashboard />} />
+              <Route path="/journal" element={<Journal />} />
+              <Route path="/mood-tracker" element={<MoodTracker />} />
+              <Route path="/resources" element={<Resources />} />
+              <Route path="/settings" element={<Settings />} />
+            </Route>
+
+            {/* 404 Page */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </AuthProvider>
+      </ThemeProvider>
+    </Router>
   );
 }
 

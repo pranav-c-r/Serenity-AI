@@ -1,0 +1,64 @@
+@import '../assets/styles/variables.scss';
+
+.resources {
+  padding: 2rem;
+
+  h1 {
+    color: $primary;
+    margin-bottom: 2rem;
+  }
+}
+
+.resources-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+.resource-card {
+  background-color: $card-bg;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s;
+
+  &:hover {
+    transform: translateY(-5px);
+  }
+
+  .resource-category {
+    display: inline-block;
+    background-color: rgba($accent, 0.2);
+    color: $accent;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    margin-bottom: 1rem;
+  }
+
+  h3 {
+    color: $primary;
+    margin-bottom: 0.75rem;
+  }
+
+  p {
+    color: $secondary;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+
+  .read-more {
+    background-color: transparent;
+    color: $accent;
+    border: 1px solid $accent;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s;
+
+    &:hover {
+      background-color: $accent;
+      color: $background;
+    }
+  }
+} 

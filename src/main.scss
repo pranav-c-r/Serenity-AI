@@ -1,0 +1,190 @@
+@import './variables.scss';
+
+// Reset and base styles
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// Global styles
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background-color: $background;
+  color: $primary;
+}
+
+// Typography
+h1, h2, h3, h4, h5, h6 {
+  color: $primary;
+  line-height: 1.2;
+  margin-bottom: $spacing-md;
+}
+
+h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+
+h2 {
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+h3 {
+  font-size: 1.75rem;
+  font-weight: 600;
+}
+
+p {
+  color: $secondary;
+  margin-bottom: $spacing-md;
+  line-height: 1.6;
+}
+
+// Links
+a {
+  color: $highlight;
+  text-decoration: none;
+  transition: color $transition-normal;
+
+  &:hover {
+    color: lighten($highlight, 10%);
+  }
+}
+
+// Buttons
+button {
+  border-radius: $border-radius-md;
+  border: 1px solid transparent;
+  padding: $spacing-sm $spacing-md;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: $accent;
+  color: $background;
+  cursor: pointer;
+  transition: all $transition-normal;
+
+  &:hover {
+    background-color: darken($accent, 10%);
+  }
+
+  &:focus,
+  &:focus-visible {
+    outline: 2px solid $highlight;
+    outline-offset: 2px;
+  }
+
+  &:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+}
+
+// Form elements
+input, textarea, select {
+  font-family: inherit;
+  font-size: 1rem;
+  padding: $spacing-md;
+  border: 1px solid $secondary;
+  border-radius: $border-radius-md;
+  background-color: $card-bg;
+  color: $primary;
+  transition: border-color $transition-normal;
+
+  &:focus {
+    outline: none;
+    border-color: $highlight;
+  }
+
+  &::placeholder {
+    color: rgba($secondary, 0.7);
+  }
+}
+
+// Scrollbar
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: $card-bg;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $secondary;
+  border-radius: $border-radius-sm;
+
+  &:hover {
+    background: $highlight;
+  }
+}
+
+// Utility classes
+.container {
+  width: 100%;
+  max-width: $breakpoint-xl;
+  margin: 0 auto;
+  padding: 0 $spacing-md;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.mt-1 { margin-top: $spacing-xs; }
+.mt-2 { margin-top: $spacing-sm; }
+.mt-3 { margin-top: $spacing-lg; }
+.mt-4 { margin-top: $spacing-xl; }
+
+.mb-1 { margin-bottom: $spacing-xs; }
+.mb-2 { margin-bottom: $spacing-sm; }
+.mb-3 { margin-bottom: $spacing-lg; }
+.mb-4 { margin-bottom: $spacing-xl; }
+
+// Animations
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.fade-in {
+  animation: fadeIn $transition-normal;
+}
+
+// Responsive design
+@media (max-width: $breakpoint-md) {
+  h1 {
+    font-size: 2rem;
+  }
+
+  h2 {
+    font-size: 1.75rem;
+  }
+
+  h3 {
+    font-size: 1.5rem;
+  }
+
+  .container {
+    padding: 0 $spacing-sm;
+  }
+} 

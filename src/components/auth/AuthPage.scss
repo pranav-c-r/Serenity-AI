@@ -1,0 +1,68 @@
+@import '../../assets/styles/variables';
+
+.auth-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: $background;
+  color: $primary;
+  padding: 2rem;
+  
+  .auth-container {
+    background-color: $card-bg;
+    border-radius: 12px;
+    padding: 2.5rem;
+    width: 100%;
+    max-width: 450px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    
+    h1 {
+      color: $primary;
+      margin-bottom: 0.5rem;
+      font-size: 2rem;
+    }
+    
+    .subtitle {
+      color: $secondary;
+      margin-bottom: 2rem;
+    }
+    
+    .error-message {
+      color: #ff6b6b;
+      background-color: rgba(255, 107, 107, 0.1);
+      padding: 0.75rem;
+      border-radius: 6px;
+      margin-bottom: 1.5rem;
+      font-size: 0.9rem;
+    }
+  }
+  
+  .auth-footer {
+    margin-top: 1.5rem;
+    text-align: center;
+    color: $secondary;
+    font-size: 0.9rem;
+    
+    a {
+      color: $highlight;
+      text-decoration: none;
+      font-weight: 500;
+      
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+    
+    .forgot-password {
+      display: block;
+      margin-top: 1rem;
+    }
+    
+    .terms {
+      margin-top: 1.5rem;
+      font-size: 0.8rem;
+      opacity: 0.8;
+    }
+  }
+}

@@ -1,0 +1,38 @@
+@import '../../assets/styles/variables';
+
+.input-group {
+  margin-bottom: 1.5rem;
+  
+  label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: $primary;
+    font-size: 0.9rem;
+    font-weight: 500;
+    
+    .required {
+      color: #ff6b6b;
+      margin-left: 0.25rem;
+    }
+  }
+  
+  input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background-color: lighten($background, 10%);
+    border: 1px solid lighten($background, 15%);
+    border-radius: 6px;
+    color: $primary;
+    font-size: 1rem;
+    transition: border-color 0.2s ease;
+    
+    &:focus {
+      outline: none;
+      border-color: $highlight;
+    }
+    
+    &::placeholder {
+      color: lighten($secondary, 10%);
+    }
+  }
+}

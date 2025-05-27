@@ -1,0 +1,43 @@
+@import '../assets/styles/variables.scss';
+
+.not-found {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem;
+  background-color: $background;
+  color: $primary;
+
+  h1 {
+    font-size: 6rem;
+    margin: 0;
+    color: $accent;
+  }
+
+  h2 {
+    font-size: 2rem;
+    margin: 1rem 0;
+  }
+
+  p {
+    color: $secondary;
+    margin-bottom: 2rem;
+  }
+
+  .home-button {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background-color: $accent;
+    color: $background;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+
+    &:hover {
+      background-color: darken($accent, 10%);
+    }
+  }
+} 
