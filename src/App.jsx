@@ -17,6 +17,7 @@ import MoodTracker from './pages/MoodTracker';
 import Resources from './pages/Resources';
 import Settings from './pages/Settings';
 import NotFound from './pages/NotFound';
+import Landing from './pages/Landing';
 
 // Global Styles
 import './main.scss';
@@ -28,13 +29,14 @@ function App() {
         <AuthProvider>
           <Routes>
             {/* Public Routes */}
+            <Route path="/" element={<Landing />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
 
             {/* Protected Routes with Layout */}
             <Route element={<PrivateRoute><Layout /></PrivateRoute>}>
-              <Route path="/" element={<Dashboard />} />
+              <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/journal" element={<Journal />} />
               <Route path="/mood-tracker" element={<MoodTracker />} />
               <Route path="/resources" element={<Resources />} />
