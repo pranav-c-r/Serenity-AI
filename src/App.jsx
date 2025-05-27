@@ -18,6 +18,7 @@ import Settings from './pages/Settings';
 import NotFound from './pages/NotFound';
 import Landing from './pages/Landing';
 import Chat from './components/chat/Chat';
+import ComfortZone from './pages/ComfortZone';
 
 // Global Styles
 import './main.scss';
@@ -41,6 +42,7 @@ function App() {
               <Route path="/resources" element={<Resources />} />
               <Route path="/settings" element={<Settings />} />
               <Route path="/chat" element={<Chat />} />
+              <Route path="/comfort-zone" element={<ComfortZone />} />
             </Route>
 
             {/* 404 Page */}

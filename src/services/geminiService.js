@@ -5,24 +5,45 @@ if (!GEMINI_API_KEY) {
   console.error('Gemini API key is not set. Please add VITE_GEMINI_API_KEY to your .env file');
 }
 
-export const sendMessageToGemini = async (message) => {
+export const sendMessageToGemini = async (userMessage, conversationHistory = [], systemPrompt = '') => {
   if (!GEMINI_API_KEY) {
     throw new Error('Gemini API key is not configured');
   }
 
   try {
+    // Build contents array without using "system" role
+    // Instead, prepend systemPrompt as a regular assistant message at the beginning (if present)
+    const contents = [];
+
+    if (systemPrompt) {
+      contents.push({
+        role: "assistant", // changed from "system" to "assistant"
+        parts: [{ text: systemPrompt.trim() }]
+      });
+    }
+
+    // Add conversation history (previous messages)
+    // conversationHistory expected as array of { sender: 'user'|'bot', text: string }
+    conversationHistory.forEach(msg => {
+      contents.push({
+        role: msg.sender === 'user' ? 'user' : 'assistant',
+        parts: [{ text: msg.text }]
+      });
+    });
+
+    // Add current user message at the end
+    contents.push({
+      role: "user",
+      parts: [{ text: userMessage }]
+    });
+
     const response = await fetch(`${GEMINI_API_URL}?key=${GEMINI_API_KEY}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        contents: [{
-          role: "user",
-          parts: [{
-            text: message
-          }]
-        }],
+        contents: contents,
         generationConfig: {
           temperature: 0.7,
           topK: 40,
@@ -60,9 +81,12 @@ export const sendMessageToGemini = async (message) => {
     if (!data.candidates?.[0]?.content?.parts?.[0]?.text) {
       throw new Error('Invalid response format from Gemini API');
     }
-    return data.candidates[0].content.parts[0].text;
+    const rawResponse = data.candidates[0].content.parts[0].text;
+    const cleanedResponse = rawResponse.replace(/\*{2,}/g, '');
+    return cleanedResponse;
+
   } catch (error) {
     console.error('Error in Gemini API call:', error);
     throw error;
   }
-}; 
+};

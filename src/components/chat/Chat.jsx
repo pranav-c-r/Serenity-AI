@@ -1,20 +1,24 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { sendMessageToGemini } from '../../services/geminiService';
 import './Chat.scss';
+import { useNavigate } from 'react-router-dom';
+import { auth, database } from '../../config/firebase';
+import { collection, doc, getDoc, getDocs } from 'firebase/firestore';
 
 const Chat = () => {
+  const { currentUser } = useAuth();
   const [messages, setMessages] = useState([]);
   const [inputText, setInputText] = useState('');
-  const [isRecording, setIsRecording] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isRecording, setIsRecording] = useState(false);
   const messagesEndRef = useRef(null);
-  const { currentUser } = useAuth();
+  const recognitionRef = useRef(null);
 
   // Initial welcome message
   useEffect(() => {
     setMessages([{
-      text: "Hi there! I'm Serena, your AI assistant. How can I help you today?",
+      text: `Hi ${username}! I'm Serena, your AI assistant. How can I help you today?`,
       sender: 'serena',
       timestamp: new Date().toISOString(),
     }]);
@@ -29,15 +33,171 @@ const Chat = () => {
     scrollToBottom();
   }, [messages]);
 
+  useEffect(() => {
+    // Initialize speech recognition
+    const initSpeechRecognition = () => {
+      if ('webkitSpeechRecognition' in window) {
+        recognitionRef.current = new window.webkitSpeechRecognition();
+        recognitionRef.current.continuous = true; // Keep listening
+        recognitionRef.current.interimResults = true; // Get results as you speak
+        recognitionRef.current.lang = 'en-US';
+
+        let finalTranscript = '';
+
+        recognitionRef.current.onstart = () => {
+          console.log('Speech recognition started');
+          setIsRecording(true);
+          setInputText('Listening...');
+          finalTranscript = '';
+        };
+
+        recognitionRef.current.onresult = (event) => {
+          let interimTranscript = '';
+          
+          for (let i = event.resultIndex; i < event.results.length; i++) {
+            const transcript = event.results[i][0].transcript;
+            if (event.results[i].isFinal) {
+              finalTranscript += transcript;
+            } else {
+              interimTranscript += transcript;
+            }
+          }
+
+          // Update input with both final and interim results
+          setInputText(finalTranscript || interimTranscript || 'Listening...');
+        };
+
+        recognitionRef.current.onerror = (event) => {
+          console.error('Speech recognition error:', event.error);
+          setIsRecording(false);
+          setInputText('');
+          
+          switch (event.error) {
+            case 'not-allowed':
+              alert('Please allow microphone access to use voice input.');
+              break;
+            case 'no-speech':
+              alert('No speech was detected. Please try again.');
+              break;
+            case 'audio-capture':
+              alert('No microphone was found. Please ensure your microphone is connected.');
+              break;
+            default:
+              alert('An error occurred with speech recognition. Please try again.');
+          }
+        };
+
+        recognitionRef.current.onend = () => {
+          console.log('Speech recognition ended');
+          setIsRecording(false);
+          
+          // If we have a final transcript, send it
+          if (finalTranscript) {
+            handleSubmit(finalTranscript);
+          }
+        };
+      } else {
+        console.warn('Speech recognition not supported');
+      }
+    };
+
+    initSpeechRecognition();
+
+    return () => {
+      if (recognitionRef.current) {
+        recognitionRef.current.stop();
+      }
+    };
+  }, []);
+  const [username, setUsername]=useState('');
+    const navigate = useNavigate();
+        useEffect(() => {
+        const fetchProfile2 = async () => {
+            try {
+              const docRef = doc(database, "Users", auth.currentUser?.uid);
+              const docSnap = await getDoc(docRef);
+              if (docSnap.exists()) {
+                const reference = docSnap.data();
+                setUsername(reference.username);
+                console.log(username+": username")
+              }
+            } catch (error) {
+              console.error('Error fetching profile:', error);
+              navigate('/');
+            }
+        };
+    
+        fetchProfile2();
+      }, []);
+      const [mood, setMoods] = useState([]);
+    const [moodText, setMoodText] = useState('');
+    
+    useEffect(() => {
+      const fetchRecentMoods = async () => {
+        const ref = doc(database, 'Users', auth.currentUser?.uid);
+        const moodsRef = collection(ref, 'moods');
+        const querySnapshot = await getDocs(moodsRef);
+    
+        const moodData = [];
+        querySnapshot.forEach((doc) => {
+          moodData.push(doc.data());
+        });
+    
+        const latestMoods = moodData
+          .sort((a, b) => b.timestamp.toMillis() - a.timestamp.toMillis())
+          .slice(0, 5);
+    
+        setMoods(latestMoods);
+      };
+    
+      if (auth.currentUser) {
+        fetchRecentMoods();
+      }
+    }, [auth.currentUser]);
+    
+    useEffect(() => {
+      const formatMoodsAsPrompt = (moods) => {
+        if (moods.length === 0) {
+          return `The user did not upload any recent moods. Ask them kindly how they feel today, and remind them to update their mood in the app so you can support them better.`;
+        }
+        return `Here are the user's recent moods: ${moods.map(
+          (m) => `${m.date}: ${m.mood.label}`
+        ).join(', ')}.`;
+      };
+    
+      setMoodText(formatMoodsAsPrompt(mood));
+    }, [mood]);
+    
+       
+      const SYSTEM_PROMPT = useMemo(() => {
+      return `
+        You are Serena, a warm, compassionate voice-based AI assistant. You listen carefully and respond like a supportive friend. Your tone is calm, soothing, and emotionally intelligent.
+    
+        Your goal is to comfort and uplift the user, whose name is ${username}. You don't need to mention their name often — only when it feels natural and personal.
+    
+        Never offer medical, psychological, or diagnostic advice. Instead, offer empathy, kindness, light humor (if appropriate), and gentle encouragement.
+    
+        Keep each response under 50 words. Prioritize clarity, warmth, and emotional connection.
+    
+        Use voice tone and word choice to match the user's mood:
+        - If they sound anxious or tense, help them slow down and feel safe.
+        - If they sound sad, gently cheer them up with a soft joke or kind words.
+        - If they're happy, reflect that joy with friendly energy.
+    
+        Always make them feel heard, understood, and never alone.
+    
+        ${moodText}
+      `;
+    }, [moodText, username]);
+
   // Handle text input submission
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!inputText.trim()) return;
+  const handleSubmit = async (text = inputText) => {
+    if (!text.trim() || text === 'Listening...') return;
 
     const userMessage = {
-      text: inputText,
+      text,
       sender: 'user',
-      timestamp: new Date().toISOString(),
+      timestamp: new Date().toISOString()
     };
 
     setMessages(prev => [...prev, userMessage]);
@@ -45,37 +205,19 @@ const Chat = () => {
     setIsLoading(true);
 
     try {
-      // Add a loading message
-      const loadingMessage = {
-        text: '',
-        sender: 'serena',
-        timestamp: new Date().toISOString(),
-        isLoading: true
-      };
-      setMessages(prev => [...prev, loadingMessage]);
-
-      // Send to Gemini
-      const response = await sendMessageToGemini(inputText, messages);
-      
-      // Remove loading message and add actual response
-      setMessages(prev => prev.filter(msg => !msg.isLoading));
-      
+      const response = await sendMessageToGemini(text, messages, SYSTEM_PROMPT);
       const botMessage = {
         text: response,
         sender: 'serena',
-        timestamp: new Date().toISOString(),
+        timestamp: new Date().toISOString()
       };
-
       setMessages(prev => [...prev, botMessage]);
     } catch (error) {
-      console.error('Error getting response:', error);
-      // Remove loading message and add error
-      setMessages(prev => prev.filter(msg => !msg.isLoading));
-      
+      console.error('Error sending message:', error);
       const errorMessage = {
-        text: "I'm sorry, I encountered an error. Please try again.",
+        text: 'Sorry, I encountered an error. Please try again.',
         sender: 'serena',
-        timestamp: new Date().toISOString(),
+        timestamp: new Date().toISOString()
       };
       setMessages(prev => [...prev, errorMessage]);
     } finally {
@@ -83,48 +225,34 @@ const Chat = () => {
     }
   };
 
-  // Handle voice input
-  const handleVoiceInput = async () => {
-    if (!('webkitSpeechRecognition' in window)) {
-      alert('Voice input is not supported in your browser. Try Chrome or Edge.');
+  // Handle key down for shift+enter
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      handleSubmit();
+    }
+  };
+
+  const toggleVoiceInput = () => {
+    if (!recognitionRef.current) {
+      alert('Speech recognition is not supported in your browser. Please use Chrome.');
       return;
     }
 
-    const recognition = new window.webkitSpeechRecognition();
-    recognition.continuous = false;
-    recognition.interimResults = false;
-    recognition.lang = 'en-US';
-
-    recognition.onstart = () => {
-      setIsRecording(true);
-    };
-
-    recognition.onresult = (event) => {
-      const transcript = event.results[0][0].transcript;
-      setInputText(prev => prev + ' ' + transcript);
-      setIsRecording(false);
-    };
-
-    recognition.onerror = (event) => {
-      console.error('Speech recognition error:', event.error);
-      setIsRecording(false);
-      if (event.error === 'not-allowed') {
-        alert('Please allow microphone access to use voice input.');
+    try {
+      if (isRecording) {
+        console.log('Stopping speech recognition');
+        recognitionRef.current.stop();
+      } else {
+        console.log('Starting speech recognition');
+        setInputText('Listening...');
+        recognitionRef.current.start();
       }
-    };
-
-    recognition.onend = () => {
+    } catch (error) {
+      console.error('Error with speech recognition:', error);
       setIsRecording(false);
-    };
-
-    recognition.start();
-  };
-
-  // Handle key down for shift+enter
-  const handleKeyDown = (e) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
-      handleSubmit(e);
+      setInputText('');
+      alert('Error starting speech recognition. Please try again.');
     }
   };
 
@@ -143,7 +271,9 @@ const Chat = () => {
           </div>
           <div className="chat-info">
             <h2>Serena</h2>
-            <p>{isRecording ? 'Listening...' : 'AI Assistant'}</p>
+            <p className={isRecording ? 'recording-status' : ''}>
+              {isRecording ? '🎤 Listening...' : 'AI Assistant'}
+            </p>
           </div>
         </div>
       </div>
@@ -188,49 +318,48 @@ const Chat = () => {
         <div ref={messagesEndRef} />
       </div>
 
-      <form onSubmit={handleSubmit} className="chat-input">
+      <div className="chat-input">
         <div className="input-container">
           <textarea
             value={inputText}
             onChange={(e) => setInputText(e.target.value)}
-            onKeyDown={handleKeyDown}
-            placeholder="Type your message..."
-            disabled={isLoading}
-            rows="1"
+            onKeyPress={handleKeyPress}
+            placeholder={isRecording ? "Speak now..." : "Type your message..."}
+            rows={1}
+            disabled={isRecording}
           />
           <div className="input-actions">
             <button
-              type="button"
+              onClick={toggleVoiceInput}
               className={`voice-button ${isRecording ? 'recording' : ''}`}
-              onClick={handleVoiceInput}
-              disabled={isLoading}
-              aria-label="Voice input"
+              title={isRecording ? 'Stop recording' : 'Start voice input'}
             >
               {isRecording ? (
-                <svg viewBox="0 0 24 24" width="20" height="20">
-                  <path fill="currentColor" d="M12,2A3,3 0 0,1 15,5V11A3,3 0 0,1 12,14A3,3 0 0,1 9,11V5A3,3 0 0,1 12,2M19,11C19,14.53 16.39,17.44 13,17.93V21H11V17.93C7.61,17.44 5,14.53 5,11H7A5,5 0 0,0 12,16A5,5 0 0,0 17,11H19Z" />
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="6" y="6" width="12" height="12" rx="2" fill="currentColor"/>
                 </svg>
               ) : (
-                <svg viewBox="0 0 24 24" width="20" height="20">
-                  <path fill="currentColor" d="M12,2A3,3 0 0,1 15,5V11A3,3 0 0,1 12,14A3,3 0 0,1 9,11V5A3,3 0 0,1 12,2M19,11C19,14.53 16.39,17.44 13,17.93V21H11V17.93C7.61,17.44 5,14.53 5,11H7A5,5 0 0,0 12,16A5,5 0 0,0 17,11H19Z" />
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 14C13.6569 14 15 12.6569 15 11V5C15 3.34315 13.6569 2 12 2C10.3431 2 9 3.34315 9 5V11C9 12.6569 10.3431 14 12 14Z" fill="currentColor"/>
+                  <path d="M19 11C19 14.866 15.866 18 12 18C8.13401 18 5 14.866 5 11M12 22V18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
               )}
             </button>
-            <button 
-              type="submit" 
+            <button
+              onClick={() => handleSubmit()}
               className="send-button"
-              disabled={isLoading || !inputText.trim()}
-              aria-label="Send message"
+              disabled={!inputText.trim() || isLoading || inputText === 'Listening...'}
             >
-              <svg viewBox="0 0 24 24" width="20" height="20">
-                <path fill="currentColor" d="M2,21L23,12L2,3V10L17,12L2,14V21Z" />
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M22 2L11 13" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                v  <path d="M22 2L15 22L11 13L2 9L22 2Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
             </button>
           </div>
         </div>
-      </form>
+      </div>                                                                                                                                
     </div>
   );
 };
 
-export default Chat;
+export default Chat
