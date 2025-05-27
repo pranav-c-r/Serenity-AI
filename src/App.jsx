@@ -6,7 +6,6 @@ import PrivateRoute from './components/common/PrivateRoute';
 import Layout from './components/layout/Layout';
 
 // Auth Pages
-import Login from './components/auth/Login';
 import Signup from './components/auth/Signup';
 import ForgotPassword from './components/auth/ForgotPassword';
 
@@ -30,7 +29,6 @@ function App() {
           <Routes>
             {/* Public Routes */}
             <Route path="/" element={<Landing />} />
-            <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
 

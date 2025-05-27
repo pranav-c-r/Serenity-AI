@@ -1,20 +1,55 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import './Auth.scss';
+import { useUser } from '../usercontext';
+import { onAuthStateChanged, signInWithPopup } from 'firebase/auth';
+import { auth, database, googleprovider } from '../../config/firebase';
+import { getDoc, setDoc, collection, doc } from 'firebase/firestore';
 
 const Signup = () => {
-  const [error, setError] = useState('');
-  const { signInWithGoogle } = useAuth();
   const navigate = useNavigate();
 
-  const handleGoogleSignIn = async () => {
-    try {
-      await signInWithGoogle();
-      navigate('/');
-    } catch (err) {
-      setError('Failed to sign up with Google');
-    }
+  useEffect(() => {
+      const unsubscribe = onAuthStateChanged(auth, (user) => {
+          if (user) {
+              navigate("/dashboard");
+          }
+      });
+      return () => unsubscribe();
+  }, [navigate]);
+
+  const signInWithGoogle = async () => {
+      if (!username) {
+          alert("Please enter username");
+          return;
+      }
+      try {
+          await signInWithPopup(auth, googleprovider);
+          addUser();
+          navigate("/dashboard");
+      } catch (error) {
+          console.error("Error signing in with Google:", error.message);
+          alert("Error signing in with Google. Please try again.");
+      }
+  };
+  const [username, setusername] = useState("");
+
+  const addUser = async () => {
+      const userRef = collection(database, "Users");
+      const userDocRef = doc(userRef, auth.currentUser.uid);
+
+      try {
+          const docSnap = await getDoc(userDocRef);
+          if (!docSnap.exists()) {
+              await setDoc(userDocRef, {
+                  username: username,
+                  email: auth.currentUser.email,
+              });
+          }
+      } catch (err) {
+          console.error("Error adding user:", err);
+      }
   };
 
   return (
@@ -24,11 +59,21 @@ const Signup = () => {
           <h1>Join Serenity</h1>
           <p>Start your journey to better mental wellness</p>
         </div>
-        
-        {error && <div className="error-message">{error}</div>}
-        
+        <input
+            type="text"
+            placeholder='Enter your Username here'
+            style={{
+                width: '300px',
+                padding: '10px',
+                marginBottom: '20px',
+                borderRadius: '8px',
+                border: '1px solid #ccc',
+                fontSize: '16px'
+            }}
+            onChange={(e) => setusername(e.target.value)}
+        />
         <button 
-          onClick={handleGoogleSignIn} 
+          onClick={signInWithGoogle} 
           className="google-button"
         >
           <img 
@@ -38,10 +83,6 @@ const Signup = () => {
           />
           Sign up with Google
         </button>
-
-        <div className="auth-footer">
-          <p>Already have an account? <Link to="/login">Sign in</Link></p>
-        </div>
       </div>
     </div>
   );

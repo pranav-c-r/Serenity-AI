@@ -26,7 +26,7 @@ const Landing = () => {
         </div>
 
         <div className="nav-buttons">
-          <Link to="/login" className="btn btn-login">Login</Link>
+          <Link to="/signup" className="btn btn-login">Login</Link>
           <Link to="/signup" className="btn btn-primary">Get Started</Link>
         </div>
 

@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react'
+import { auth, database } from '../../config/firebase'
+import { doc, getDoc } from 'firebase/firestore';
 import { Outlet, Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { useTheme } from '../../context/ThemeContext';
@@ -8,10 +10,32 @@ const Layout = () => {
   const { logout } = useAuth();
   const { isDarkMode, toggleTheme } = useTheme();
   const navigate = useNavigate();
-
+  const [username, setUsername]=useState('');
+    const [email, setEmail]=useState('');
+    useEffect(() => {
+        const fetchUserData = async () => {
+            const currentUser = auth.currentUser;
+  
+            if (currentUser) {
+            const userRef = doc(database, "Users", currentUser.uid);
+            const userSnap = await getDoc(userRef);
+            if (userSnap.exists()) {
+                const userData = userSnap.data();
+                setUsername(userData.username || 'No Username');
+                setEmail(userData.email || 'No email found');
+            } else {
+                navigate("/signin");
+            }
+            } else {
+            navigate("/");
+            }
+        };
+  
+        fetchUserData();
+    }, [navigate]);
   const handleLogout = () => {
     logout();
-    navigate('/login');
+    navigate('/');
   };
 
   return (
@@ -19,7 +43,7 @@ const Layout = () => {
       <nav className="sidebar">
         <div className="logo">Serenity AI</div>
         <ul className="nav-links">
-          <li><Link to="/">Dashboard</Link></li>
+          <li><Link to="/dashboard">Dashboard</Link></li>
           <li><Link to="/journal">Journal</Link></li>
           <li><Link to="/mood-tracker">Mood Tracker</Link></li>
           <li><Link to="/resources">Resources</Link></li>
@@ -29,6 +53,7 @@ const Layout = () => {
           <button onClick={toggleTheme} className="theme-toggle">
             {isDarkMode ? '☀️' : '🌙'}
           </button>
+          <h4>{username} <br />{email}</h4>
           <button onClick={handleLogout} className="logout-btn">
             Logout
           </button>
