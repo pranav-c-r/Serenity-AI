@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './MoodTracker.scss';
-
+import { collection, doc, getDocs, setDoc } from 'firebase/firestore';
+import { auth, database } from '../config/firebase';
+import { Timestamp } from 'firebase/firestore';
 const MoodTracker = () => {
   const moods = [
     { emoji: '😊', label: 'Happy' },
@@ -14,17 +16,38 @@ const MoodTracker = () => {
   const [selectedMood, setSelectedMood] = useState(null);
   const [moodHistory, setMoodHistory] = useState([]);
 
-  const handleMoodSelect = (mood) => {
+  const handleMoodSelect = async (mood) => {
     setSelectedMood(mood);
     const entry = {
-      id: Date.now(),
-      mood,
+      id: auth.currentUser?.uid,
+      mood: mood,
       date: new Date().toLocaleDateString(),
-      time: new Date().toLocaleTimeString()
+      timestamp: Timestamp.now(),
     };
-    setMoodHistory([entry, ...moodHistory]);
-  };
+    const groupRef = doc(database, 'Users', auth.currentUser?.uid);
+    const messagesRef = collection(groupRef, 'moods');
+    const newMessageRef = doc(messagesRef, `${Math.random()}`);
+    await setDoc(newMessageRef, entry);
 
+    setMoodHistory([entry, ...moodHistory]);
+    setSelectedMood(null);
+    fetchMoods();
+  };
+  const fetchMoods = async () => {
+    const ref = doc(database, 'Users', auth.currentUser?.uid);
+    const journalref = collection(ref, 'moods');
+    const querySnapshot = await getDocs(journalref);
+
+    const journals = [];
+    querySnapshot.forEach((doc) => {
+        journals.push(doc.data());
+    });
+    const sortedJournals = journals.sort((a, b) => b.timestamp.toMillis() - a.timestamp.toMillis());
+    setMoodHistory(sortedJournals);
+  };
+  useEffect(()=>{
+    fetchMoods();
+  }, [auth.currentUser])
   return (
     <div className="mood-tracker">
       <h1>Mood Tracker</h1>
@@ -53,7 +76,7 @@ const MoodTracker = () => {
               <span className="emoji">{entry.mood.emoji}</span>
               <div className="entry-details">
                 <span className="mood-label">{entry.mood.label}</span>
-                <span className="timestamp">{entry.date} {entry.time}</span>
+                <span className="timestamp">{entry.date} {entry.timestamp.toDate().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
               </div>
             </div>
           ))}
