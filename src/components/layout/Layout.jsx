@@ -47,7 +47,8 @@ const Layout = () => {
           <li><Link to="/journal">Journal</Link></li>
           <li><Link to="/mood-tracker">Mood Tracker</Link></li>
           <li><Link to="/resources">Resources</Link></li>
-          <li><Link to="/chat">Talk to Serena</Link></li>
+          <li><Link to="/comfort-zone">Talk to Serena</Link></li>
+          <li><Link to="/chat">Chat with Serena</Link></li>
           <li><Link to="/settings">Settings</Link></li>
         </ul>
         <div className="nav-footer">
