@@ -22,13 +22,28 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
-  background-color: $background;
-  color: $primary;
+  
+  .dark & {
+    background-color: $background;
+    color: $primary;
+  }
+  
+  .light & {
+    background-color: $light-mode-bg;
+    color: #000000;
+  }
 }
 
 // Typography
 h1, h2, h3, h4, h5, h6 {
-  color: $primary;
+  .dark & {
+    color: $primary;
+  }
+  
+  .light & {
+    color: #000000;
+  }
+  
   line-height: 1.2;
   margin-bottom: $spacing-md;
 }
@@ -49,7 +64,14 @@ h3 {
 }
 
 p {
-  color: $secondary;
+  .dark & {
+    color: $secondary;
+  }
+  
+  .light & {
+    color: #4A4A4A;
+  }
+  
   margin-bottom: $spacing-md;
   line-height: 1.6;
 }
@@ -101,8 +123,17 @@ input, textarea, select {
   padding: $spacing-md;
   border: 1px solid $secondary;
   border-radius: $border-radius-md;
-  background-color: $card-bg;
-  color: $primary;
+  
+  .dark & {
+    background-color: $card-bg;
+    color: $primary;
+  }
+  
+  .light & {
+    background-color: #FFFFFF;
+    color: #000000;
+  }
+  
   transition: border-color $transition-normal;
 
   &:focus {
@@ -111,7 +142,13 @@ input, textarea, select {
   }
 
   &::placeholder {
-    color: rgba($secondary, 0.7);
+    .dark & {
+      color: rgba($secondary, 0.7);
+    }
+    
+    .light & {
+      color: rgba(#4A4A4A, 0.7);
+    }
   }
 }
 
@@ -122,11 +159,24 @@ input, textarea, select {
 }
 
 ::-webkit-scrollbar-track {
-  background: $card-bg;
+  .dark & {
+    background: $card-bg;
+  }
+  
+  .light & {
+    background: $light-mode-sidebar;
+  }
 }
 
 ::-webkit-scrollbar-thumb {
-  background: $secondary;
+  .dark & {
+    background: $secondary;
+  }
+  
+  .light & {
+    background: #4A4A4A;
+  }
+  
   border-radius: $border-radius-sm;
 
   &:hover {

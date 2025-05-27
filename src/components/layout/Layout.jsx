@@ -47,13 +47,19 @@ const Layout = () => {
           <li><Link to="/journal">Journal</Link></li>
           <li><Link to="/mood-tracker">Mood Tracker</Link></li>
           <li><Link to="/resources">Resources</Link></li>
+          <li><Link to="/chat">Talk to Serena</Link></li>
           <li><Link to="/settings">Settings</Link></li>
         </ul>
         <div className="nav-footer">
           <button onClick={toggleTheme} className="theme-toggle">
-            {isDarkMode ? '☀️' : '🌙'}
+            <span className={`toggle-label light ${!isDarkMode ? 'active' : ''}`}>Light</span>
+            <span className={`toggle-label dark ${isDarkMode ? 'active' : ''}`}>Dark</span>
+            <div className="toggle-slider"></div>
           </button>
-          <h4>{username} <br />{email}</h4>
+          <div className="user-info">
+            <span className="username">{username}</span>
+            <span className="email">{email}</span>
+          </div>
           <button onClick={handleLogout} className="logout-btn">
             Logout
           </button>

@@ -17,6 +17,7 @@ import Resources from './pages/Resources';
 import Settings from './pages/Settings';
 import NotFound from './pages/NotFound';
 import Landing from './pages/Landing';
+import Chat from './components/chat/Chat';
 
 // Global Styles
 import './main.scss';
@@ -39,6 +40,7 @@ function App() {
               <Route path="/mood-tracker" element={<MoodTracker />} />
               <Route path="/resources" element={<Resources />} />
               <Route path="/settings" element={<Settings />} />
+              <Route path="/chat" element={<Chat />} />
             </Route>
 
             {/* 404 Page */}
