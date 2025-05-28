@@ -1,0 +1,55 @@
+@import '../../assets/styles/variables.scss';
+
+.sidebar {
+  width: 250px;
+  height: 100vh;
+  background: lighten($background, 5%);
+  padding: 2rem 0;
+  position: fixed;
+  left: 0;
+  top: 0;
+  border-right: 1px solid lighten($background, 10%);
+
+  nav {
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+
+      li {
+        margin-bottom: 0.5rem;
+
+        a {
+          display: flex;
+          align-items: center;
+          padding: 1rem 2rem;
+          color: $secondary;
+          text-decoration: none;
+          transition: all 0.3s ease;
+          font-size: 1rem;
+
+          i {
+            margin-right: 1rem;
+            width: 20px;
+            text-align: center;
+          }
+
+          &:hover {
+            background: lighten($background, 10%);
+            color: $primary;
+          }
+
+          &.active {
+            background: $highlight;
+            color: $background;
+            font-weight: 600;
+
+            i {
+              color: $background;
+            }
+          }
+        }
+      }
+    }
+  }
+} 

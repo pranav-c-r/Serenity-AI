@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import './Sidebar.scss';
 
 const Sidebar = () => {
   const location = useLocation();
@@ -8,46 +9,54 @@ const Sidebar = () => {
     return location.pathname === path;
   };
 
+  const menuItems = [
+    {
+      path: '/dashboard',
+      icon: 'fas fa-home',
+      label: 'Dashboard'
+    },
+    {
+      path: '/mood-tracker',
+      icon: 'fas fa-chart-line',
+      label: 'Mood Tracker'
+    },
+    {
+      path: '/guidebook',
+      icon: 'fas fa-book',
+      label: 'Guidebook'
+    },
+    {
+      path: '/mindful-breathing',
+      icon: 'fas fa-wind',
+      label: 'Mindful Breathing'
+    },
+    {
+      path: '/resources',
+      icon: 'fas fa-hands-helping',
+      label: 'Resources'
+    },
+    {
+      path: '/comfort-zone',
+      icon: 'fas fa-comments',
+      label: 'Talk to Serena'
+    }
+  ];
+
   return (
     <aside className="sidebar">
       <nav>
         <ul>
-          <li>
-            <Link to="/dashboard" className={isActive('/dashboard') ? 'active' : ''}>
-              <i className="fas fa-home"></i>
-              Dashboard
-            </Link>
-          </li>
-          <li>
-            <Link to="/mood-tracker" className={isActive('/mood-tracker') ? 'active' : ''}>
-              <i className="fas fa-chart-line"></i>
-              Mood Tracker
-            </Link>
-          </li>
-          <li>
-            <Link to="/guidebook" className={isActive('/guidebook') ? 'active' : ''}>
-              <i className="fas fa-book"></i>
-              Guidebook
-            </Link>
-          </li>
-          <li>
-            <Link to="/mindful-breathing" className={isActive('/mindful-breathing') ? 'active' : ''}>
-              <i className="fas fa-wind"></i>
-              Mindful Breathing
-            </Link>
-          </li>
-          <li>
-            <Link to="/resources" className={isActive('/resources') ? 'active' : ''}>
-              <i className="fas fa-hands-helping"></i>
-              Resources
-            </Link>
-          </li>
-          <li>
-            <Link to="/comfort-zone" className={isActive('/comfort-zone') ? 'active' : ''}>
-              <i className="fas fa-comments"></i>
-              Talk to Serena
-            </Link>
-          </li>
+          {menuItems.map((item, index) => (
+            <li key={index}>
+              <Link 
+                to={item.path} 
+                className={isActive(item.path) ? 'active' : ''}
+              >
+                <i className={item.icon}></i>
+                {item.label}
+              </Link>
+            </li>
+          ))}
         </ul>
       </nav>
     </aside>
