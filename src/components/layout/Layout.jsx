@@ -54,6 +54,7 @@ const Layout = () => {
           <li><Link to="/journal" className={isActive('/journal') ? 'active' : ''}>Journal</Link></li>
           <li><Link to="/mood-tracker" className={isActive('/mood-tracker') ? 'active' : ''}>Mood Tracker</Link></li>
           <li><Link to="/resources" className={isActive('/resources') ? 'active' : ''}>Resources</Link></li>
+          <li><Link to="/guidebook" className={isActive('/guidebook') ? 'active' : ''}>Guidebook</Link></li>
           <li><Link to="/comfort-zone" className={isActive('/comfort-zone') ? 'active' : ''}>Talk to Serena</Link></li>
           <li><Link to="/chat" className={isActive('/chat') ? 'active' : ''}>Chat with Serena</Link></li>
           <li><Link to="/settings" className={isActive('/settings') ? 'active' : ''}>Settings</Link></li>

@@ -1,0 +1,251 @@
+@import '../assets/styles/variables.scss';
+
+.guidebook-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  background: $background;
+  color: $primary;
+
+  .guidebook-header {
+    text-align: center;
+    margin-bottom: 2rem;
+
+    h1 {
+      font-size: 2.5rem;
+      color: $primary;
+      margin-bottom: 0.5rem;
+    }
+
+    p {
+      font-size: 1.1rem;
+      color: $secondary;
+      margin-bottom: 2rem;
+    }
+  }
+
+  .search-container {
+    margin: 2rem 0;
+
+    .search-input {
+      width: 100%;
+      max-width: 600px;
+      padding: 0.8rem 1rem;
+      border: 2px solid lighten($background, 15%);
+      border-radius: 30px;
+      font-size: 1rem;
+      outline: none;
+      transition: all 0.3s ease;
+      background: lighten($background, 5%);
+      color: $primary;
+
+      &:focus {
+        border-color: $accent;
+        box-shadow: 0 0 0 3px rgba($accent, 0.2);
+      }
+
+      &::placeholder {
+        color: $secondary;
+      }
+    }
+  }
+
+  .category-filters {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+
+    .category-tag {
+      padding: 0.5rem 1rem;
+      background: lighten($background, 10%);
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-size: 0.9rem;
+      color: $primary;
+
+      &:hover {
+        background: lighten($background, 15%);
+      }
+
+      &.active {
+        background: $highlight;
+        color: $background;
+      }
+    }
+  }
+
+  .guides-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+
+  .guide-card {
+    background: lighten($background, 5%);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid lighten($background, 10%);
+    cursor: pointer;
+    max-height: 300px;
+
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 15px rgba($accent, 0.1);
+    }
+
+    .guide-content {
+      padding: 1.5rem;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+
+      .guide-category {
+        color: $highlight;
+        font-size: 0.8rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        text-transform: uppercase;
+      }
+
+      h3 {
+        font-size: 1.3rem;
+        margin: 0.5rem 0;
+        color: $primary;
+      }
+
+      .guide-description {
+        color: $secondary;
+        font-size: 0.95rem;
+        line-height: 1.5;
+        margin-bottom: 1rem;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        position: relative;
+        flex: 1;
+
+        &.expanded {
+          -webkit-line-clamp: unset;
+          max-height: none;
+        }
+
+        &::after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          height: 40px;
+          background: linear-gradient(transparent, lighten($background, 5%));
+          pointer-events: none;
+          opacity: 1;
+          transition: opacity 0.3s ease;
+        }
+
+        &.expanded::after {
+          opacity: 0;
+        }
+      }
+
+      .guide-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: auto;
+
+        .read-more {
+          background: none;
+          border: none;
+          color: $accent;
+          font-size: 0.9rem;
+          cursor: pointer;
+          padding: 0.3rem 0;
+          transition: color 0.2s ease;
+
+          &:hover {
+            color: $highlight;
+            text-decoration: underline;
+          }
+        }
+
+        .external-link {
+          text-decoration: none;
+          color: $accent;
+          font-weight: 600;
+          display: inline-flex;
+          align-items: center;
+          transition: color 0.2s ease;
+          font-size: 0.9rem;
+
+          &:hover {
+            color: $highlight;
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+  }
+
+  .loading-text-bottom-right {
+    position: absolute;
+    bottom: 40px;
+    right: 60px;
+    font-size: 1.1rem;
+    color: $secondary;
+    z-index: 10;
+  }
+
+  .error-message {
+    text-align: center;
+    padding: 3rem;
+    color: $secondary;
+
+    .reset-filters {
+      margin-top: 1rem;
+      padding: 0.5rem 1rem;
+      background: $highlight;
+      color: $background;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.2s ease;
+      font-weight: 600;
+
+      &:hover {
+        background: $accent;
+        color: $background;
+      }
+    }
+  }
+
+  .no-results {
+    text-align: center;
+    padding: 3rem;
+    color: $secondary;
+
+    .reset-filters {
+      margin-top: 1rem;
+      padding: 0.5rem 1rem;
+      background: $highlight;
+      color: $background;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.2s ease;
+      font-weight: 600;
+
+      &:hover {
+        background: $accent;
+        color: $background;
+      }
+    }
+  }
+} 

@@ -19,6 +19,7 @@ import NotFound from './pages/NotFound';
 import Landing from './pages/Landing';
 import Chat from './components/chat/Chat';
 import ComfortZone from './pages/ComfortZone';
+import Guidebook from './pages/Guidebook';
 
 // Global Styles
 import './main.scss';
@@ -40,6 +41,7 @@ function App() {
               <Route path="/journal" element={<Journal />} />
               <Route path="/mood-tracker" element={<MoodTracker />} />
               <Route path="/resources" element={<Resources />} />
+              <Route path="/guidebook" element={<Guidebook />} />
               <Route path="/settings" element={<Settings />} />
               <Route path="/chat" element={<Chat />} />
               <Route path="/comfort-zone" element={<ComfortZone />} />
