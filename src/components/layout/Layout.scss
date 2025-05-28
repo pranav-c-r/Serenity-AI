@@ -57,10 +57,28 @@
         display: block;
         padding: 0.5rem;
         border-radius: 4px;
-        transition: background-color 0.3s;
+        transition: all 0.3s ease;
+        border: 2px solid transparent;
         
         &:hover {
           background-color: rgba($accent, 0.1);
+        }
+
+        &.active {
+          background-color: rgba(#FFD700, 0.1);
+          border-color: #FFD700;
+          color: #FFD700;
+          font-weight: 600;
+          box-shadow: 0 2px 8px rgba(#FFD700, 0.2);
+          transform: translateX(5px);
+
+          .dark & {
+            background-color: rgba(#FFD700, 0.15);
+          }
+          
+          .light & {
+            background-color: rgba(#FFD700, 0.1);
+          }
         }
       }
     }

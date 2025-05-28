@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './Landing.scss';
 
@@ -7,6 +7,15 @@ const Landing = () => {
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+  };
+
+  const scrollToSection = (e, sectionId) => {
+    e.preventDefault();
+    const section = document.getElementById(sectionId);
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth' });
+      setIsMenuOpen(false); // Close mobile menu after clicking
+    }
   };
 
   return (
@@ -18,11 +27,11 @@ const Landing = () => {
         </div>
         
         <div className={`nav-menu ${isMenuOpen ? 'active' : ''}`}>
-          <Link to="#features" className="nav-link">Features</Link>
-          <Link to="#pricing" className="nav-link">Pricing</Link>
-          <Link to="#team" className="nav-link">Team</Link>
-          <Link to="#contact" className="nav-link">Contact</Link>
-          <Link to="#support" className="nav-link">Support</Link>
+          <a href="#features" className="nav-link" onClick={(e) => scrollToSection(e, 'features')}>Features</a>
+          <a href="#pricing" className="nav-link" onClick={(e) => scrollToSection(e, 'pricing')}>Pricing</a>
+          <a href="#team" className="nav-link" onClick={(e) => scrollToSection(e, 'team')}>Team</a>
+          <a href="#contact" className="nav-link" onClick={(e) => scrollToSection(e, 'contact')}>Contact</a>
+          <a href="#support" className="nav-link" onClick={(e) => scrollToSection(e, 'support')}>Support</a>
         </div>
 
         <div className="nav-buttons">
@@ -44,7 +53,7 @@ const Landing = () => {
           <p>Your personal AI companion for a more peaceful and productive life.</p>
           <div className="hero-buttons">
             <Link to="/signup" className="btn btn-primary">Get Started</Link>
-            <Link to="#features" className="btn btn-secondary">Learn More</Link>
+            <a href="#features" className="btn btn-secondary" onClick={(e) => scrollToSection(e, 'features')}>Learn More</a>
           </div>
         </div>
       </section>
@@ -116,18 +125,18 @@ const Landing = () => {
         <div className="team-grid">
           <div className="team-card">
             <div className="team-image"></div>
-            <h3>John Doe</h3>
-            <p>CEO & Founder</p>
+            <h3>Pranav C R</h3>
+            <p>Frontend Developer</p>
           </div>
           <div className="team-card">
             <div className="team-image"></div>
-            <h3>Jane Smith</h3>
-            <p>CTO</p>
+            <h3>Kesavan G</h3>
+            <p>Backend Developer</p>
           </div>
           <div className="team-card">
             <div className="team-image"></div>
-            <h3>Mike Johnson</h3>
-            <p>Lead Developer</p>
+            <h3>Adwaith J</h3>
+            <p>AIML Developer</p>
           </div>
         </div>
       </section>

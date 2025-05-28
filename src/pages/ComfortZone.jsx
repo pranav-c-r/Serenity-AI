@@ -191,17 +191,17 @@ useEffect(() => {
         utterance.onstart = () => setIsSpeaking(true);
         utterance.onend = () => setIsSpeaking(false);
         utterance.onerror = (event) => {
-          let message = 'An error occurred while speaking the response.';
-          if (event.error === 'not-allowed') {
-            message = 'Speech synthesis not allowed. Please check your browser settings.';
-          } else if (event.error === 'interrupted') {
-            message = 'Speech synthesis was interrupted.';
-          } else if (event.error === 'audio-busy') {
-            message = 'Audio device is busy. Please try again.';
-          } else if (event.error === 'network') {
-            message = 'Network error during speech synthesis.';
+          if (event.error !== 'interrupted') {
+            let message = 'An error occurred while speaking the response.';
+            if (event.error === 'not-allowed') {
+              message = 'Speech synthesis not allowed. Please check your browser settings.';
+            } else if (event.error === 'audio-busy') {
+              message = 'Audio device is busy. Please try again.';
+            } else if (event.error === 'network') {
+              message = 'Network error during speech synthesis.';
+            }
+            setError(message);
           }
-          setError(message);
           setIsSpeaking(false);
         };
         speechSynthesisRef.current.speak(utterance);
@@ -280,11 +280,7 @@ useEffect(() => {
 
       <div className="voice-interface">
         <div className="voice-status">
-          {error ? (
-            <div className="error-message">
-              <span>⚠️ {error}</span>
-            </div>
-          ) : isRecording ? (
+          {isRecording ? (
             <div className="recording-indicator">
               <div className="pulse-ring"></div>
               <span>Listening...</span>

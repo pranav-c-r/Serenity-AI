@@ -1,9 +1,27 @@
 @import '../variables.scss';
 
+// 3D Card Effect
+@mixin card-3d {
+  transform-style: preserve-3d;
+  transition: transform 0.3s ease;
+  &:hover {
+    transform: translateY(-10px) rotateX(5deg) rotateY(5deg);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+  }
+}
+
+// Floating Animation
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+  100% { transform: translateY(0px); }
+}
+
 .landing {
   min-height: 100vh;
   background-color: $background;
   color: $primary;
+  perspective: 1000px;
 }
 
 // Navigation
@@ -28,6 +46,21 @@
     a {
       color: $primary;
       text-decoration: none;
+      position: relative;
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: linear-gradient(90deg, $accent, $highlight);
+        transform: scaleX(0);
+        transition: transform 0.3s ease;
+      }
+      &:hover::after {
+        transform: scaleX(1);
+      }
     }
   }
 
@@ -39,9 +72,20 @@
       color: $secondary;
       text-decoration: none;
       transition: color $transition-normal;
-
-      &:hover {
-        color: $primary;
+      position: relative;
+      &::before {
+        content: '';
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: $accent;
+        transform: scaleX(0);
+        transition: transform 0.3s ease;
+      }
+      &:hover::before {
+        transform: scaleX(1);
       }
     }
   }
@@ -65,16 +109,32 @@
   padding: $spacing-xl;
   text-align: center;
   background: linear-gradient(to bottom, $background, darken($background, 5%));
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at center, rgba($accent, 0.1) 0%, transparent 70%);
+    animation: float 6s ease-in-out infinite;
+  }
 
   .hero-content {
     max-width: 800px;
-
+    position: relative;
+    z-index: 1;
+    
     h1 {
       font-size: 3.5rem;
       margin-bottom: $spacing-md;
       background: linear-gradient(to right, $primary, $highlight);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      text-shadow: 0 2px 4px rgba($accent, 0.1);
     }
 
     p {
@@ -109,18 +169,17 @@
   }
 
   .feature-card {
-    background-color: $card-bg;
+    @include card-3d;
+    background: linear-gradient(145deg, $card-bg, darken($card-bg, 5%));
+    border: 1px solid rgba($accent, 0.1);
     padding: $spacing-xl;
     border-radius: $border-radius-lg;
     transition: transform $transition-normal;
 
-    &:hover {
-      transform: translateY(-5px);
-    }
-
     .feature-icon {
-      font-size: 2.5rem;
-      margin-bottom: $spacing-md;
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      animation: float 3s ease-in-out infinite;
     }
 
     h3 {
@@ -152,14 +211,21 @@
   }
 
   .pricing-card {
-    background-color: $card-bg;
+    @include card-3d;
+    background: linear-gradient(145deg, $card-bg, darken($card-bg, 5%));
+    border: 1px solid rgba($accent, 0.1);
     padding: $spacing-xl;
     border-radius: $border-radius-lg;
     transition: transform $transition-normal;
 
     &.featured {
-      border: 2px solid $highlight;
       transform: scale(1.05);
+      border: 2px solid $accent;
+      box-shadow: 0 10px 30px rgba($accent, 0.2);
+      
+      &:hover {
+        transform: scale(1.05) translateY(-10px) rotateX(5deg) rotateY(5deg);
+      }
     }
 
     h3 {
@@ -207,12 +273,32 @@
   }
 
   .team-card {
+    @include card-3d;
+    background: linear-gradient(145deg, $card-bg, darken($card-bg, 5%));
+    border: 1px solid rgba($accent, 0.1);
+    padding: $spacing-xl;
+    border-radius: $border-radius-lg;
+    transition: transform $transition-normal;
+
     .team-image {
       width: 150px;
       height: 150px;
       border-radius: 50%;
       background-color: $card-bg;
       margin: 0 auto $spacing-md;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+      
+      &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(45deg, rgba($accent, 0.2), transparent);
+      }
     }
 
     h3 {
@@ -248,10 +334,13 @@
       border: 1px solid $secondary;
       background-color: $card-bg;
       color: $primary;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
 
       &:focus {
         border-color: $highlight;
         outline: none;
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
       }
     }
 
@@ -280,7 +369,9 @@
   }
 
   .support-card {
-    background-color: $card-bg;
+    @include card-3d;
+    background: linear-gradient(145deg, $card-bg, darken($card-bg, 5%));
+    border: 1px solid rgba($accent, 0.1);
     padding: $spacing-xl;
     border-radius: $border-radius-lg;
     transition: transform $transition-normal;
@@ -305,6 +396,17 @@
   background-color: darken($background, 5%);
   padding: $spacing-xl * 2 $spacing-xl $spacing-xl;
   color: $secondary;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, $accent, transparent);
+  }
 
   .footer-content {
     display: grid;
@@ -327,9 +429,20 @@
       text-decoration: none;
       margin-bottom: $spacing-sm;
       transition: color $transition-normal;
-
-      &:hover {
-        color: $primary;
+      position: relative;
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 100%;
+        height: 1px;
+        background: $accent;
+        transform: scaleX(0);
+        transition: transform 0.3s ease;
+      }
+      &:hover::after {
+        transform: scaleX(1);
       }
     }
   }
@@ -355,9 +468,33 @@
   font-weight: 500;
   transition: all $transition-normal;
   cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transform: translateX(-100%);
+    transition: transform 0.6s ease;
+  }
+  
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba($accent, 0.3);
+    
+    &::before {
+      transform: translateX(100%);
+    }
+  }
 
   &.btn-primary {
-    background-color: $accent;
+    background: linear-gradient(45deg, $accent, darken($accent, 10%));
     color: $background;
 
     &:hover {
@@ -366,7 +503,7 @@
   }
 
   &.btn-secondary {
-    background-color: transparent;
+    background: linear-gradient(45deg, transparent, rgba($accent, 0.1));
     border: 1px solid $accent;
     color: $accent;
 
@@ -450,4 +587,4 @@
       transform: none;
     }
   }
-} 
+}
