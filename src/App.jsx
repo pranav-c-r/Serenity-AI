@@ -20,6 +20,7 @@ import Landing from './pages/Landing';
 import Chat from './components/chat/Chat';
 import ComfortZone from './pages/ComfortZone';
 import Guidebook from './pages/Guidebook';
+import MindfulBreathing from './pages/MindfulBreathing';
 
 // Global Styles
 import './main.scss';
@@ -42,6 +43,7 @@ function App() {
               <Route path="/mood-tracker" element={<MoodTracker />} />
               <Route path="/resources" element={<Resources />} />
               <Route path="/guidebook" element={<Guidebook />} />
+              <Route path="/mindful-breathing" element={<MindfulBreathing />} />
               <Route path="/settings" element={<Settings />} />
               <Route path="/chat" element={<Chat />} />
               <Route path="/comfort-zone" element={<ComfortZone />} />

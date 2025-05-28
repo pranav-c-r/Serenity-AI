@@ -26,6 +26,18 @@ const Dashboard = () => {
       path: '/mood-tracker'
     },
     {
+      title: 'Guidebook',
+      description: 'Explore mental health resources and guides',
+      icon: '📚',
+      path: '/guidebook'
+    },
+    {
+      title: 'Mindful Breathing',
+      description: 'Practice guided breathing exercises',
+      icon: '🫁',
+      path: '/mindful-breathing'
+    },
+    {
       title: 'Chat',
       description: 'Have a text conversation with your AI companion',
       icon: '💬',
@@ -90,36 +102,17 @@ const Dashboard = () => {
     <div className="dashboard">
       <h1>Welcome back, {username}</h1>
       <div className="dashboard-grid">
-        <div className="dashboard-card" onClick={() => handleCardClick('/mood-tracker')}>
-          <div className="card-icon">📊</div>
-          <h3>Mood Overview</h3>
-          <p>Track your daily mood and emotional patterns</p>
-        </div>
-        <div className="dashboard-card" onClick={() => handleCardClick('/journal')}>
-          <div className="card-icon">📝</div>
-          <h3>Journal Entries</h3>
-          <p>Your recent thoughts and reflections</p>
-        </div>
-        <div className="dashboard-card" onClick={() => handleCardClick('/chat')}>
-          <div className="card-icon">💬</div>
-          <h3>Chat with AI</h3>
-          <p>Have a text conversation with your AI companion</p>
-        </div>
-        <div className="dashboard-card" onClick={() => handleCardClick('/comfort-zone')}>
-          <div className="card-icon">🎤</div>
-          <h3>Comfort Zone</h3>
-          <p>Voice-based conversation with your AI companion</p>
-        </div>
-        <div className="dashboard-card" onClick={() => handleCardClick('/resources')}>
-          <div className="card-icon">📚</div>
-          <h3>Resources</h3>
-          <p>Helpful tools and articles for mental wellbeing</p>
-        </div>
-        <div className="dashboard-card" onClick={() => handleCardClick('/settings')}>
-          <div className="card-icon">⚙️</div>
-          <h3>Settings</h3>
-          <p>Customize your experience and manage your account</p>
-        </div>
+        {features.map((feature, index) => (
+          <div 
+            key={index} 
+            className="dashboard-card" 
+            onClick={() => handleCardClick(feature.path)}
+          >
+            <div className="card-icon">{feature.icon}</div>
+            <h3>{feature.title}</h3>
+            <p>{feature.description}</p>
+          </div>
+        ))}
       </div>
     </div>
   );
