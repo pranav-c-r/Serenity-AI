@@ -14,7 +14,7 @@ export default defineConfig({
     },
     chunkSizeWarningLimit: 1000,
     target: 'esnext',
-    minify: 'terser',
+    minify: 'esbuild',
     sourcemap: false
   },
   server: {
