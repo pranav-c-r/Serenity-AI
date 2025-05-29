@@ -5,7 +5,41 @@
   max-width: 1200px;
   margin: 0 auto;
 
-  h1 {
+  .dashboard-header {
+    text-align: center; // Center align header content
+    margin-bottom: 2.5rem;
+
+    .motivational-quote-status {
+      font-size: 1rem;
+      color: $secondary;
+      min-height: 1.5em; // Reserve space to prevent layout shift
+      margin-bottom: 0.75rem;
+      font-style: italic;
+
+      &.error {
+        color: $danger; // Assuming you have a $danger color variable
+        font-weight: 500;
+      }
+    }
+
+    .motivational-quote {
+      font-size: 1.2rem; // Slightly larger for emphasis
+      color: $primary;
+      font-style: italic;
+      margin-bottom: 1rem;
+      padding: 0 1rem;
+      min-height: 1.5em; // Reserve space
+      line-height: 1.6;
+    }
+
+    h1 {
+      color: $primary;
+      font-size: 2rem;
+      margin: 0; // Removed default margin-bottom from h1 if it's inside header
+    }
+  }
+
+  h1 { // General h1 if not in header (though now it is)
     color: $primary;
     margin-bottom: 2rem;
     font-size: 2rem;
@@ -76,12 +110,87 @@
   }
 }
 
+.prophecy-quote-card {
+  background: linear-gradient(135deg, rgba($primary,0.12) 0%, rgba($accent,0.10) 100%);
+  border: 2.5px solid $accent;
+  border-radius: 1.5rem;
+  box-shadow: 0 0 24px 4px rgba($accent, 0.25), 0 2px 16px 0 rgba($primary, 0.10);
+  padding: 2.5rem 2rem 2rem 2rem;
+  margin: 0 auto 2.5rem auto;
+  max-width: 800px;
+  min-height: 180px;
+  text-align: center;
+  position: relative;
+  animation: prophecyFadeIn 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.prophecy-icon {
+  font-size: 2.8rem;
+  margin-bottom: 0.5rem;
+  animation: prophecyGlow 2.5s infinite alternate;
+  filter: drop-shadow(0 0 8px $accent);
+}
+
+.prophecy-title {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 1.3rem;
+  color: $accent;
+  letter-spacing: 0.08em;
+  margin-bottom: 1.1rem;
+  text-shadow: 0 2px 8px rgba($accent, 0.18);
+}
+
+.prophecy-quote {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.35rem;
+  color: $primary;
+  font-style: italic;
+  line-height: 1.7;
+  margin: 0 auto;
+  padding: 0 1rem;
+  text-shadow: 0 2px 12px rgba($primary, 0.10);
+  position: relative;
+}
+
+@keyframes prophecyGlow {
+  from {
+    filter: drop-shadow(0 0 8px $accent);
+  }
+  to {
+    filter: drop-shadow(0 0 18px lighten($accent, 10%));
+  }
+}
+
+@keyframes prophecyFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-30px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+// Add a $danger variable to your variables.scss if you don't have one
+// e.g., $danger: #e74c3c;
+
 @media (max-width: $breakpoint-md) {
   .dashboard {
     padding: 1rem;
+
+    .dashboard-header {
+      margin-bottom: 2rem;
+      .motivational-quote {
+        font-size: 1.1rem;
+      }
+      h1 {
+        font-size: 1.8rem;
+      }
+    }
 
     .dashboard-grid {
       grid-template-columns: 1fr;
     }
   }
-} 
+}
