@@ -1,4 +1,4 @@
-@import '../assets/styles/variables.scss';
+@import '../variables.scss';
 
 .mindful-breathing-page {
   max-width: 1200px;
@@ -7,6 +7,10 @@
   min-height: 100vh;
   background: $background;
   color: $primary;
+  .light & {
+    background: $light-mode-bg;
+    color: $light-mode-text;
+  }
 
   .breathing-container {
     text-align: center;
@@ -17,12 +21,18 @@
       font-size: 2.5rem;
       color: $primary;
       margin-bottom: 0.5rem;
+      .light & {
+        color: $light-mode-text;
+      }
     }
 
     .subtitle {
       font-size: 1.1rem;
       color: $secondary;
       margin-bottom: 3rem;
+      .light & {
+        color: $light-mode-text;
+      }
     }
   }
 
@@ -39,6 +49,9 @@
     transition: all 0.5s ease;
     position: relative;
     overflow: hidden;
+    .light & {
+      background: $light-mode-card;
+    }
 
     &::before {
       content: '';
@@ -93,6 +106,9 @@
         font-size: 1.5rem;
         color: $primary;
         margin-bottom: 1rem;
+        .light & {
+          color: $light-mode-text;
+        }
       }
 
       .breath-count {
@@ -143,10 +159,16 @@
     background: lighten($background, 5%);
     border-radius: 12px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    .light & {
+      background: $light-mode-card;
+    }
 
     h3 {
       color: $primary;
       margin-bottom: 1.5rem;
+      .light & {
+        color: $light-mode-text;
+      }
     }
 
     .duration-controls {
@@ -160,6 +182,9 @@
           display: block;
           margin-bottom: 0.5rem;
           color: $secondary;
+          .light & {
+            color: $light-mode-text;
+          }
         }
 
         input {
@@ -171,6 +196,10 @@
           background: $background;
           color: $primary;
           transition: all 0.3s ease;
+          .light & {
+            background: $light-mode-bg;
+            color: $light-mode-text;
+          }
 
           &:focus {
             border-color: $accent;
@@ -192,10 +221,16 @@
     background: lighten($background, 5%);
     border-radius: 12px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    .light & {
+      background: $light-mode-card;
+    }
 
     h3 {
       color: $primary;
       margin-bottom: 1.5rem;
+      .light & {
+        color: $light-mode-text;
+      }
     }
 
     ul {
@@ -213,6 +248,10 @@
         border-radius: 8px;
         text-align: center;
         transition: all 0.3s ease;
+        .light & {
+          color: $light-mode-text;
+          background: $light-mode-bg;
+        }
 
         &:hover {
           transform: translateY(-2px);
@@ -220,5 +259,10 @@
         }
       }
     }
+  }
+
+  .light & {
+    -webkit-text-stroke: 1px #000;
+    text-stroke: 1px #000;
   }
 } 

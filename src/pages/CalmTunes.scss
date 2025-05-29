@@ -141,4 +141,74 @@
       }
     }
   }
+}
+
+.light .calm-tunes [style*='color: #F1DB4B'],
+.light .calm-tunes .accent-text {
+  -webkit-text-stroke: 1px #000;
+  text-stroke: 1px #000;
+}
+
+.calm-tunes {
+  .page-header {
+    h1 {
+      color: $accent;
+    }
+    
+    p {
+      color: $secondary;
+    }
+  }
+
+  .now-playing {
+    .player-card {
+      .track-info {
+        .track-details {
+          h3 {
+            color: $primary;
+          }
+
+          p {
+            color: $secondary;
+          }
+        }
+      }
+
+      .player-controls {
+        .control-button {
+          &:hover {
+            background-color: rgba($accent, 0.1);
+          }
+        }
+      }
+    }
+  }
+
+  .playlists-container {
+    .playlist-section {
+      h2 {
+        color: $primary;
+      }
+
+      .tracks-list {
+        .track-item {
+          .track-info {
+            h4 {
+              color: $primary;
+            }
+
+            p {
+              color: $secondary;
+            }
+          }
+
+          .play-button {
+            &:hover {
+              background-color: rgba($accent, 0.1);
+            }
+          }
+        }
+      }
+    }
+  }
 } 

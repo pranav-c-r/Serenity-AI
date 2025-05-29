@@ -155,4 +155,10 @@
       }
     }
   }
+}
+
+.light .mind-canvas [style*='color: #F1DB4B'],
+.light .mind-canvas .accent-text {
+  -webkit-text-stroke: 1px #000;
+  text-stroke: 1px #000;
 } 

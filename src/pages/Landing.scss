@@ -588,3 +588,9 @@
     }
   }
 }
+
+.light .landing [style*='color: #F1DB4B'],
+.light .landing .accent-text {
+  -webkit-text-stroke: 1px #000;
+  text-stroke: 1px #000;
+}

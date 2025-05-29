@@ -5,14 +5,19 @@ $accent: #F1DB4B;        // Naplex yellow - Accent/buttons
 $highlight: #03CEA4;     // Mini - Highlights
 $background: #101419;    // Dark purple - Background
 $card-bg: lighten(#101419, 5%);
-$light-mode-bg: #CDF7F6; // Light teal - Light mode background
-$light-mode-sidebar: #B8F0EE; // Slightly darker teal - Light mode sidebar
+
+// Light Theme Colors
+$light-mode-bg: #FFFFFF; // White background
+$light-mode-sidebar: #81D2C7; // Teal sidebar
+$light-mode-card: #52EDD8; // Light teal card background
+$light-mode-text: #000000; // Black text
 
 // Additional UI Colors
 $error: #FF6B6B;
 $success: #4CAF50;  
 $warning: #FFC107;
 $info: #2196F3;
+$danger : #FF6B6B;
 
 // Spacing
 $spacing-xs: 0.25rem;

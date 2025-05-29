@@ -12,6 +12,10 @@
   margin: 0rem 1rem;
   box-shadow: $shadow-lg;
   width: calc(100% - 2rem);
+  .light & {
+    background-color: $light-mode-bg;
+    color: $light-mode-text;
+  }
 }
 
 .chat-header {
@@ -23,6 +27,9 @@
   z-index: 10;
   border-bottom: 1px solid rgba($secondary, 0.1);
   border-radius: 20px 20px 0 0;
+  .light & {
+    background-color: $light-mode-card;
+  }
 
   .chat-header-content {
     display: flex;
@@ -77,6 +84,9 @@
   width: 100%;
   scroll-behavior: smooth;
   padding-right: 2rem;
+  .light & {
+    color: $light-mode-text;
+  }
 
   .message {
     display: flex;
@@ -166,6 +176,9 @@
   border-top: 1px solid rgba($secondary, 0.1);
   border-radius: 0 0 20px 20px;
   width: 100%;
+  .light & {
+    background-color: $light-mode-card;
+  }
 
   .input-container {
     display: flex;
@@ -337,4 +350,10 @@
     color: $error;
     animation: pulse 1.5s infinite;
   }
+}
+
+.light .chat-container [style*='color: #F1DB4B'],
+.light .chat-container .accent-text {
+  -webkit-text-stroke: 1px #000;
+  text-stroke: 1px #000;
 }

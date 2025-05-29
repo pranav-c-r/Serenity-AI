@@ -40,4 +40,14 @@
       background-color: darken($accent, 10%);
     }
   }
+
+  .light & {
+    -webkit-text-stroke: 1px #000;
+    text-stroke: 1px #000;
+  }
+}
+
+.light .not-found h1 {
+  -webkit-text-stroke: 1px #000;
+  text-stroke: 1px #000;
 } 

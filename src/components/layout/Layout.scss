@@ -11,7 +11,7 @@
   
   &.light {
     background-color: $light-mode-bg;
-    color: #000000;
+    color: $light-mode-text;
   }
 }
 
@@ -50,7 +50,7 @@
         }
         
         .light & {
-          color: #000000;
+          color: $light-mode-text;
         }
         
         text-decoration: none;
@@ -167,7 +167,7 @@
         }
         
         .light & {
-          color: #000000;
+          color: $light-mode-text;
         }
       }
       
@@ -203,5 +203,18 @@
 .main-content {
   flex: 1;
   padding: 2rem;
-  overflow-y: auto;
+  
+  .dark & {
+    background-color: $background;
+  }
+  
+  .light & {
+    background-color: $light-mode-bg;
+  }
+}
+
+.light .sidebar [style*='color: #F1DB4B'],
+.light .sidebar .accent-text {
+  -webkit-text-stroke: 1px #000;
+  text-stroke: 1px #000;
 } 

@@ -30,8 +30,26 @@ body {
   
   .light & {
     background-color: $light-mode-bg;
-    color: #000000;
+    color: $light-mode-text;
   }
+}
+
+// Card styles
+.card {
+  .dark & {
+    background-color: $card-bg;
+    color: $primary;
+  }
+  
+  .light & {
+    background-color: $light-mode-card;
+    color: $light-mode-text;
+  }
+  
+  border-radius: $border-radius-md;
+  padding: $spacing-lg;
+  box-shadow: $shadow-sm;
+  margin-bottom: $spacing-md;
 }
 
 // Typography
@@ -41,7 +59,7 @@ h1, h2, h3, h4, h5, h6 {
   }
   
   .light & {
-    color: #000000;
+    color: $light-mode-text;
   }
   
   line-height: 1.2;
@@ -69,7 +87,7 @@ p {
   }
   
   .light & {
-    color: #4A4A4A;
+    color: $light-mode-text;
   }
   
   margin-bottom: $spacing-md;
@@ -78,12 +96,25 @@ p {
 
 // Links
 a {
-  color: $highlight;
+  .dark & {
+    color: $highlight;
+  }
+  
+  .light & {
+    color: darken($light-mode-card, 40%);
+  }
+  
   text-decoration: none;
   transition: color $transition-normal;
 
   &:hover {
-    color: lighten($highlight, 10%);
+    .dark & {
+      color: lighten($highlight, 10%);
+    }
+    
+    .light & {
+      color: darken($light-mode-card, 50%);
+    }
   }
 }
 
@@ -130,8 +161,8 @@ input, textarea, select {
   }
   
   .light & {
-    background-color: #FFFFFF;
-    color: #000000;
+    background-color: $light-mode-bg;
+    color: $light-mode-text;
   }
   
   transition: border-color $transition-normal;
@@ -147,7 +178,7 @@ input, textarea, select {
     }
     
     .light & {
-      color: rgba(#4A4A4A, 0.7);
+      color: rgba($light-mode-text, 0.7);
     }
   }
 }
@@ -174,7 +205,7 @@ input, textarea, select {
   }
   
   .light & {
-    background: #4A4A4A;
+    background: darken($light-mode-sidebar, 10%);
   }
   
   border-radius: $border-radius-sm;

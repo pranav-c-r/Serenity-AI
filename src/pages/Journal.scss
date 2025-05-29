@@ -1,4 +1,4 @@
-@import '../assets/styles/variables.scss';
+@import '../variables.scss';
 
 .journal {
   padding: 2rem;
@@ -6,6 +6,9 @@
   h1 {
     color: $primary;
     margin-bottom: 2rem;
+    .light & {
+      color: $light-mode-text;
+    }
   }
 }
 
@@ -22,7 +25,10 @@
     resize: vertical;
     margin-bottom: 1rem;
     font-family: inherit;
-
+    .light & {
+      background-color: $light-mode-card;
+      color: $light-mode-text;
+    }
     &:focus {
       outline: none;
       border-color: $accent;
@@ -56,16 +62,32 @@
   padding: 1.5rem;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  .light & {
+    background-color: $light-mode-card;
+  }
 
   .entry-date {
     color: $secondary;
-    font-size: 0.9rem;
+    font-size: 0.5rem;
     margin-bottom: 0.5rem;
+    .light & {
+      color: $light-mode-text;
+    }
   }
 
   .entry-content {
     color: $primary;
     line-height: 1.6;
     white-space: pre-wrap;
+    font-size: 1.4rem;
+    .light & {
+      color: $light-mode-text;
+    }
   }
+}
+
+.journal-entry .entry-date h3 {
+  font-size: 0.8rem;
+  font-weight: normal;
+  margin: 0;
 } 
