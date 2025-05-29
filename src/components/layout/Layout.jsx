@@ -48,19 +48,19 @@ const Layout = () => {
   return (
     <div className={`layout ${isDarkMode ? 'dark' : 'light'}`}>
       <nav className="sidebar">
-        <div className="logo">Serenity AI</div>
+        <div className="logo accent-text">Serenity AI</div>
         <ul className="nav-links">
-          <li><Link to="/dashboard" className={isActive('/dashboard') ? 'active' : ''}>Dashboard</Link></li>
-          <li><Link to="/journal" className={isActive('/journal') ? 'active' : ''}>Journal</Link></li>
-          <li><Link to="/mood-tracker" className={isActive('/mood-tracker') ? 'active' : ''}>Mood Tracker</Link></li>
-          <li><Link to="/mindful-breathing" className={isActive('/mindful-breathing') ? 'active' : ''}>Mindful Breathing</Link></li>
-          <li><Link to="/resources" className={isActive('/resources') ? 'active' : ''}>Resources</Link></li>
-          <li><Link to="/guidebook" className={isActive('/guidebook') ? 'active' : ''}>Guidebook</Link></li>
-          <li><Link to="/comfort-zone" className={isActive('/comfort-zone') ? 'active' : ''}>Talk to Serena</Link></li>
-          <li><Link to="/chat" className={isActive('/chat') ? 'active' : ''}>Chat with Serena</Link></li>
-          <li><Link to="/games" className={isActive('/games') ? 'active' : ''}>Games & Challenges</Link></li>
-          <li><Link to="/calm-tunes" className={isActive('/calm-tunes') ? 'active' : ''}>Calm Tunes</Link></li>
-          <li><Link to="/mind-canvas" className={isActive('/mind-canvas') ? 'active' : ''}>Mind Canvas</Link></li>
+          <li><Link to="/dashboard" className={isActive('/dashboard') ? 'active accent-text' : ''}>Dashboard</Link></li>
+          <li><Link to="/journal" className={isActive('/journal') ? 'active accent-text' : ''}>Journal</Link></li>
+          <li><Link to="/mood-tracker" className={isActive('/mood-tracker') ? 'active accent-text' : ''}>Mood Tracker</Link></li>
+          <li><Link to="/mindful-breathing" className={isActive('/mindful-breathing') ? 'active accent-text' : ''}>Mindful Breathing</Link></li>
+          <li><Link to="/resources" className={isActive('/resources') ? 'active accent-text' : ''}>Resources</Link></li>
+          <li><Link to="/guidebook" className={isActive('/guidebook') ? 'active accent-text' : ''}>Guidebook</Link></li>
+          <li><Link to="/comfort-zone" className={isActive('/comfort-zone') ? 'active accent-text' : ''}>Talk to Serena</Link></li>
+          <li><Link to="/chat" className={isActive('/chat') ? 'active accent-text' : ''}>Chat with Serena</Link></li>
+          <li><Link to="/games" className={isActive('/games') ? 'active accent-text' : ''}>Games & Challenges</Link></li>
+          <li><Link to="/calm-tunes" className={isActive('/calm-tunes') ? 'active accent-text' : ''}>Calm Tunes</Link></li>
+          <li><Link to="/mind-canvas" className={isActive('/mind-canvas') ? 'active accent-text' : ''}>Mind Canvas</Link></li>
         </ul>
         <div className="nav-footer">
           <button onClick={toggleTheme} className="theme-toggle">

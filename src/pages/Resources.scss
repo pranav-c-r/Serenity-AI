@@ -139,12 +139,18 @@
         font-weight: 600;
         margin-bottom: 0.5rem;
         text-transform: uppercase;
+        .light & {
+          color: $light-mode-text;
+        }
       }
 
       h3 {
         font-size: 1.3rem;
         margin: 0.5rem 0;
         color: $primary;
+        .light & {
+          color: $light-mode-text;
+        }
       }
 
       .resource-description {
@@ -152,6 +158,9 @@
         font-size: 0.95rem;
         line-height: 1.5;
         margin-bottom: 1.5rem;
+        .light & {
+          color: $light-mode-text;
+        }
       }
 
       .resource-footer {
@@ -165,10 +174,16 @@
           display: inline-flex;
           align-items: center;
           transition: color 0.2s ease;
+          .light & {
+            color: $light-mode-text;
+          }
 
           &:hover {
             color: $highlight;
             text-decoration: underline;
+            .light & {
+              color: darken($light-mode-text, 10%);
+            }
           }
 
           &::after {
@@ -225,6 +240,6 @@
 .light .resources-page [style*='color: #F1DB4B'],
 .light .resources-page .accent-text,
 .light .resources-page .resource-link {
-  -webkit-text-stroke: 1px #000;
-  text-stroke: 1px #000;
+  -webkit-text-stroke: 0.4px #000;
+  text-stroke: 0.4px #000;
 }

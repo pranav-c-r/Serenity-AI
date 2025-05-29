@@ -394,7 +394,14 @@ const Resources = () => {
                     <div className="resource-category">{resource.category}</div>
                     <h3>{resource.title}</h3>
                     <p className={`resource-description ${expandedCards.has(resource.id) ? 'expanded' : ''}`}>
-                      {resource.description}
+                      {expandedCards.has(resource.id)
+                        ? resource.description
+                        : resource.description.length > 120
+                          ? <>
+                              {resource.description.slice(0, 120)}... 
+                              <span style={{position: 'absolute', left: '-9999px', width: '1px', height: '1px', overflow: 'hidden'}}>Truncated description. Click Read More to expand.</span>
+                            </>
+                          : resource.description}
                     </p>
                     <div className="resource-footer">
                       <button 

@@ -333,7 +333,7 @@ const ComfortZone = () => {
           ) : isSpeaking ? (
             <div className="speaking-indicator">
               <div className="wave-animation"></div>
-              <span>Speaking...</span>
+              <span className="accent-text">Speaking...</span>
             </div>
           ) : (
             <span>Click the microphone to start speaking</span>

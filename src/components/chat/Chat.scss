@@ -100,8 +100,8 @@
       max-width: 75%;
 
       .message-content {
-        background-color: #344966;
-        color: white;
+        background-color: #E3F2FD;
+        color: #000;
         border-radius: $border-radius-lg $border-radius-lg 0 $border-radius-lg;
       }
     }
@@ -112,7 +112,8 @@
       max-width: 75%;
 
       .message-content {
-        background-color: $card-bg;
+        background-color: #BBDEFB;
+        color: #000;
         border-radius: $border-radius-lg $border-radius-lg $border-radius-lg 0;
       }
     }

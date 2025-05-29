@@ -92,14 +92,14 @@
   }
 
   .light & {
-    -webkit-text-stroke: 1px #000;
-    text-stroke: 1px #000;
+    -webkit-text-stroke: 0.4px #000;
+    text-stroke: 0.4px #000;
   }
 }
 
 .light .settings .edit-button {
-  -webkit-text-stroke: 1px #000;
-  text-stroke: 1px #000;
+  -webkit-text-stroke: 0.4px #000;
+  text-stroke: 0.4px #000;
 }
 
 .switch {
@@ -147,12 +147,12 @@
   }
 
   .light & {
-    -webkit-text-stroke: 1px #000;
-    text-stroke: 1px #000;
+    -webkit-text-stroke: 0.4px #000;
+    text-stroke: 0.4px #000;
   }
 }
 
 .light .settings .switch {
-  -webkit-text-stroke: 1px #000;
-  text-stroke: 1px #000;
+  -webkit-text-stroke: 0.4px #000;
+  text-stroke: 0.4px #000;
 } 

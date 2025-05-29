@@ -125,12 +125,18 @@
         font-weight: 600;
         margin-bottom: 0.5rem;
         text-transform: uppercase;
+        .light & {
+          color: $light-mode-text;
+        }
       }
 
       h3 {
         font-size: 1.3rem;
         margin: 0.5rem 0;
         color: $primary;
+        .light & {
+          color: $light-mode-text;
+        }
       }
 
       .guide-description {
@@ -144,6 +150,9 @@
         overflow: hidden;
         position: relative;
         flex: 1;
+        .light & {
+          color: $light-mode-text;
+        }
 
         &.expanded {
           -webkit-line-clamp: unset;
@@ -161,6 +170,9 @@
           pointer-events: none;
           opacity: 1;
           transition: opacity 0.3s ease;
+          .light & {
+            background: linear-gradient(transparent, $light-mode-card);
+          }
         }
 
         &.expanded::after {
@@ -196,11 +208,21 @@
           display: inline-flex;
           align-items: center;
           transition: color 0.2s ease;
-          font-size: 0.9rem;
+          .light & {
+            color: $light-mode-text;
+          }
 
           &:hover {
             color: $highlight;
             text-decoration: underline;
+            .light & {
+              color: darken($light-mode-text, 10%);
+            }
+          }
+
+          &::after {
+            content: '→';
+            margin-left: 0.5rem;
           }
         }
       }
@@ -266,7 +288,7 @@
   .light .guidebook-page .accent-text,
   .light .guidebook-page .read-more,
   .light .guidebook-page .external-link {
-    -webkit-text-stroke: 1px #000;
-    text-stroke: 1px #000;
+    -webkit-text-stroke: 0.4px #000;
+    text-stroke: 0.4px #000;
   }
 } 
