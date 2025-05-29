@@ -1,40 +1,42 @@
 const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
-const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1/models/gemini-2.0-flash:generateContent';
+const GEMINI_API_URL =
+  'https://generativelanguage.googleapis.com/v1/models/gemini-2.0-flash:generateContent';
 
 if (!GEMINI_API_KEY) {
-  console.error('Gemini API key is not set. Please add VITE_GEMINI_API_KEY to your .env file');
+  console.error(
+    'Gemini API key is not set. Please add VITE_GEMINI_API_KEY to your .env file'
+  );
 }
 
-export const sendMessageToGemini = async (userMessage, conversationHistory = [], systemPrompt = '') => {
+export const sendMessageToGemini = async (
+  userMessage,
+  conversationHistory = [],
+  systemPrompt = ''
+) => {
   if (!GEMINI_API_KEY) {
     throw new Error('Gemini API key is not configured');
   }
 
   try {
-    // Build contents array without using "system" role
-    // Instead, prepend systemPrompt as a regular assistant message at the beginning (if present)
     const contents = [];
 
     if (systemPrompt) {
       contents.push({
-        role: "assistant", // changed from "system" to "assistant"
-        parts: [{ text: systemPrompt.trim() }]
+        role: 'assistant',
+        parts: [{ text: systemPrompt.trim() }],
       });
     }
 
-    // Add conversation history (previous messages)
-    // conversationHistory expected as array of { sender: 'user'|'bot', text: string }
-    conversationHistory.forEach(msg => {
+    conversationHistory.forEach((msg) => {
       contents.push({
         role: msg.sender === 'user' ? 'user' : 'assistant',
-        parts: [{ text: msg.text }]
+        parts: [{ text: msg.text }],
       });
     });
 
-    // Add current user message at the end
     contents.push({
-      role: "user",
-      parts: [{ text: userMessage }]
+      role: 'user',
+      parts: [{ text: userMessage }],
     });
 
     const response = await fetch(`${GEMINI_API_URL}?key=${GEMINI_API_KEY}`, {
@@ -52,39 +54,40 @@ export const sendMessageToGemini = async (userMessage, conversationHistory = [],
         },
         safetySettings: [
           {
-            category: "HARM_CATEGORY_HARASSMENT",
-            threshold: "BLOCK_MEDIUM_AND_ABOVE"
+            category: 'HARM_CATEGORY_HARASSMENT',
+            threshold: 'BLOCK_MEDIUM_AND_ABOVE',
           },
           {
-            category: "HARM_CATEGORY_HATE_SPEECH",
-            threshold: "BLOCK_MEDIUM_AND_ABOVE"
+            category: 'HARM_CATEGORY_HATE_SPEECH',
+            threshold: 'BLOCK_MEDIUM_AND_ABOVE',
           },
           {
-            category: "HARM_CATEGORY_SEXUALLY_EXPLICIT",
-            threshold: "BLOCK_MEDIUM_AND_ABOVE"
+            category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT',
+            threshold: 'BLOCK_MEDIUM_AND_ABOVE',
           },
           {
-            category: "HARM_CATEGORY_DANGEROUS_CONTENT",
-            threshold: "BLOCK_MEDIUM_AND_ABOVE"
-          }
-        ]
-      })
+            category: 'HARM_CATEGORY_DANGEROUS_CONTENT',
+            threshold: 'BLOCK_MEDIUM_AND_ABOVE',
+          },
+        ],
+      }),
     });
 
     if (!response.ok) {
       const errorData = await response.json();
       console.error('Gemini API Error:', errorData);
-      throw new Error(`Failed to get response from Gemini API: ${errorData.error?.message || 'Unknown error'}`);
+      throw new Error(
+        `Failed to get response from Gemini API: ${
+          errorData.error?.message || 'Unknown error'
+        }`
+      );
     }
 
     const data = await response.json();
-    if (!data.candidates?.[0]?.content?.parts?.[0]?.text) {
-      throw new Error('Invalid response format from Gemini API');
-    }
-    const rawResponse = data.candidates[0].content.parts[0].text;
+    const rawResponse =
+      data.candidates?.[0]?.content?.parts?.[0]?.text || '';
     const cleanedResponse = rawResponse.replace(/\*{2,}/g, '');
     return cleanedResponse;
-
   } catch (error) {
     console.error('Error in Gemini API call:', error);
     throw error;
