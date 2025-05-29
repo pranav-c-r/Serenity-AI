@@ -1,0 +1,84 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+.creative-expression {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: 'black';
+  font-family: 'Poppins', sans-serif;
+  color: #fefefe;
+  padding: 2rem;
+  text-align: center;
+}
+
+.creative-expression h1 {
+  font-size: 2.5rem;
+  margin-bottom: 0.4rem;
+  font-weight: 600;
+}
+
+.tagline {
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: #ddd3f6;
+  margin-bottom: 2.5rem;
+}
+
+.challenge-box {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px); /* for Safari */
+  padding: 2rem 2.5rem;
+  border-radius: 18px;
+  max-width: 480px;
+  width: 100%;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.prompt-text {
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: #ffffff;
+  margin-bottom: 2rem;
+  transition: opacity 0.4s ease;
+  opacity: 1;
+}
+
+.prompt-text.fade-in {
+  animation: fadeInPrompt 0.4s ease;
+}
+
+@keyframes fadeInPrompt {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+button {
+  padding: 0.7rem 2rem;
+  border-radius: 30px;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  background: #e0c3fc;
+  color: #2d1e42;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 3px 10px rgba(224, 195, 252, 0.4);
+}
+
+button:hover {
+  background: #d3b4f7;
+  transform: translateY(-2px);
+}
+canvas {
+  width: 100%;
+  max-width: 600px;
+  height: 400px;
+  border: 2px solid #ccc;
+  background-color: #fff;
+  touch-action: none;
+}
+

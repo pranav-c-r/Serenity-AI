@@ -1,0 +1,85 @@
+.word-puzzle-app {
+  min-height: 100vh;
+  background: 'black';
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Segoe UI', sans-serif;
+  color: #374151;
+  padding: 20px;
+
+  h1 {
+    font-size: 2.5rem;
+    color: #4f46e5;
+    margin-bottom: 10px;
+  }
+
+  p {
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+    color: #6b7280;
+  }
+
+  .puzzle-box {
+    background: #fff;
+    border-radius: 1.5rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    text-align: center;
+    max-width: 400px;
+    width: 100%;
+
+    .scrambled-word {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #4f46e5;
+      margin-bottom: 20px;
+      letter-spacing: 3px;
+    }
+
+    input {
+      padding: 10px 15px;
+      font-size: 1rem;
+      border-radius: 10px;
+      border: 2px solid #c7d2fe;
+      outline: none;
+      margin-bottom: 15px;
+      width: 80%;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 10px;
+
+      button {
+        background-color: #6366f1;
+        color: white;
+        padding: 10px 16px;
+        border: none;
+        border-radius: 9999px;
+        cursor: pointer;
+        font-weight: 500;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+          background-color: #4338ca;
+        }
+      }
+    }
+
+    .feedback {
+      font-size: 1rem;
+      margin-top: 10px;
+      color: #10b981;
+    }
+
+    .score {
+      font-weight: bold;
+      margin-top: 10px;
+      color: #4b5563;
+    }
+  }
+}

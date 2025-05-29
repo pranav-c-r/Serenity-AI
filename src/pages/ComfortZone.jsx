@@ -5,7 +5,7 @@ import './ComfortZone.scss';
 import { auth, database } from '../config/firebase';
 import { collection, doc, getDoc, getDocs } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
-
+import { onAuthStateChanged } from 'firebase/auth';
 const ComfortZone = () => {
   const { currentUser } = useAuth();
   const [messages, setMessages] = useState([]);
@@ -18,64 +18,72 @@ const ComfortZone = () => {
   const [username, setUsername]=useState('');
   const navigate = useNavigate();
   const [voices, setVoices] = useState([]);
-
   useEffect(() => {
-    const fetchProfile2 = async () => {
-        try {
-          const docRef = doc(database, "Users", auth.currentUser?.uid);
-          const docSnap = await getDoc(docRef);
-          if (docSnap.exists()) {
+      const unsubscribe = onAuthStateChanged(auth, async (user) => {
+        if (user) {
+          try {
+            const docRef = doc(database, "Users", user.uid);
+            const docSnap = await getDoc(docRef);
             const reference = docSnap.data();
             setUsername(reference.username);
-            console.log(username+": username")
+            console.log(reference.username + ": username");
+          } catch (error) {
+            console.error('Error fetching profile:', error);
+            navigate('/');
           }
-        } catch (error) {
-          console.error('Error fetching profile:', error);
+        } else {
+          console.log("No user is signed in.");
           navigate('/');
         }
-    };
-
-    fetchProfile2();
-  }, []);
-
-  const [mood, setMoods] = useState([]);
-  const [moodText, setMoodText] = useState('');
-
-  useEffect(() => {
-    const fetchRecentMoods = async () => {
-      const ref = doc(database, 'Users', auth.currentUser?.uid);
-      const moodsRef = collection(ref, 'moods');
-      const querySnapshot = await getDocs(moodsRef);
-
-      const moodData = [];
-      querySnapshot.forEach((doc) => {
-        moodData.push(doc.data());
       });
 
-      const latestMoods = moodData
-        .sort((a, b) => b.timestamp.toMillis() - a.timestamp.toMillis())
-        .slice(0, 5);
+      return () => unsubscribe(); 
+    }, []);
 
-      setMoods(latestMoods);
-    };
+const [mood, setMoods] = useState([]);
+const [moodText, setMoodText] = useState('');
 
-    if (auth.currentUser) {
-      fetchRecentMoods();
-    }
-  }, [auth.currentUser]);
+useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        try {
+          const ref = doc(database, 'Users', user.uid);
+          const moodsRef = collection(ref, 'moods');
+          const querySnapshot = await getDocs(moodsRef);
 
+          const moodData = [];
+          querySnapshot.forEach((doc) => {
+            moodData.push(doc.data());
+          });
+
+          const latestMoods = moodData
+            .sort((a, b) => b.timestamp.toMillis() - a.timestamp.toMillis())
+            .slice(0, 5);
+
+          setMoods(latestMoods);
+        } catch (error) {
+          console.error('Error fetching moods:', error);
+        }
+      } else {
+        console.log('No user is signed in.');
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
   useEffect(() => {
     const formatMoodsAsPrompt = (moods) => {
       if (moods.length === 0) {
         return `The user did not upload any recent moods. Ask them kindly how they feel today, and remind them to update their mood in the app so you can support them better.`;
       }
-      return `Here are the user's recent moods: ${moods.map(
-        (m) => `${m.date}: ${m.mood.label}`
-      ).join(', ')}.`;
+      return `Here are the user's recent moods: ${moods
+        .map((m) => `${m.date}: ${m.mood.label}`)
+        .join(', ')}.`;
     };
 
     setMoodText(formatMoodsAsPrompt(mood));
   }, [mood]);
+
 
   const SYSTEM_PROMPT = useMemo(() => {
     return `
@@ -100,14 +108,16 @@ const ComfortZone = () => {
 
   // Initial welcome message
   useEffect(() => {
-    const welcomeMessage = {
-      text: `Hi ${username}! I'm Serena, your voice companion. How are you feeling today?`,
-      sender: 'bot',
-      timestamp: new Date().toISOString(),
-    };
-    setMessages([welcomeMessage]);
-    speakText(welcomeMessage.text);
-  }, []);
+    if(username){
+      const welcomeMessage = {
+        text: `Hi ${username}! I'm Serena, your voice companion. How are you feeling today?`,
+        sender: 'bot',
+        timestamp: new Date().toISOString(),
+      };
+      setMessages([welcomeMessage]);
+      speakText(welcomeMessage.text);
+    }
+  }, [username]);
 
   // Initialize speech recognition
   useEffect(() => {

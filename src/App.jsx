@@ -27,6 +27,10 @@ import MindCanvas from './pages/MindCanvas';
 
 // Global Styles
 import './main.scss';
+import CardApp from './pages/cardApp';
+import WordPuzzleApp from './pages/WordPuzzleApp';
+import FocusChallenge from './pages/FocusChallenge';
+import CreativeExpression from './pages/CreativeExpression';
 
 function App() {
   return (
@@ -53,6 +57,10 @@ function App() {
               <Route path="/games" element={<GamesAndChallenges />} />
               <Route path="/calm-tunes" element={<CalmTunes />} />
               <Route path="/mind-canvas" element={<MindCanvas />} />
+              <Route path="/cardApp" element={<CardApp />} />
+              <Route path="/wordPuzzle" element={<WordPuzzleApp />} />
+              <Route path="/focusChallenge" element={<FocusChallenge />} />
+              <Route path="/creativeExpression" element={<CreativeExpression />} />
             </Route>
 
             {/* 404 Page */}
