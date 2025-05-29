@@ -1,0 +1,72 @@
+@import '../variables.scss';
+
+.games-challenges {
+  padding: 2rem;
+
+  .page-header {
+    margin-bottom: 2rem;
+    
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+      color: $accent;
+    }
+    
+    p {
+      color: $secondary;
+      font-size: 1.1rem;
+    }
+  }
+
+  .games-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    padding: 1rem;
+
+    .game-card {
+      background-color: $card-bg;
+      border-radius: $border-radius-lg;
+      padding: 1.5rem;
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+
+      &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 4px 15px rgba($accent, 0.1);
+      }
+
+      .game-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+      }
+
+      h3 {
+        font-size: 1.2rem;
+        margin-bottom: 0.5rem;
+        color: $primary;
+      }
+
+      p {
+        color: $secondary;
+        margin-bottom: 1.5rem;
+        font-size: 0.9rem;
+      }
+
+      .play-button {
+        background-color: $accent;
+        color: $background;
+        border: none;
+        padding: 0.5rem 1.5rem;
+        border-radius: $border-radius-md;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+          background-color: darken($accent, 10%);
+        }
+      }
+    }
+  }
+} 

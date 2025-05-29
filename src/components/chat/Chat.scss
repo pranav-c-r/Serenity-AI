@@ -3,13 +3,13 @@
 .chat-container {
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 2rem);
+  height: calc(100vh - 3rem);
   background-color: $background;
   color: $primary;
   font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
   border-radius: 20px;
   overflow: hidden;
-  margin: 0.5rem 1rem;
+  margin: 0rem 1rem;
   box-shadow: $shadow-lg;
   width: calc(100% - 2rem);
 }

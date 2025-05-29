@@ -53,11 +53,14 @@ const Layout = () => {
           <li><Link to="/dashboard" className={isActive('/dashboard') ? 'active' : ''}>Dashboard</Link></li>
           <li><Link to="/journal" className={isActive('/journal') ? 'active' : ''}>Journal</Link></li>
           <li><Link to="/mood-tracker" className={isActive('/mood-tracker') ? 'active' : ''}>Mood Tracker</Link></li>
+          <li><Link to="/mindful-breathing" className={isActive('/mindful-breathing') ? 'active' : ''}>Mindful Breathing</Link></li>
           <li><Link to="/resources" className={isActive('/resources') ? 'active' : ''}>Resources</Link></li>
           <li><Link to="/guidebook" className={isActive('/guidebook') ? 'active' : ''}>Guidebook</Link></li>
           <li><Link to="/comfort-zone" className={isActive('/comfort-zone') ? 'active' : ''}>Talk to Serena</Link></li>
           <li><Link to="/chat" className={isActive('/chat') ? 'active' : ''}>Chat with Serena</Link></li>
-          <li><Link to="/settings" className={isActive('/settings') ? 'active' : ''}>Settings</Link></li>
+          <li><Link to="/games" className={isActive('/games') ? 'active' : ''}>Games & Challenges</Link></li>
+          <li><Link to="/calm-tunes" className={isActive('/calm-tunes') ? 'active' : ''}>Calm Tunes</Link></li>
+          <li><Link to="/mind-canvas" className={isActive('/mind-canvas') ? 'active' : ''}>Mind Canvas</Link></li>
         </ul>
         <div className="nav-footer">
           <button onClick={toggleTheme} className="theme-toggle">

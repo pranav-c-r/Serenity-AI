@@ -21,6 +21,9 @@ import Chat from './components/chat/Chat';
 import ComfortZone from './pages/ComfortZone';
 import Guidebook from './pages/Guidebook';
 import MindfulBreathing from './pages/MindfulBreathing';
+import GamesAndChallenges from './pages/GamesAndChallenges';
+import CalmTunes from './pages/CalmTunes';
+import MindCanvas from './pages/MindCanvas';
 
 // Global Styles
 import './main.scss';
@@ -47,6 +50,9 @@ function App() {
               <Route path="/settings" element={<Settings />} />
               <Route path="/chat" element={<Chat />} />
               <Route path="/comfort-zone" element={<ComfortZone />} />
+              <Route path="/games" element={<GamesAndChallenges />} />
+              <Route path="/calm-tunes" element={<CalmTunes />} />
+              <Route path="/mind-canvas" element={<MindCanvas />} />
             </Route>
 
             {/* 404 Page */}

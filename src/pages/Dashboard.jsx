@@ -25,7 +25,9 @@ const Dashboard = () => {
     { title: 'Chat', description: 'Have a text conversation with your AI companion', icon: '💬', path: '/chat' },
     { title: 'Comfort Zone', description: 'Voice-based conversation with your AI companion', icon: '🎤', path: '/comfort-zone' },
     { title: 'Resources', description: 'Access helpful mental health resources and tools', icon: '📚', path: '/resources' },
-    { title: 'Settings', description: 'Customize your experience and manage your account', icon: '⚙️', path: '/settings' }
+    { title: 'Games & Challenges', description: 'Engage in fun activities to boost your mental well-being', icon: '🎮', path: '/games' },
+    { title: 'Calm Tunes', description: 'Relax and unwind with soothing sounds and music', icon: '🎵', path: '/calm-tunes' },
+    { title: 'Mind Canvas', description: 'Transform your thoughts into visual art', icon: '🎨', path: '/mind-canvas' }
   ];
 
   useEffect(() => {
