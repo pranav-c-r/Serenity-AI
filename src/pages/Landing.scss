@@ -815,3 +815,65 @@
   -webkit-text-stroke: 0.4px $light-mode-text; // Use light mode text for stroke
   text-stroke: 0.4px $light-mode-text;
 }
+
+.de4dscope-signature {
+  width: 100%;
+  text-align: center;
+  margin: 2.5rem 0 1.2rem 0;
+  font-family: 'Pacifico', cursive;
+  font-size: 1.35rem;
+  color: $accent;
+  letter-spacing: 0.04em;
+  position: relative;
+  z-index: 10;
+  opacity: 0.92;
+  text-shadow: 0 2px 12px rgba($accent, 0.18), 0 1px 4px rgba($primary, 0.10);
+  
+  span {
+    display: inline-block;
+    position: relative;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    
+    &::after {
+      content: '💖';
+      margin-left: 0.5em;
+      font-size: 1.1em;
+      animation: heartBeat 1.8s infinite;
+      vertical-align: middle;
+    }
+  }
+
+  b {
+    font-weight: 700;
+    color: $highlight;
+    letter-spacing: 0.08em;
+    text-shadow: 0 2px 8px rgba($highlight, 0.18);
+  }
+}
+
+@keyframes heartBeat {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+/* Add parchment-like background effect */
+.de4dscope-signature::before {
+  content: '';
+  position: absolute;
+  top: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% + 40px);
+  height: calc(100% + 30px);
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="none" stroke="%23${str-slice(inspect(rgba($primary, 0.1)), 4)}" stroke-width="0.5" rx="2"/></svg>');
+  opacity: 0.3;
+  z-index: -1;
+  pointer-events: none;
+}
+

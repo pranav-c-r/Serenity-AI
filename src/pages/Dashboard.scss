@@ -12,7 +12,7 @@
       font-size: 2rem;
       margin-bottom: 0.5rem;
       
-      .dark & {
+    .dark & {
         color: $primary;
       }
       
@@ -26,7 +26,7 @@
         color: $secondary;
       }
       
-      .light & {
+    .light & {
         color: $light-mode-text;
       }
       
@@ -194,12 +194,12 @@
     }
   }
 
-  .dashboard-header {
-    text-align: center;
+.dashboard-header {
+  text-align: center;
     margin-bottom: 2.5rem;
 
-    .motivational-quote-status {
-      font-size: 1rem;
+  .motivational-quote-status {
+    font-size: 1rem;
       
       .dark & {
         color: $secondary;
@@ -209,13 +209,13 @@
         color: $light-mode-text;
       }
       
-      min-height: 1.5em;
+    min-height: 1.5em;
       margin-bottom: 0.75rem;
-      font-style: italic;
+    font-style: italic;
 
-      &.error {
-        color: $danger;
-        font-weight: 500;
+    &.error {
+      color: $danger;
+      font-weight: 500;
       }
     }
 
@@ -336,7 +336,7 @@
       
       font-size: 0.9rem;
       line-height: 1.5;
-      margin: 0;
+    margin: 0;
     }
 
     &::after {
@@ -391,7 +391,7 @@
 .prophecy-icon {
   font-size: 2.8rem;
   margin-bottom: 0.5rem;
-  
+
   .dark & {
     animation: prophecyGlowDark 2.5s infinite alternate;
     filter: drop-shadow(0 0 8px $accent);
@@ -400,10 +400,10 @@
     animation: prophecyGlowLight 2.5s infinite alternate;
     filter: drop-shadow(0 0 8px $light-mode-text);
   }
-}
+  }
 
-.prophecy-title {
-  font-family: 'Cinzel Decorative', serif;
+  .prophecy-title {
+    font-family: 'Cinzel Decorative', serif;
   font-size: 1.3rem;
   
   .dark & {
@@ -417,10 +417,10 @@
   letter-spacing: 0.08em;
   margin-bottom: 1.1rem;
   text-shadow: 0 2px 8px rgba($accent, 0.18);
-}
+  }
 
-.prophecy-quote {
-  font-family: 'Playfair Display', serif;
+  .prophecy-quote {
+    font-family: 'Playfair Display', serif;
   font-size: 1.35rem;
   
   .dark & {
@@ -431,12 +431,12 @@
     color: $light-mode-text;
   }
   
-  font-style: italic;
+    font-style: italic;
   line-height: 1.7;
-  margin: 0 auto;
+    margin: 0 auto;
   padding: 0 1rem;
   text-shadow: 0 2px 12px rgba($primary, 0.10);
-  position: relative;
+    position: relative;
 }
 
 // Keyframes for prophecy icon glow

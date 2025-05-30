@@ -164,21 +164,21 @@ const Landing = () => {
         <div className="team-grid">
           <div className="team-card" data-scroll-animate data-animation-delay="0s">
             <div className="team-image-wrapper">
-              <div className="team-image"></div> {/* Add actual images here if available */}
+              <img src="/pfp.jpg" alt="Pranav C R" className="team-image" />
             </div>
             <h3>Pranav C R</h3>
             <p>Frontend Developer</p>
           </div>
           <div className="team-card" data-scroll-animate data-animation-delay="0.1s">
             <div className="team-image-wrapper">
-             <div className="team-image"></div>
+              <img src="/pfp.jpg" alt="Kesavan G" className="team-image" />
             </div>
             <h3>Kesavan G</h3>
             <p>Backend Developer</p>
           </div>
           <div className="team-card" data-scroll-animate data-animation-delay="0.2s">
             <div className="team-image-wrapper">
-              <div className="team-image"></div>
+              <img src="/pfp.jpg" alt="Adwaith J" className="team-image" />
             </div>
             <h3>Adwaith J</h3>
             <p>AIML Developer</p>
@@ -218,6 +218,11 @@ const Landing = () => {
           </div>
         </div>
       </section>
+
+      {/* Signature */}
+      <div className="de4dscope-signature">
+        <span>with love, <b>TEAM DE4DSCOPE</b></span>
+      </div>
 
       {/* Footer */}
       <footer className="footer">
