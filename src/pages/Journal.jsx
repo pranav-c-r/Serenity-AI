@@ -118,7 +118,7 @@ Be empathetic and constructive.`;
             </div>
             <div className="entry-content">{entry.content}</div>
             <button onClick={() => handleGeminiAnalysis(entry)}>
-              Serenity's Perception
+              What Serenity felt
             </button>
           </div>
         ))}

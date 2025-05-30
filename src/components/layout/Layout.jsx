@@ -4,6 +4,7 @@ import { doc, getDoc } from 'firebase/firestore';
 import { Outlet, Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { useTheme } from '../../context/ThemeContext';
+import Logo from '../common/Logo';
 import './Layout.scss';
 
 const Layout = () => {
@@ -48,7 +49,10 @@ const Layout = () => {
   return (
     <div className={`layout ${isDarkMode ? 'dark' : 'light'}`}>
       <nav className="sidebar">
-        <div className="logo">Serenity AI</div>
+        <div className="logo">
+          <Logo size={32} className="logo-icon" />
+          <span>Serenity AI</span>
+        </div>
         <ul className="nav-links">
           <li><Link to="/dashboard" className={isActive('/dashboard') ? 'active' : ''}>Dashboard</Link></li>
           <li><Link to="/journal" className={isActive('/journal') ? 'active' : ''}>Journal</Link></li>

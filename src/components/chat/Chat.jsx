@@ -12,16 +12,20 @@ const Chat = () => {
   const [inputText, setInputText] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
+  const [isSpeaking, setIsSpeaking] = useState(false);
   const messagesEndRef = useRef(null);
   const recognitionRef = useRef(null);
+  const speechSynthesisRef = useRef(window.speechSynthesis);
 
   // Initial welcome message
   useEffect(() => {
-    setMessages([{
+    const welcomeMessage = {
       text: `Hi ${username}! I'm Serena, your AI assistant. How can I help you today?`,
       sender: 'serena',
       timestamp: new Date().toISOString(),
-    }]);
+    };
+    setMessages([welcomeMessage]);
+    speakText(welcomeMessage.text);
   }, []);
 
   // Scroll to bottom when new messages arrive
@@ -107,88 +111,169 @@ const Chat = () => {
       if (recognitionRef.current) {
         recognitionRef.current.stop();
       }
+      if (speechSynthesisRef.current) {
+        speechSynthesisRef.current.cancel();
+        setIsSpeaking(false);
+      }
     };
   }, []);
-  const [username, setUsername]=useState('');
-    const navigate = useNavigate();
-        useEffect(() => {
-        const fetchProfile2 = async () => {
-            try {
-              const docRef = doc(database, "Users", auth.currentUser?.uid);
-              const docSnap = await getDoc(docRef);
-              if (docSnap.exists()) {
-                const reference = docSnap.data();
-                setUsername(reference.username);
-                console.log(username+": username")
-              }
-            } catch (error) {
-              console.error('Error fetching profile:', error);
-              navigate('/');
-            }
-        };
+
+  const speakText = (text) => {
+    if (!text || !text.trim()) return;
     
-        fetchProfile2();
-      }, []);
-      const [mood, setMoods] = useState([]);
-    const [moodText, setMoodText] = useState('');
-    
-    useEffect(() => {
-      const fetchRecentMoods = async () => {
-        const ref = doc(database, 'Users', auth.currentUser?.uid);
-        const moodsRef = collection(ref, 'moods');
-        const querySnapshot = await getDocs(moodsRef);
-    
-        const moodData = [];
-        querySnapshot.forEach((doc) => {
-          moodData.push(doc.data());
-        });
-    
-        const latestMoods = moodData
-          .sort((a, b) => b.timestamp.toMillis() - a.timestamp.toMillis())
-          .slice(0, 5);
-    
-        setMoods(latestMoods);
-      };
-    
-      if (auth.currentUser) {
-        fetchRecentMoods();
-      }
-    }, [auth.currentUser]);
-    
-    useEffect(() => {
-      const formatMoodsAsPrompt = (moods) => {
-        if (moods.length === 0) {
-          return `The user did not upload any recent moods. Ask them kindly how they feel today, and remind them to update their mood in the app so you can support them better.`;
+    if (speechSynthesisRef.current) {
+      try {
+        const utterance = new window.SpeechSynthesisUtterance(text);
+        
+        // Get all voices and log them for debugging
+        const availableVoices = window.speechSynthesis.getVoices();
+        console.log('Available voices:', availableVoices.map(v => v.name));
+        
+        // Try to find a female voice with more specific criteria
+        const femaleVoice = availableVoices.find(voice => 
+          voice.name.toLowerCase().includes('female') || 
+          voice.name.toLowerCase().includes('samantha') ||
+          voice.name.toLowerCase().includes('karen') ||
+          voice.name.toLowerCase().includes('victoria') ||
+          voice.name.toLowerCase().includes('zira') ||
+          voice.name.toLowerCase().includes('hazel') ||
+          voice.name.toLowerCase().includes('google uk english female') ||
+          voice.name.toLowerCase().includes('microsoft zira desktop') ||
+          voice.name.toLowerCase().includes('microsoft hazel desktop') ||
+          voice.name.toLowerCase().includes('google us english female') ||
+          voice.name.toLowerCase().includes('microsoft david desktop') ||
+          voice.name.toLowerCase().includes('microsoft mark desktop') ||
+          voice.name.toLowerCase().includes('microsoft james desktop') ||
+          voice.name.toLowerCase().includes('microsoft linda desktop') ||
+          voice.name.toLowerCase().includes('microsoft heidi desktop') ||
+          voice.name.toLowerCase().includes('microsoft haruka desktop') ||
+          voice.name.toLowerCase().includes('microsoft heera desktop') ||
+          voice.name.toLowerCase().includes('microsoft kalpana desktop') ||
+          voice.name.toLowerCase().includes('microsoft hemant desktop') ||
+          voice.name.toLowerCase().includes('microsoft ravi desktop') ||
+          voice.name.toLowerCase().includes('microsoft sabina desktop') ||
+          voice.name.toLowerCase().includes('microsoft hortense desktop') ||
+          voice.name.toLowerCase().includes('microsoft hulda desktop') ||
+          voice.name.toLowerCase().includes('microsoft hedda desktop') ||
+          voice.name.toLowerCase().includes('microsoft helena desktop')
+        );
+
+        if (femaleVoice) {
+          console.log('Selected female voice:', femaleVoice.name);
+          utterance.voice = femaleVoice;
+          utterance.pitch = 1.2;  // Higher pitch for more feminine sound
+          utterance.rate = 0.9;   // Slightly slower rate for clarity
+        } else {
+          console.log('No female voice found, using default voice with feminine settings');
+          // If no female voice is found, try to set a higher pitch to make it sound more feminine
+          utterance.pitch = 1.2;
+          utterance.rate = 0.9;
         }
-        return `Here are the user's recent moods: ${moods.map(
-          (m) => `${m.date}: ${m.mood.label}`
-        ).join(', ')}.`;
-      };
-    
-      setMoodText(formatMoodsAsPrompt(mood));
-    }, [mood]);
-    
-       
-      const SYSTEM_PROMPT = useMemo(() => {
-      return `
-        You are Serena, a warm, compassionate voice-based AI assistant. You listen carefully and respond like a supportive friend. Your tone is calm, soothing, and emotionally intelligent.
-    
-        Your goal is to comfort and uplift the user, whose name is ${username}. You don't need to mention their name often — only when it feels natural and personal.
-    
-        Never offer medical, psychological, or diagnostic advice. Instead, offer empathy, kindness, light humor (if appropriate), and gentle encouragement.
-    
-        Keep each response under 50 words. Prioritize clarity, warmth, and emotional connection.
-    
-        Use voice tone and word choice to match the user's mood:
-        - If they sound anxious or tense, help them slow down and feel safe.
-        - If they sound sad, gently cheer them up with a soft joke or kind words.
-        - If they're happy, reflect that joy with friendly energy.
-    
-        Always make them feel heard, understood, and never alone.
-    
-        ${moodText}
-      `;
-    }, [moodText, username]);
+
+        utterance.onstart = () => setIsSpeaking(true);
+        utterance.onend = () => setIsSpeaking(false);
+        speechSynthesisRef.current.speak(utterance);
+      } catch (err) {
+        console.error('Error speaking the response:', err);
+        setIsSpeaking(false);
+      }
+    }
+  };
+
+  // Load voices when component mounts
+  useEffect(() => {
+    const loadVoices = () => {
+      const availableVoices = window.speechSynthesis.getVoices();
+      console.log('Available voices:', availableVoices.map(v => v.name));
+    };
+
+    // Chrome loads voices asynchronously
+    if (window.speechSynthesis.onvoiceschanged !== undefined) {
+      window.speechSynthesis.onvoiceschanged = loadVoices;
+    }
+    loadVoices();
+  }, []);
+
+  const [username, setUsername]=useState('');
+  const navigate = useNavigate();
+  useEffect(() => {
+    const fetchProfile2 = async () => {
+      try {
+        const docRef = doc(database, "Users", auth.currentUser?.uid);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          const reference = docSnap.data();
+          setUsername(reference.username);
+          console.log(username+": username")
+        }
+      } catch (error) {
+        console.error('Error fetching profile:', error);
+        navigate('/');
+      }
+    };
+
+    fetchProfile2();
+  }, []);
+  const [mood, setMoods] = useState([]);
+  const [moodText, setMoodText] = useState('');
+  
+  useEffect(() => {
+    const fetchRecentMoods = async () => {
+      const ref = doc(database, 'Users', auth.currentUser?.uid);
+      const moodsRef = collection(ref, 'moods');
+      const querySnapshot = await getDocs(moodsRef);
+  
+      const moodData = [];
+      querySnapshot.forEach((doc) => {
+        moodData.push(doc.data());
+      });
+  
+      const latestMoods = moodData
+        .sort((a, b) => b.timestamp.toMillis() - a.timestamp.toMillis())
+        .slice(0, 5);
+  
+      setMoods(latestMoods);
+    };
+  
+    if (auth.currentUser) {
+      fetchRecentMoods();
+    }
+  }, [auth.currentUser]);
+  
+  useEffect(() => {
+    const formatMoodsAsPrompt = (moods) => {
+      if (moods.length === 0) {
+        return `The user did not upload any recent moods. Ask them kindly how they feel today, and remind them to update their mood in the app so you can support them better.`;
+      }
+      return `Here are the user's recent moods: ${moods.map(
+        (m) => `${m.date}: ${m.mood.label}`
+      ).join(', ')}.`;
+    };
+  
+    setMoodText(formatMoodsAsPrompt(mood));
+  }, [mood]);
+  
+   
+  const SYSTEM_PROMPT = useMemo(() => {
+  return `
+    You are Serena, a warm, compassionate voice-based AI assistant. You listen carefully and respond like a supportive friend. Your tone is calm, soothing, and emotionally intelligent.
+
+    Your goal is to comfort and uplift the user, whose name is ${username}. You don't need to mention their name often — only when it feels natural and personal.
+
+    Never offer medical, psychological, or diagnostic advice. Instead, offer empathy, kindness, light humor (if appropriate), and gentle encouragement.
+
+    Keep each response under 50 words. Prioritize clarity, warmth, and emotional connection.
+
+    Use voice tone and word choice to match the user's mood:
+    - If they sound anxious or tense, help them slow down and feel safe.
+    - If they sound sad, gently cheer them up with a soft joke or kind words.
+    - If they're happy, reflect that joy with friendly energy.
+
+    Always make them feel heard, understood, and never alone.
+
+    ${moodText}
+  `;
+}, [moodText, username]);
 
   // Handle text input submission
   const handleSubmit = async (text = inputText) => {
@@ -212,6 +297,7 @@ const Chat = () => {
         timestamp: new Date().toISOString()
       };
       setMessages(prev => [...prev, botMessage]);
+      speakText(response);
     } catch (error) {
       console.error('Error sending message:', error);
       const errorMessage = {
@@ -220,6 +306,7 @@ const Chat = () => {
         timestamp: new Date().toISOString()
       };
       setMessages(prev => [...prev, errorMessage]);
+      speakText(errorMessage.text);
     } finally {
       setIsLoading(false);
     }

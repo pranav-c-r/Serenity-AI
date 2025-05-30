@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import Logo from '../components/common/Logo';
 import './Landing.scss';
 
 const Landing = () => {
@@ -23,7 +24,10 @@ const Landing = () => {
       {/* Navigation */}
       <nav className="nav">
         <div className="nav-brand">
-          <Link to="/">Serenity AI</Link>
+          <Link to="/" className="brand-link">
+            <Logo size={32} className="logo-icon" />
+            <span>Serenity AI</span>
+          </Link>
         </div>
         
         <div className={`nav-menu ${isMenuOpen ? 'active' : ''}`}>
@@ -49,6 +53,9 @@ const Landing = () => {
       {/* Hero Section */}
       <section className="hero">
         <div className="hero-content">
+          <div className="hero-logo">
+            <Logo size={80} className="logo-icon" />
+          </div>
           <h1>Welcome to Serenity AI</h1>
           <p>Your personal AI companion for a more peaceful and productive life.</p>
           <div className="hero-buttons">

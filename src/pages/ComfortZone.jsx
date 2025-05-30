@@ -188,6 +188,7 @@ useEffect(() => {
       }
       if (speechSynthesisRef.current) {
         speechSynthesisRef.current.cancel();
+        setIsSpeaking(false);
       }
     };
   }, []);
@@ -229,16 +230,42 @@ useEffect(() => {
           voice.name.toLowerCase().includes('hazel') ||
           voice.name.toLowerCase().includes('google uk english female') ||
           voice.name.toLowerCase().includes('microsoft zira desktop') ||
-          voice.name.toLowerCase().includes('microsoft hazel desktop')
+          voice.name.toLowerCase().includes('microsoft hazel desktop') ||
+          voice.name.toLowerCase().includes('google us english female') ||
+          voice.name.toLowerCase().includes('microsoft david desktop') ||
+          voice.name.toLowerCase().includes('microsoft mark desktop') ||
+          voice.name.toLowerCase().includes('microsoft james desktop') ||
+          voice.name.toLowerCase().includes('microsoft linda desktop') ||
+          voice.name.toLowerCase().includes('microsoft heidi desktop') ||
+          voice.name.toLowerCase().includes('microsoft haruka desktop') ||
+          voice.name.toLowerCase().includes('microsoft heera desktop') ||
+          voice.name.toLowerCase().includes('microsoft kalpana desktop') ||
+          voice.name.toLowerCase().includes('microsoft hemant desktop') ||
+          voice.name.toLowerCase().includes('microsoft ravi desktop') ||
+          voice.name.toLowerCase().includes('microsoft sabina desktop') ||
+          voice.name.toLowerCase().includes('microsoft hortense desktop') ||
+          voice.name.toLowerCase().includes('microsoft hulda desktop') ||
+          voice.name.toLowerCase().includes('microsoft hedda desktop') ||
+          voice.name.toLowerCase().includes('microsoft helena desktop') ||
+          voice.name.toLowerCase().includes('microsoft heidi desktop') ||
+          voice.name.toLowerCase().includes('microsoft heera desktop') ||
+          voice.name.toLowerCase().includes('microsoft kalpana desktop') ||
+          voice.name.toLowerCase().includes('microsoft hemant desktop') ||
+          voice.name.toLowerCase().includes('microsoft ravi desktop') ||
+          voice.name.toLowerCase().includes('microsoft sabina desktop') ||
+          voice.name.toLowerCase().includes('microsoft hortense desktop') ||
+          voice.name.toLowerCase().includes('microsoft hulda desktop') ||
+          voice.name.toLowerCase().includes('microsoft hedda desktop') ||
+          voice.name.toLowerCase().includes('microsoft helena desktop')
         );
 
         if (femaleVoice) {
           console.log('Selected female voice:', femaleVoice.name);
           utterance.voice = femaleVoice;
           utterance.pitch = 1.2;  // Higher pitch for more feminine sound
-          utterance.rate = 0.9;   // Slightly slower rate
+          utterance.rate = 0.9;   // Slightly slower rate for clarity
         } else {
-          console.log('No female voice found, using default voice');
+          console.log('No female voice found, using default voice with feminine settings');
           // If no female voice is found, try to set a higher pitch to make it sound more feminine
           utterance.pitch = 1.2;
           utterance.rate = 0.9;

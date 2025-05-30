@@ -62,6 +62,7 @@
   padding: 1.5rem;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative;
   .light & {
     background-color: $light-mode-card;
   }
@@ -80,8 +81,27 @@
     line-height: 1.6;
     white-space: pre-wrap;
     font-size: 1.4rem;
+    margin-bottom: 3rem;
     .light & {
       color: $light-mode-text;
+    }
+  }
+
+  button {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    background-color: $accent;
+    color: $background;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+
+    &:hover {
+      background-color: darken($accent, 10%);
     }
   }
 }
@@ -97,12 +117,13 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(255, 255, 255, 0.8);
+  background: rgba(0, 0, 0, 0.8);
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 1.5rem;
   z-index: 1000;
+  color: white;
 }
 
 .popup-overlay {
@@ -119,11 +140,42 @@
 }
 
 .popup-content {
-  background: white;
+  background-color: $card-bg;
   padding: 2rem;
   border-radius: 10px;
   max-width: 600px;
   width: 90%;
   max-height: 80vh;
   overflow-y: auto;
+  color: $primary;
+
+  h3 {
+    color: $accent;
+    margin-bottom: 1rem;
+  }
+
+  p {
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+
+  button {
+    background-color: $accent;
+    color: $background;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+
+    &:hover {
+      background-color: darken($accent, 10%);
+    }
+  }
+
+  .light & {
+    background-color: $light-mode-card;
+    color: $light-mode-text;
+  }
 }

@@ -200,7 +200,14 @@ const Guidebook = () => {
       </div>
 
       {isLoading ? (
-        <div className="loading-text-bottom-right">Loading guides...</div>
+        <div className="loading-container">
+          <div className="loading-spinner">
+            <div className="spinner-circle"></div>
+            <div className="spinner-circle"></div>
+            <div className="spinner-circle"></div>
+          </div>
+          <p className="loading-text">Gathering mental health guides...</p>
+        </div>
       ) : error ? (
         <div className="error-message">
           <p>Error loading guides: {error}</p>

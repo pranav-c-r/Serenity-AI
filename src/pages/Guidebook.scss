@@ -229,13 +229,78 @@
     }
   }
 
+  .loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 300px;
+    width: 100%;
+    padding: 2rem;
+
+    .loading-spinner {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+
+      .spinner-circle {
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background: linear-gradient(45deg, $accent, lighten($accent, 20%));
+        box-shadow: 0 0 10px rgba($accent, 0.3);
+        animation: pulse 1.5s ease-in-out infinite;
+        position: relative;
+
+        &::after {
+          content: '';
+          position: absolute;
+          top: 2px;
+          left: 2px;
+          right: 2px;
+          bottom: 2px;
+          border-radius: 50%;
+          background: rgba(255, 255, 255, 0.1);
+        }
+
+        &:nth-child(2) {
+          animation-delay: 0.2s;
+        }
+
+        &:nth-child(3) {
+          animation-delay: 0.4s;
+        }
+      }
+    }
+
+    .loading-text {
+      color: $primary;
+      font-size: 1.2rem;
+      font-weight: 500;
+      text-align: center;
+      .light & {
+        color: $light-mode-text;
+      }
+    }
+  }
+
+  @keyframes pulse {
+    0% {
+      transform: scale(0.8);
+      opacity: 0.5;
+    }
+    50% {
+      transform: scale(1.2);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(0.8);
+      opacity: 0.5;
+    }
+  }
+
   .loading-text-bottom-right {
-    position: absolute;
-    bottom: 40px;
-    right: 60px;
-    font-size: 1.1rem;
-    color: $secondary;
-    z-index: 10;
+    display: none;
   }
 
   .error-message {

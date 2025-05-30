@@ -34,6 +34,19 @@
     font-weight: bold;
     margin-bottom: 2rem;
     color: $accent;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+
+    .logo-icon {
+      flex-shrink: 0;
+    }
+
+    span {
+      background: linear-gradient(45deg, $accent, darken($accent, 10%));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
   }
   
   .nav-links {

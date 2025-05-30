@@ -3,9 +3,10 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import './Auth.scss';
 import { useUser } from '../usercontext';
-import { onAuthStateChanged, signInWithPopup } from 'firebase/auth';
+import { onAuthStateChanged, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import { auth, database, googleprovider } from '../../config/firebase';
 import { getDoc, setDoc, collection, doc } from 'firebase/firestore';
+import Logo from '../common/Logo';
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -56,6 +57,9 @@ const Signup = () => {
     <div className="auth-container">
       <div className="auth-card">
         <div className="auth-header">
+          <div className="auth-logo">
+            <Logo size={64} className="logo-icon" />
+          </div>
           <h1>Join Serenity</h1>
           <p>Start your journey to better mental wellness</p>
         </div>
