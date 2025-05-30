@@ -377,7 +377,7 @@
   from {
     opacity: 0;
     transform: translateY(30px) scale(0.985);
-    filter: blur(4px); // Optional: adds a subtle blur effect on load
+    filter: blur(4px);
   }
   to {
     opacity: 1;
@@ -386,14 +386,12 @@
   }
 }
 
-// For the animated background gradient
 @keyframes subtlePageBackgroundFlow {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
 }
 
-// For the pulsing accent lines
 @keyframes pageAccentLinePulseDark {
   0%, 100% {
     height: 2px;
@@ -421,21 +419,13 @@
 }
 
 
-// --- 2. Enhancements for .guidebook-page ---
 
 .guidebook-page {
-  // ... your existing max-width, margin, padding, color ...
-  // ... your existing .light & { ... } for base background and color ...
   
-  // MODIFIED: Use the enhanced page load animation
   animation: enhancedPageFadeIn 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-  position: relative; // Needed for pseudo-elements
-  overflow-x: hidden; // Good practice if background animations might cause scroll
-
-  // Animated Background Gradient
-  // This applies to the dark theme using $background.
-  // Your .light & rule already sets its specific background.
-  & { // Default (dark mode) styles
+  position: relative;
+  overflow-x: hidden;
+  & { 
     background: linear-gradient(
       275deg,
       darken($background, 3%),
@@ -450,8 +440,6 @@
   }
 
   .light & {
-    // Your existing: background: $light-mode-bg; color: $light-mode-text;
-    // Add animated background for light mode
     background: linear-gradient(
       275deg,
       lighten($light-mode-bg, 1%),
@@ -460,31 +448,28 @@
       rgba($accent, 0.015) // Subtle hint of accent
     );
     background-size: 350% 350%;
-    // Ensure background animation also applies here, starting after page fade-in
     animation: subtlePageBackgroundFlow 80s ease infinite 0.8s,
                enhancedPageFadeIn 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
   }
 
-  // Pulsing Accent Lines
   &::before,
   &::after {
     content: '';
     position: absolute;
-    left: 0; // Align with the content box defined by max-width
-    right: 0; // Align with the content box
-    width: 100%; // Span the full width of the content area
-    height: 2px; // Initial height
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 2px;
     pointer-events: none;
-    z-index: 1; // Just above the main background
-    opacity: 0; // Start hidden, animation controls fade-in and pulse
-    animation-fill-mode: both; // Keep final state of pulse (or initial for fade-in)
-    animation-delay: 1s; // Start after page fade-in
+    z-index: 1;
+    opacity: 0;
+    animation-fill-mode: both;
+    animation-delay: 1s;
     will-change: height, background, opacity;
   }
 
-  &::before { // Top line
-    top: 0; // At the very top of the .guidebook-page block (respects padding)
-    // Use animation-name based on theme context
+  &::before {
+    top: 0;
     .dark & { animation-name: pageAccentLinePulseDark; }
     .light & { animation-name: pageAccentLinePulseLight; }
     animation-duration: 4s;
@@ -492,13 +477,13 @@
     animation-timing-function: ease-in-out;
   }
 
-  &::after { // Bottom line
-    bottom: 0; // At the very bottom
+  &::after {
+    bottom: 0;
     .dark & { animation-name: pageAccentLinePulseDark; }
     .light & { animation-name: pageAccentLinePulseLight; }
     animation-duration: 4s;
     animation-iteration-count: infinite;
     animation-timing-function: ease-in-out;
-    animation-delay: 1.2s; // Slightly stagger from the top line
+    animation-delay: 1.2s;
   }
 }

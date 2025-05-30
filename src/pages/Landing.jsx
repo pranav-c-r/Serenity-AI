@@ -16,29 +16,25 @@ const Landing = () => {
     if (section) {
       section.scrollIntoView({ behavior: 'smooth' });
       if (isMenuOpen) {
-        setIsMenuOpen(false); // Close mobile menu after clicking
+        setIsMenuOpen(false);
       }
     }
   };
 
-  // Scroll-triggered animations
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add('is-visible');
-            // Optional: Unobserve after animation if you only want it once
-            // observer.unobserve(entry.target);
+            observer.unobserve(entry.target);
           } else {
-            // Optional: Remove class if you want animation to repeat on scroll out/in
-            // entry.target.classList.remove('is-visible');
+            entry.target.classList.remove('is-visible');
           }
         });
       },
       {
-        threshold: 0.1, // Trigger when 10% of the element is visible
-        // rootMargin: "-50px 0px -50px 0px" // Adjust viewport bounds
+        threshold: 0.1,
       }
     );
 
@@ -53,7 +49,6 @@ const Landing = () => {
 
   return (
     <div className="landing">
-      {/* Navigation */}
       <nav className="nav">
         <div className="nav-brand">
           <Link to="/" className="brand-link">
@@ -82,7 +77,6 @@ const Landing = () => {
         </button>
       </nav>
 
-      {/* Hero Section */}
       <section className="hero">
         <div className="hero-content">
           <div className="hero-logo" data-scroll-animate data-animation-delay="0s">
@@ -97,7 +91,6 @@ const Landing = () => {
         </div>
       </section>
 
-      {/* Features Section */}
       <section id="features" className="features section-padding">
         <h2 data-scroll-animate>Features</h2>
         <div className="features-grid">
@@ -119,7 +112,6 @@ const Landing = () => {
         </div>
       </section>
 
-      {/* Pricing Section */}
       <section id="pricing" className="pricing section-padding">
         <h2 data-scroll-animate>Pricing Plans</h2>
         <div className="pricing-grid">
@@ -158,7 +150,6 @@ const Landing = () => {
         </div>
       </section>
 
-      {/* Team Section */}
       <section id="team" className="team section-padding">
         <h2 data-scroll-animate>Our Team</h2>
         <div className="team-grid">
@@ -186,7 +177,6 @@ const Landing = () => {
         </div>
       </section>
 
-      {/* Support Section */}
       <section id="support" className="support section-padding">
         <h2 data-scroll-animate>Support</h2>
         <div className="support-grid">
@@ -210,12 +200,10 @@ const Landing = () => {
   
         
 
-      {/* Signature */}
       <div className="de4dscope-signature">
         <span>with love, <b>TEAM DE4DSCOPE</b></span>
       </div>
 
-      {/* Contact Section */}
       <section id="contact" className="contact section-padding">
         <h2 data-scroll-animate>Contact Us</h2>
         <div className="social-links" data-scroll-animate>
@@ -225,8 +213,7 @@ const Landing = () => {
           <a href="mailto:knightowl00007@gmail.com">Gmail</a>
         </div>
       </section>
-
-      {/* Footer */}
+    
       <footer className="footer">
         <div className="footer-content">
           <div className="footer-section">

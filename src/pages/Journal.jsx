@@ -70,11 +70,9 @@ Be empathetic and constructive.`;
       setSelectedAnalysis(analysis);
       setShowPopup(true);
 
-      // Save the analysis back to Firebase
       const journalDocRef = doc(database, 'Users', auth.currentUser?.uid, 'journals', entry.id);
       await updateDoc(journalDocRef, { analysis });
 
-      // Update local state
       const updatedEntries = entries.map((e) =>
         e.id === entry.id ? { ...e, analysis } : e
       );

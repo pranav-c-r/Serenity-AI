@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './Guidebook.scss';
 
-// Sample data as fallback
 const sampleGuides = [
   {
     id: '1',
@@ -93,7 +92,6 @@ const Guidebook = () => {
     const data = await response.json();
     const content = data.candidates[0].content.parts[0].text;
     
-    // Clean and parse the response
     const cleanedContent = content.replace(/```json\n?|\n?```/g, '').trim();
     return JSON.parse(cleanedContent);
   };

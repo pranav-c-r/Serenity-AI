@@ -115,7 +115,6 @@
   text-stroke: 0.4px #000;
 }
 
-// --- ENHANCEMENTS & ANIMATIONS ---
 
 @keyframes gamesCardFadeIn {
   from { opacity: 0; transform: translateY(40px) scale(0.97); }
@@ -208,73 +207,56 @@
 }
 
 
-// --- 2. Style Enhancements (Integrate into your existing SCSS) ---
 
-// --- Animated Page Background ---
 .games-challenges {
-  // ... existing padding ...
-  position: relative; // For potential page-wide pseudo elements if needed later
-  overflow-x: hidden; // Good practice with full-width animated backgrounds
+  position: relative; 
+  overflow-x: hidden; 
 
-  // Apply animated background directly if $background is the dark mode base
-  // Or use a .dark & wrapper if $background can be light or dark
-  & { // Assuming current context is dark mode or $background is dark
+  & { 
+  & { 
     background: linear-gradient(290deg, darken($background, 3.5%), $background, darken($background, 2%), rgba($accent, 0.03));
     background-size: 350% 350%;
     animation: subtlePageBackgroundFlow 50s ease infinite;
   }
-  // Light mode already has its own background set
   will-change: background-position;
 }
 
-// --- Grid Enhancements ---
+ 
 .games-grid {
-  // ... existing display, grid-template-columns, gap, padding ...
-  perspective: 1500px; // For more pronounced 3D card effects
+  perspective: 1500px; 
 }
 
-// --- Game Card Enhancements ---
-// This section integrates with and enhances your existing "ENHANCEMENTS & ANIMATIONS"
-// block for .game-card.
 
 .game-card {
-  // Your existing: background-color, radius, padding, text-align, transition, cursor
-  // From your "ENHANCEMENTS" block:
-  // animation: gamesCardFadeIn ... (good, we'll add stagger)
-  // transition: box-shadow 0.3s, transform 0.3s; (will be enhanced)
-  // will-change: transform, box-shadow; (good)
+  transition: box-shadow 0.3s, transform 0.3s;
+  will-change: transform, box-shadow;
 
-  // More specific transition for smoother, more granular control
   transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94),
               box-shadow 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94),
               border-color 0.3s ease; // If you add a visible border
   will-change: transform, box-shadow, border-color;
-  position: relative; // For pseudo-elements (border, shine)
-  overflow: hidden; // For shine effect
+  position: relative; 
+  overflow: hidden; 
 
-  // Stagger entry animation
-  animation: gamesCardFadeIn 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) both; // Keep this
-  opacity: 0; // Start hidden for animation if not covered by `both` keyword (it is)
+  animation: gamesCardFadeIn 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) both; 
+  opacity: 0; 
 
-  @for $i from 1 through 12 { // Adjust count as needed
+  @for $i from 1 through 12 { 
     &:nth-child(#{$i}) {
-      animation-delay: #{0.1 + $i * 0.07}s; // Initial delay + stagger
+      animation-delay: #{0.1 + $i * 0.07}s; 
     }
   }
 
-  // Animated Border on Hover (::before)
   &::before {
     content: "";
     position: absolute;
-    top: -3px; left: -3px; right: -3px; bottom: -3px; // Slightly outside
+    top: -3px; left: -3px; right: -3px; bottom: -3px; 
     z-index: -1;
-    border-radius: $border-radius-lg; // Match card's radius
-    // Gradient for the border - adjust colors for dark/light themes
-    .dark & { // Assuming current context is dark or use .dark class if defined higher
+    border-radius: $border-radius-lg; 
+    .dark & { 
       background: linear-gradient(160deg, rgba($accent,0.9), rgba($highlight,0.7), rgba($primary,0.5), rgba($accent,0.9));
     }
-    .light & { // For light mode border - this will fight !important border on .game-card
-                // Consider making light mode border transparent on hover to show this
+    .light & { 
       background: linear-gradient(160deg, rgba($accent,0.7), rgba(darken($accent,5%),0.6), rgba(lighten($accent,10%),0.5));
     }
     background-size: 300% 300%;
@@ -284,154 +266,104 @@
     will-change: opacity, background-position;
   }
   
-  // Shine/Glint Effect on Hover (::after)
   &::after {
     content: '';
     position: absolute;
     top: 0;
-    left: 0; // Start off-screen
-    width: 50px; // Width of the shine
+    left: 0; 
+    width: 50px; 
     height: 100%;
     background: linear-gradient(
       to right,
       transparent 0%,
-      rgba(255, 255, 255, 0.08) 50%, // Very subtle shine for dark mode
+      rgba(255, 255, 255, 0.08) 50%, 
       transparent 100%
     );
-    .light & { // Different shine for light mode
+    .light & { 
       background: linear-gradient(
         to right,
         transparent 0%,
-        rgba(255, 255, 255, 0.25) 50%, // More visible shine for light mode
+        rgba(255, 255, 255, 0.25) 50%, 
         transparent 100%
       );
     }
-    transform: translateX(-110%) skewX(-25deg); // Initial position and angle
+    transform: translateX(-110%) skewX(-25deg); 
     pointer-events: none;
-    transition: transform 0s; // No transition on the transform itself, animation handles it
-    z-index: 1; // Above content but below interactive elements if any overlay
+    transition: transform 0s; 
+    z-index: 1; 
   }
 
 
   &:hover {
-    // Your existing hover: transform: translateY(-5px); box-shadow: 0 4px 15px rgba($accent, 0.1);
-    // Enhanced hover from your "ENHANCEMENTS" block:
-    // box-shadow: 0 8px 32px 0 rgba($accent, 0.18), 0 1.5px 8px 0 rgba($primary, 0.10);
-    // transform: translateY(-6px) scale(1.03) rotateZ(-1deg);
-    // z-index: 2;
-
-    // Consolidated and further enhanced hover:
+    transform: translateY(-5px); box-shadow: 0 4px 15px rgba($accent, 0.1);
+    z-index: 2;
     transform: translateY(-10px) scale(1.05) rotateX(5deg) rotateY(-3deg);
-    z-index: 10; // Ensure it's on top
+    z-index: 10; 
 
-    // Box shadow for dark mode (override or complement existing)
-    .dark & { // Assuming current context or .dark class
+    .dark & { 
       box-shadow: 0 12px 40px rgba($accent, 0.22), 0 5px 15px rgba($primary, 0.12);
     }
-    // For light mode, the !important box-shadow will take precedence unless this is also !important
-    // or the selector is more specific and the light mode rule is changed.
-    // To make the animated border visible in light mode, you might need:
-    // .light &:hover { border-color: transparent !important; }
+    .light &:hover { border-color: transparent !important; }
 
-    &::before { // Activate border
+    &::before { 
       opacity: 1;
       animation-play-state: running;
     }
     
-    &::after { // Trigger shine animation
-      animation: cardShine 0.85s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.1s; // Slight delay
-      // Reset animation for next hover (not strictly needed if it just runs once)
-      // animation-fill-mode: forwards; // To keep it at end state if desired
+    &::after { 
+      animation: cardShine 0.85s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.1s; 
     }
 
     .game-icon {
       .dark & { animation: gameIconBoingDark 0.6s ease-out forwards; }
-      .light & { animation: gameIconBoingLight 0.6s ease-out forwards; } // Respects !important color
+      .light & { animation: gameIconBoingLight 0.6s ease-out forwards; } 
     }
   }
 
   .game-icon {
-    // ... existing font-size, margin-bottom ...
-    // Base transition for non-animated properties or fallback
     transition: transform 0.3s ease;
     will-change: transform, filter;
-    position: relative; // Ensure it's above the shine ::after if z-index is used there
+    position: relative; 
     z-index: 2;
   }
 
   h3 {
-    // ... existing styles ...
     position: relative; z-index: 2;
   }
 
   p {
-    // ... existing styles ...
     position: relative; z-index: 2;
   }
 
   .play-button {
-    // ... existing background-color, color, border, padding, radius, cursor, transition ...
     will-change: background-color, transform, box-shadow;
-    position: relative; z-index: 2; // Above shine
-    transition: background-color 0.3s ease, transform 0.2s ease-out, box-shadow 0.2s ease-out; // Enhanced transition
+    position: relative; z-index: 2; 
+    transition: background-color 0.3s ease, transform 0.2s ease-out, box-shadow 0.2s ease-out; 
 
     &:hover {
-      // Your existing: background-color: darken($accent, 10%);
-      // From generic button ENHANCEMENTS:
-      // box-shadow: 0 0 0 3px rgba($accent, 0.18), 0 2px 8px rgba($accent, 0.10);
-      // background: lighten($accent, 10%); // This conflicts with the specific darken()
-      
-      // Specific .play-button hover:
-      background-color: darken($accent, 10%); // Keep this for dark mode
+      background-color: darken($accent, 10%);
       transform: translateY(-3px) scale(1.05);
       box-shadow: 0 4px 12px rgba(darken($accent,15%), 0.3), 0 0 0 2px rgba($accent,0.1);
 
-      // Light mode hover is handled by specific .light .game-card .play-button:hover
-      // which uses `background: darken($accent, 10%) !important;`
-      // The transform and box-shadow here will apply unless overridden by light mode too.
+      }
     }
 
     &:active {
-      --translateY: -1px; // To align pulse with potential hover Y offset
+      --translateY: -1px; 
       animation: playButtonActivePulse 0.3s ease-out;
-      transform: translateY(-1px) scale(0.97); // Slightly less than hover
-      // Dark mode active state
+      transform: translateY(-1px) scale(0.97); 
       .dark & { background-color: darken($accent, 15%); }
-      // Light mode active state needs to be careful with !important
       .light & { background: darken($accent, 15%) !important; color: #fff !important; }
     }
   }
 }
 
-
-// --- Light Mode Overrides ---
-// Your existing light mode block is quite comprehensive with !important.
-// The animations above (transforms, opacity changes for pseudo-elements) should generally work.
-// Color/background changes in animations might be tricky.
-// For the ::before animated border on .game-card:hover in light mode:
 .light .games-challenges .games-grid .game-card:hover {
-  border-color: transparent !important; // Allows ::before border to be visible
-  // The box-shadow from the dark mode hover will try to apply.
-  // Light mode already has: box-shadow: 0 4px 15px rgba($accent, 0.07) !important;
-  // To override hover shadow in light mode specifically for more pop:
+  border-color: transparent !important; 
   box-shadow: 0 10px 30px rgba($accent, 0.12), 0 0 0 1px rgba($accent, 0.1) !important;
 }
 
 
-// --- Remove or adjust generic selectors from "ENHANCEMENTS & ANIMATIONS" if they are now too broad ---
-// For example, if .challenge-item is a different kind of card, it needs its own specific styling.
-// The class .games-challenges-section is also mentioned; if it's a container, its animation might be different.
-
-// Your existing:
-// .game-card, .games-challenges-section, .challenge-item {
-//   animation: gamesCardFadeIn ...
-//   &:hover { ... } // This general hover is now more specifically handled by .game-card:hover
-// }
-// It's better to target .game-card specifically for its detailed hover.
-// .games-challenges-section and .challenge-item (if they exist and need animation)
-// can keep the gamesCardFadeIn but should have their own hover/interaction logic.
-
-.games-challenges-section, .challenge-item:not(.game-card) { // Exclude .game-card if it has its own
+.games-challenges-section, .challenge-item:not(.game-card) { 
   animation: gamesCardFadeIn 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) both;
-  // Add specific hover/interaction for these if needed
 }
