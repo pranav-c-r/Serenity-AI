@@ -71,6 +71,44 @@
   }
 }
 
+.light .games-challenges {
+  background: $light-mode-bg;
+
+  .page-header h1 {
+    color: $accent;
+  }
+  .page-header p {
+    color: $secondary;
+  }
+
+  .game-card {
+    background: $light-mode-card !important;
+    color: #111 !important;
+    box-shadow: 0 4px 15px rgba($accent, 0.07) !important;
+    border: 1px solid rgba($accent, 0.08) !important;
+
+    .game-icon {
+      color: $accent !important;
+      filter: none !important;
+    }
+    h3 {
+      color: #111 !important;
+    }
+    p {
+      color: #333 !important;
+    }
+    .play-button {
+      background: $accent !important;
+      color: #111 !important;
+      box-shadow: 0 2px 8px rgba($accent, 0.12) !important;
+      &:hover {
+        background: darken($accent, 10%) !important;
+        color: #fff !important;
+      }
+    }
+  }
+}
+
 .light .games-challenges [style*='color: #F1DB4B'],
 .light .games-challenges .accent-text {
   -webkit-text-stroke: 0.4px #000;

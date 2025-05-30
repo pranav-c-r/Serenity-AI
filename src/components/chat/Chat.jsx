@@ -5,6 +5,7 @@ import './Chat.scss';
 import { useNavigate } from 'react-router-dom';
 import { auth, database } from '../../config/firebase';
 import { collection, doc, getDoc, getDocs } from 'firebase/firestore';
+import Logo from '../common/Logo';
 
 const Chat = () => {
   const { currentUser } = useAuth();
@@ -348,13 +349,7 @@ const Chat = () => {
       <div className="chat-header">
         <div className="chat-header-content">
           <div className="chat-avatar">
-            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="50" cy="50" r="45" fill="#6C63FF"/>
-              <path d="M30,40 Q50,20 70,40 Q80,50 70,60 Q50,80 30,60 Q20,50 30,40" fill="white"/>
-              <circle cx="40" cy="45" r="5" fill="#333"/>
-              <circle cx="60" cy="45" r="5" fill="#333"/>
-              <path d="M40,65 Q50,75 60,65" stroke="#333" strokeWidth="3" fill="none"/>
-            </svg>
+            <img src="/circlelogo.png" alt="Serenity AI Logo" width={48} height={48} />
           </div>
           <div className="chat-info">
             <h2>Serena</h2>
@@ -371,14 +366,6 @@ const Chat = () => {
             key={index}
             className={`message ${message.sender === 'user' ? 'user-message' : 'bot-message'}`}
           >
-            {message.sender === 'serena' && !message.isLoading && (
-              <div className="message-avatar">
-                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                  <circle cx="50" cy="50" r="45" fill="#6C63FF"/>
-                  <path d="M30,40 Q50,20 70,40 Q80,50 70,60 Q50,80 30,60 Q20,50 30,40" fill="white"/>
-                </svg>
-              </div>
-            )}
             <div className="message-content">
               {message.isLoading ? (
                 <div className="typing-indicator">
@@ -395,11 +382,6 @@ const Chat = () => {
                 </>
               )}
             </div>
-            {message.sender === 'user' && (
-              <div className="message-avatar user">
-                {currentUser?.displayName?.charAt(0) || 'U'}
-              </div>
-            )}
           </div>
         ))}
         <div ref={messagesEndRef} />

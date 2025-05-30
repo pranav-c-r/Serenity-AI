@@ -24,12 +24,18 @@ import MindfulBreathing from './pages/MindfulBreathing';
 import GamesAndChallenges from './pages/GamesAndChallenges';
 import CalmTunes from './pages/CalmTunes';
 
-// Global Styles
-import './main.scss';
+// Game Components
 import CardApp from './pages/cardApp';
 import WordPuzzleApp from './pages/WordPuzzleApp';
 import FocusChallenge from './pages/FocusChallenge';
 import CreativeExpression from './pages/CreativeExpression';
+import MindfulListening from './pages/MindfulListening';
+import MeditationTimer from './pages/MeditationTimer';
+import EmotionRecognition from './pages/EmotionRecognition';
+import AffirmationBuilder from './pages/AffirmationBuilder';
+
+// Global Styles
+import './main.scss';
 
 function App() {
   return (
@@ -55,11 +61,16 @@ function App() {
               <Route path="/comfort-zone" element={<ComfortZone />} />
               <Route path="/games" element={<GamesAndChallenges />} />
               <Route path="/calm-tunes" element={<CalmTunes />} />
-              <Route path="/mind-canvas" element={<MindCanvas />} />
+              
+              {/* Game Routes */}
               <Route path="/cardApp" element={<CardApp />} />
               <Route path="/wordPuzzle" element={<WordPuzzleApp />} />
               <Route path="/focusChallenge" element={<FocusChallenge />} />
               <Route path="/creativeExpression" element={<CreativeExpression />} />
+              <Route path="/mindfulListening" element={<MindfulListening />} />
+              <Route path="/meditationTimer" element={<MeditationTimer />} />
+              <Route path="/emotionRecognition" element={<EmotionRecognition />} />
+              <Route path="/affirmationBuilder" element={<AffirmationBuilder />} />
             </Route>
 
             {/* 404 Page */}

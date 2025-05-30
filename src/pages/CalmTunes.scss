@@ -143,6 +143,68 @@
   }
 }
 
+.light .calm-tunes {
+  background: $light-mode-bg;
+  color: $light-mode-text;
+
+  .page-header h1,
+  .page-header p {
+    color: $accent;
+  }
+
+  .playlist-section h2 {
+    color: #111 !important;
+  }
+
+  .tracks-list .track-item {
+    background: $light-mode-card !important;
+    color: #111 !important;
+    box-shadow: 0 2px 8px rgba($accent, 0.06) !important;
+    border: 1px solid rgba($accent, 0.08) !important;
+    
+    .track-icon {
+      color: $accent !important;
+    }
+    .track-info h4 {
+      color: #111 !important;
+    }
+    .track-info p {
+      color: #111 !important;
+    }
+    .play-button {
+      background: $accent !important;
+      color: $background !important;
+      box-shadow: 0 0 8px rgba($accent, 0.15) !important;
+      &:hover {
+        background: darken($accent, 10%) !important;
+      }
+    }
+  }
+
+  .now-playing .player-card {
+    background: $light-mode-card;
+    color: $light-mode-text;
+    box-shadow: 0 2px 12px rgba($accent, 0.08);
+    border: 1px solid rgba($accent, 0.08);
+    .track-icon {
+      color: $accent;
+    }
+    .track-details h3 {
+      color: $primary;
+    }
+    .track-details p {
+      color: $secondary;
+    }
+    .player-controls .control-button {
+      background: $accent;
+      color: $background;
+      &:hover {
+        background: darken($accent, 10%);
+      }
+    }
+  }
+}
+
 .light .calm-tunes [style*='color: #F1DB4B'],
 .light .calm-tunes .accent-text {
   -webkit-text-stroke: 0.4px #000;

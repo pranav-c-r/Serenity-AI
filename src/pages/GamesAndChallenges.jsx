@@ -39,6 +39,34 @@ const GamesAndChallenges = () => {
           <p>Express yourself through interactive art challenges</p>
           <button onClick={()=>navigate('/creativeExpression')} className="play-button">Play Now</button>
         </div>
+
+        <div className="game-card">
+          <div className="game-icon">🎧</div>
+          <h3>Mindful Listening</h3>
+          <p>Train your ears to recognize different nature sounds</p>
+          <button onClick={()=>navigate('/mindfulListening')} className="play-button">Play Now</button>
+        </div>
+
+        <div className="game-card">
+          <div className="game-icon">🧘</div>
+          <h3>Meditation Timer</h3>
+          <p>Customize your meditation session with ambient sounds</p>
+          <button onClick={()=>navigate('/meditationTimer')} className="play-button">Play Now</button>
+        </div>
+
+        <div className="game-card">
+          <div className="game-icon">😊</div>
+          <h3>Emotion Recognition</h3>
+          <p>Learn to identify and understand different emotions</p>
+          <button onClick={()=>navigate('/emotionRecognition')} className="play-button">Play Now</button>
+        </div>
+
+        <div className="game-card">
+          <div className="game-icon">✨</div>
+          <h3>Affirmation Builder</h3>
+          <p>Create and practice positive affirmations for daily motivation</p>
+          <button onClick={()=>navigate('/affirmationBuilder')} className="play-button">Play Now</button>
+        </div>
       </div>
     </div>
   );

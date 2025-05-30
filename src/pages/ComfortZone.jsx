@@ -356,47 +356,56 @@ useEffect(() => {
   return (
     <div className="comfort-zone">
       <div className="comfort-zone-header">
-        <h1>Comfort Zone</h1>
-        <p>Your safe space for voice conversation</p>
+        <h1>Talk to Serena</h1>
+        <p>Your voice companion for emotional support</p>
       </div>
 
       <div className="voice-interface">
         <div className="voice-status">
-          {isRecording ? (
+          {error && (
+            <div className="error-message">
+              <span>⚠️ {error}</span>
+            </div>
+          )}
+          {isRecording && (
             <div className="recording-indicator">
               <div className="pulse-ring"></div>
-              <span>Listening...</span>
+              Recording...
             </div>
-          ) : isSpeaking ? (
+          )}
+          {isSpeaking && (
             <div className="speaking-indicator">
               <div className="wave-animation"></div>
-              <span className="accent-text">Speaking...</span>
+              Serena is speaking...
             </div>
-          ) : (
-            <span>Click the microphone to start speaking</span>
           )}
         </div>
 
         <button
-          onClick={toggleVoiceInput}
           className={`voice-button ${isRecording ? 'recording' : ''}`}
-          title={isRecording ? 'Stop recording' : 'Start voice input'}
+          onClick={toggleVoiceInput}
           disabled={isSpeaking}
         >
-          {isRecording ? (
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="6" y="6" width="12" height="12" rx="2" fill="currentColor"/>
-            </svg>
-          ) : (
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M12 14C13.6569 14 15 12.6569 15 11V5C15 3.34315 13.6569 2 12 2C10.3431 2 9 3.34315 9 5V11C9 12.6569 10.3431 14 12 14Z" fill="currentColor"/>
-              <path d="M19 11C19 14.866 15.866 18 12 18C8.13401 18 5 14.866 5 11M12 22V18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-          )}
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="#1e2d3b"
+            stroke="#1e2d3b"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            width="24"
+            height="24"
+          >
+            <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" />
+            <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+            <line x1="12" y1="19" x2="12" y2="23" />
+            <line x1="8" y1="23" x2="16" y2="23" />
+          </svg>
         </button>
       </div>
 
-      <div className="conversation-history">
+      <div className="conversation-history" ref={messagesEndRef}>
         {messages.map((message, index) => (
           <div
             key={index}
@@ -405,12 +414,11 @@ useEffect(() => {
             <div className="message-content">
               <p>{message.text}</p>
               <span className="message-timestamp">
-                {new Date(message.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                {new Date(message.timestamp).toLocaleTimeString()}
               </span>
             </div>
           </div>
         ))}
-        <div ref={messagesEndRef} />
       </div>
     </div>
   );

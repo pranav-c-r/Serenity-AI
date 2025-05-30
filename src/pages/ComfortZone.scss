@@ -164,8 +164,8 @@
       &.user-message {
         align-self: flex-end;
         .message-content {
-          background: #E3F2FD;
-          color: #000;
+          background: #1f4d8f;
+          color: white;
           border-radius: 1rem 1rem 0 1rem;
         }
       }
@@ -173,8 +173,8 @@
       &.bot-message {
         align-self: flex-start;
         .message-content {
-          background: #BBDEFB;
-          color: #000;
+          background: #1e2d3b;
+          color: white;
           border-radius: 1rem 1rem 1rem 0;
         }
       }
@@ -235,4 +235,22 @@
 .light .comfort-zone .accent-text {
   -webkit-text-stroke: 0.4px #000;
   text-stroke: 0.4px #000;
+}
+
+.light .comfort-zone {
+  .conversation-history {
+    .message {
+      &.user-message, &.bot-message {
+        .message-content {
+          color: white !important;
+          p {
+            color: white !important;
+          }
+          .message-timestamp {
+            color: rgba(255, 255, 255, 0.7) !important;
+          }
+        }
+      }
+    }
+  }
 } 

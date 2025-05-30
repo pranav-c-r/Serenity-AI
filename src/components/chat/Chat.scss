@@ -353,6 +353,36 @@
   }
 }
 
+.light .chat-container {
+  .chat-input {
+    background: $light-mode-card !important;
+    color: #111 !important;
+    input, textarea {
+      background: $light-mode-card !important;
+      color: #111 !important;
+      border: 1px solid #1f4d8f !important;
+      &::placeholder {
+        color: #888 !important;
+      }
+    }
+    .input-container {
+      background-color: #48f2e3 !important;
+      border: 2px solid #000 !important;
+    }
+  }
+  .user-message, .bot-message {
+    .message-content {
+      color: white !important;
+      p {
+        color: white !important;
+      }
+      .message-timestamp {
+        color: rgba(255, 255, 255, 0.7) !important;
+      }
+    }
+  }
+}
+
 .light .chat-container [style*='color: #F1DB4B'],
 .light .chat-container .accent-text {
   -webkit-text-stroke: 1px #000;
