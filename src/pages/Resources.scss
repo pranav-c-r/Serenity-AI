@@ -304,3 +304,268 @@
   -webkit-text-stroke: 0.4px #000;
   text-stroke: 0.4px #000;
 }
+
+// --- ENHANCEMENTS & ANIMATIONS ---
+
+@keyframes resourcesCardFadeIn {
+  from { opacity: 0; transform: translateY(40px) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.resources-card, .resources-section, .resource-item {
+  animation: resourcesCardFadeIn 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) both;
+  transition: box-shadow 0.3s, transform 0.3s;
+  will-change: transform, box-shadow;
+  &:hover {
+    box-shadow: 0 8px 32px 0 rgba($accent, 0.18), 0 1.5px 8px 0 rgba($primary, 0.10);
+    transform: translateY(-6px) scale(1.03) rotateZ(-1deg);
+    z-index: 2;
+  }
+}
+
+.resources-page button, .resources-card button {
+  transition: box-shadow 0.2s, background 0.2s;
+  &:hover, &:focus {
+    box-shadow: 0 0 0 3px rgba($accent, 0.18), 0 2px 8px rgba($accent, 0.10);
+    background: lighten($accent, 10%);
+  }
+}
+
+.resource-item {
+  position: relative;
+  overflow: hidden;
+  &::after {
+    content: '';
+    position: absolute;
+    left: -50%;
+    top: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba($accent,0.08) 0%, transparent 70%);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s;
+    z-index: 1;
+  }
+  &:hover::after {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 600px) {
+  .resources-page { padding: 0.5rem; }
+  .resources-section { padding: 0.7rem; }
+  .resources-card { padding: 0.7rem; font-size: 0.95rem; }
+  .resource-item { padding: 0.5rem; font-size: 0.9rem; }
+}
+
+@keyframes subtlePageBackgroundFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes titleAccentDraw {
+  0% { width: 0; opacity: 0.5; }
+  100% { width: 60%; opacity: 1; } // Adjust width as desired
+}
+
+@keyframes searchFocusBreathe {
+  0% { box-shadow: 0 0 0 3px rgba($accent, 0.2), 0 0 8px rgba($accent, 0.1); }
+  50% { box-shadow: 0 0 0 5px rgba($accent, 0.35), 0 0 15px 5px rgba($accent, 0.15); }
+  100% { box-shadow: 0 0 0 3px rgba($accent, 0.2), 0 0 8px rgba($accent, 0.1); }
+}
+
+@keyframes categoryTagActivePulseGlow {
+  0% { box-shadow: 0 0 7px 0px rgba($highlight, 0.4), 0 0 0 0px rgba($highlight, 0.2); }
+  50% { box-shadow: 0 0 12px 2px rgba($highlight, 0.6), 0 0 0 3px rgba($highlight, 0.25); }
+  100% { box-shadow: 0 0 7px 0px rgba($highlight, 0.4), 0 0 0 0px rgba($highlight, 0.2); }
+}
+
+// For <img> tags or inner elements within .resource-image
+@keyframes kenBurnsOnImageElement {
+  0% { transform: scale(1.03) rotate(0.001deg); } // Small initial scale, rotate for HW accel.
+  100% { transform: scale(1.15) rotate(0.001deg); } // Zoom in
+}
+
+@keyframes resourceCardHoverBorderSpin {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; } // Loop the gradient
+}
+
+@keyframes resourceLinkArrowDance {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(4px); }
+  75% { transform: translateX(-2px); }
+  100% { transform: translateX(0); }
+}
+
+@keyframes loadingTextDots {
+  0%, 100% { content: '.'; }
+  33% { content: '..'; }
+  66% { content: '...'; }
+}
+
+
+// --- 2. Style Enhancements (Integrate into your existing SCSS) ---
+
+// --- Animated Page Background ---
+.resources-page {
+  // ... your existing max-width, margin, padding, color ...
+  .dark & { // Assuming this is the implicit default (not .light)
+    background: linear-gradient(275deg, darken($background, 4%), $background, darken($background, 2%), rgba($primary, 0.03));
+    background-size: 350% 350%; // Larger size for slower, subtler movement
+    animation: subtlePageBackgroundFlow 45s ease infinite;
+  }
+  .light & {
+    // ... your existing background, color ...
+    background: linear-gradient(275deg, lighten($light-mode-bg, 1.5%), $light-mode-bg, lighten($light-mode-bg, 0.5%), rgba($accent, 0.02));
+    background-size: 350% 350%;
+    animation: subtlePageBackgroundFlow 50s ease infinite;
+  }
+  will-change: background-position; // Performance hint
+}
+
+// --- Header H1 Animated Accent ---
+.resources-header {
+  // ... your existing text-align, margin-bottom ...
+  h1 {
+    // ... your existing font-size, color, margin-bottom ...
+    // ... your existing .light & ...
+    position: relative;
+    display: inline-block; // Or block, depending on desired layout for the line
+    padding-bottom: 0.5rem; // Space for the line
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%; // Center the start of the line
+      transform: translateX(-50%); // Center the line itself
+      height: 3px;
+      background: $accent;
+      width: 0;
+      border-radius: 3px;
+      animation: titleAccentDraw 0.8s cubic-bezier(0.65, 0, 0.35, 1) 0.3s forwards;
+      will-change: width, opacity;
+    }
+  }
+}
+
+// --- Search Input Focus Enhancement ---
+.search-container {
+  // ... your existing margin ...
+  .search-input {
+    // ... your existing styles ...
+    &:focus {
+      border-color: $accent; // Keep this for immediate feedback
+      // MODIFIED: Use animation for the box-shadow glow
+      animation: searchFocusBreathe 1.8s ease-in-out infinite;
+      // The box-shadow in the keyframe provides the visual effect.
+      // The existing transition: all 0.3s ease; will still apply to border-color.
+    }
+  }
+}
+
+// --- Category Tag Enhancements ---
+.category-filters {
+  // ... your existing styles ...
+  .category-tag {
+    // ... your existing padding, background, border, radius, cursor, transition, font-size, color ...
+    will-change: transform, box-shadow, background-color; // Add will-change
+
+    &:hover {
+      // ... your existing background: lighten($background, 15%); ...
+      transform: translateY(-3px) scale(1.03); // Lift and slightly enlarge
+      box-shadow: 0 5px 12px rgba(darken($highlight, 5%), 0.2); // Softer, more prominent shadow
+    }
+
+    &.active {
+      // ... your existing background: $highlight; color: $background; ...
+      // ADDED: Pulsing glow animation
+      animation: categoryTagActivePulseGlow 2s ease-in-out infinite;
+      // Base shadow for the animation to start from (can be none if keyframes define it fully)
+      box-shadow: 0 0 7px 0px rgba($highlight, 0.4);
+    }
+  }
+}
+
+
+// --- Resource Card Image (Ken Burns) & Type Badge Animation ---
+.resource-card {
+  // ... your existing styles for .resource-card ...
+
+  .resource-image {
+    // ... your existing height, background-size, background-position, position ...
+    overflow: hidden; // ESSENTIAL for Ken Burns effect on inner elements
+
+    // Target an actual <img> tag or a specific inner div that holds the image content
+    // If .resource-image IS the image (e.g. <img class="resource-image">), target that.
+    // If it's a div with a background, this CSS Ken Burns is harder.
+    // This example assumes an inner element that can be transformed.
+    > img, > div:first-child { // Adjust selector as needed
+      transition: transform 10s cubic-bezier(0.25, 0.46, 0.45, 0.94); // Smooth transition for Ken Burns
+      transform-origin: center center; // Or randomise with JS for variety
+      will-change: transform;
+    }
+
+    .resource-type {
+      // ... your existing styles ...
+      // ADDED: Subtle pulse animation using your existing @keyframes pulse
+      animation: pulse 2.5s ease-in-out infinite 0.3s; // Stagger start slightly
+      transform-origin: center;
+    }
+  }
+
+  // Apply Ken Burns effect when the CARD is hovered
+  &:hover {
+    // ... your existing hover styles from the "ENHANCEMENTS & ANIMATIONS" block ...
+    .resource-image {
+      > img, > div:first-child { // Ensure this selector matches above
+         // Start the Ken Burns animation on card hover
+         // 'forwards' will keep it at the end state, 'infinite alternate' for continuous
+        animation: kenBurnsOnImageElement 10s ease-out forwards;
+      }
+    }
+  }
+}
+
+
+// --- Resource Link Arrow Animation ---
+.resource-footer {
+  .resource-link {
+    // ... your existing styles ...
+    &::after { // The arrow
+      // ... your existing content, margin-left ...
+      display: inline-block; // Necessary for transform to apply correctly
+      transition: transform 0.2s ease-out; // For smooth reset if animation isn't infinite
+      will-change: transform;
+    }
+
+    &:hover {
+      // ... your existing hover color, text-decoration ...
+      &::after {
+        // ADDED: Trigger arrow animation on link hover
+        animation: resourceLinkArrowDance 0.5s cubic-bezier(0.45, 0, 0.55, 1);
+      }
+    }
+  }
+}
+
+// --- Loading Text Animation ---
+.loading-container {
+  // ... your existing styles for container and spinner ...
+  .loading-text {
+    // ... your existing color, font-size, font-weight, text-align ...
+    // ... your existing .light & ...
+    position: relative; // For the pseudo-element dots
+
+    &::after { // Animated trailing dots
+      content: '.'; // Initial content
+      display: inline-block; // Or `position: absolute` if you want to place it precisely
+      margin-left: 4px;
+      animation: loadingTextDots 1.2s linear infinite;
+      will-change: content; // Though 'content' animation support is good, this is a hint
+    }
+  }
+}

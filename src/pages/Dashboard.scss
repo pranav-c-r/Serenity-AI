@@ -485,3 +485,224 @@
   -webkit-text-stroke: 0.4px #000;
   text-stroke: 0.4px #000;
 }
+
+// -----------------------------------------------------------------------------
+// START: New Animations & Effects Snippet
+// -----------------------------------------------------------------------------
+
+// --- 1. New Keyframes ---
+
+@keyframes animatedGradientMovement {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes cardEntryAnimation {
+  from {
+    opacity: 0;
+    transform: translateY(35px) scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes textShimmerEffect {
+  0% { background-position: -250% center; }
+  100% { background-position: 250% center; }
+}
+
+@keyframes quoteIconPulseEffect {
+  0%, 100% { transform: scale(1) rotate(-5deg); opacity: 0.08; }
+  50% { transform: scale(1.20) rotate(5deg); opacity: 0.18; }
+}
+
+@keyframes prophecyCardAuraDark {
+  0% {
+    box-shadow: 0 0 35px -8px rgba($accent, 0.25),
+                0 0 55px -12px rgba($primary, 0.2) inset,
+                0 0 20px -2px rgba(lighten($accent,10%), 0.22);
+    opacity: 0.65;
+  }
+  50% {
+    box-shadow: 0 0 45px 0px rgba($accent, 0.35),
+                0 0 70px -8px rgba($primary, 0.25) inset,
+                0 0 30px 8px rgba(lighten($accent,15%), 0.3);
+    opacity: 1;
+  }
+  100% {
+    box-shadow: 0 0 35px -8px rgba($accent, 0.25),
+                0 0 55px -12px rgba($primary, 0.2) inset,
+                0 0 20px -2px rgba(lighten($accent,10%), 0.22);
+    opacity: 0.65;
+  }
+}
+
+@keyframes prophecyCardAuraLight {
+  0% {
+    box-shadow: 0 0 35px -8px rgba($light-mode-text, 0.12),
+                0 0 55px -12px rgba(darken($light-mode-text, 20%), 0.12) inset,
+                0 0 20px -2px rgba(lighten($accent,20%), 0.18);
+    opacity: 0.55;
+  }
+  50% {
+    box-shadow: 0 0 45px 0px rgba($light-mode-text, 0.18),
+                0 0 70px -8px rgba(darken($light-mode-text, 20%), 0.18) inset,
+                0 0 30px 8px rgba(lighten($accent,25%), 0.22);
+    opacity: 0.9;
+  }
+  100% {
+    box-shadow: 0 0 35px -8px rgba($light-mode-text, 0.12),
+                0 0 55px -12px rgba(darken($light-mode-text, 20%), 0.12) inset,
+                0 0 20px -2px rgba(lighten($accent,20%), 0.18);
+    opacity: 0.55;
+  }
+}
+
+// Revised Keyframes for prophecy icon glow (breathing effect)
+// (Replace existing prophecyGlowDark & prophecyGlowLight keyframes with these)
+@keyframes prophecyGlowDark { // Renamed from original to avoid conflict if you merge manually
+  0%   { filter: drop-shadow(0 0 7px $accent) drop-shadow(0 0 3px $accent); opacity: 0.75; transform: scale(1); }
+  50%  { filter: drop-shadow(0 0 22px lighten($accent, 12%)) drop-shadow(0 0 12px lighten($accent, 7%)); opacity: 1; transform: scale(1.08); }
+  100% { filter: drop-shadow(0 0 7px $accent) drop-shadow(0 0 3px $accent); opacity: 0.75; transform: scale(1); }
+}
+@keyframes prophecyGlowLight { // Renamed from original
+  0%   { filter: drop-shadow(0 0 7px $light-mode-text) drop-shadow(0 0 3px $light-mode-text); opacity: 0.65; transform: scale(1); }
+  50%  { filter: drop-shadow(0 0 22px darken($light-mode-text, 12%)) drop-shadow(0 0 12px darken($light-mode-text, 7%)); opacity: 1; transform: scale(1.08); }
+  100% { filter: drop-shadow(0 0 7px $light-mode-text) drop-shadow(0 0 3px $light-mode-text); opacity: 0.65; transform: scale(1); }
+}
+
+
+// --- 2. Animated Dashboard Background ---
+.dashboard {
+  // Add these background and animation properties
+  // Assumes $background and $light-mode-bg are defined in your variables.scss
+  // $background: your dark mode background; $light-mode-bg: your light mode background
+  .dark & {
+    background: linear-gradient(250deg, darken($background, 2%), $background, darken($background, 4%), rgba($secondary, 0.3));
+    background-size: 300% 300%;
+    animation: animatedGradientMovement 20s ease infinite;
+  }
+
+  .light & {
+    background: linear-gradient(250deg, lighten($light-mode-bg, 1%), $light-mode-bg, lighten($light-mode-bg, 3%), rgba($accent, 0.05));
+    background-size: 300% 300%;
+    animation: animatedGradientMovement 25s ease infinite;
+  }
+}
+
+
+// --- 3. Enhanced Dashboard Card Grid & Cards ---
+.dashboard-grid {
+  .dashboard-card {
+    // Add animation properties
+    animation: cardEntryAnimation 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    opacity: 0; // Start hidden for animation
+
+    // Stagger animation for cards (adjust count as needed)
+    @for $i from 1 through 15 {
+      &:nth-child(#{$i}) {
+        animation-delay: #{$i * 0.08}s;
+      }
+    }
+
+    &:hover {
+      // Enhance existing hover with a subtle glow
+      .dark & {
+        // Existing: border-color: $primary;
+        box-shadow: $shadow-lg, 0 0 28px rgba($primary, 0.25), 0 0 12px rgba($accent, 0.15);
+      }
+      .light & {
+        // Existing: border-color: $light-mode-text;
+        box-shadow: $shadow-lg, 0 0 28px rgba($light-mode-text, 0.18), 0 0 12px rgba($accent, 0.1);
+      }
+    }
+  }
+}
+
+
+// --- 4. Animated Page Header H1 ---
+.page-header h1 {
+  // Add these properties for text shimmer
+  // Note: This will make the text color transparent to show the gradient.
+  // Original color rules inside .dark & and .light & for h1 will be overridden.
+  position: relative; // Good practice for text effects
+
+  .dark & {
+    // Original: color: $primary;
+    background: linear-gradient(to right, lighten($primary,10%) 20%, $accent 40%, $accent 60%, lighten($primary,10%) 80%);
+    background-size: 250% auto;
+    color: transparent;
+    background-clip: text;
+    -webkit-background-clip: text;
+    animation: textShimmerEffect 4s linear infinite;
+    will-change: background-position; // Performance hint
+  }
+
+  .light & {
+    // Original: color: $light-mode-text;
+    background: linear-gradient(to right, $light-mode-text 20%, lighten($accent,5%) 40%, lighten($accent,5%) 60%, $light-mode-text 80%);
+    background-size: 250% auto;
+    color: transparent;
+    background-clip: text;
+    -webkit-background-clip: text;
+    animation: textShimmerEffect 4.5s linear infinite;
+    will-change: background-position; // Performance hint
+  }
+}
+
+
+// --- 5. Pulsing Quote Card Icon ---
+.quote-card {
+  &::before {
+    // Add animation to the existing ::before pseudo-element
+    // Original styles for ::before should be kept
+    animation: quoteIconPulseEffect 5s ease-in-out infinite 0.8s;
+    transform-origin: center center; // Ensure scaling and rotation are centered
+    will-change: transform, opacity; // Performance hint
+  }
+}
+
+
+// --- 6. Ethereal Aura for Prophecy Quote Card ---
+.prophecy-quote-card {
+  // Add a new pseudo-element for the aura
+  &::before { // Or ::after if ::before is already in use for something else
+    content: '';
+    position: absolute;
+    // Make it slightly larger than the card and adjust border-radius accordingly
+    top: -12px; right: -12px; bottom: -12px; left: -12px;
+    border-radius: calc(1.5rem + 12px); // Original card radius + offset
+    pointer-events: none; // So it doesn't interfere with interaction
+    z-index: -1; // Place it behind the card content
+    opacity: 0; // Animation will control opacity
+
+    .dark & {
+      animation: prophecyCardAuraDark 6s ease-in-out infinite 1s;
+    }
+    .light & {
+      animation: prophecyCardAuraLight 6s ease-in-out infinite 1s;
+    }
+    will-change: box-shadow, opacity; // Performance hint
+  }
+}
+
+
+// --- 7. Update Prophecy Icon Animation ---
+.prophecy-icon {
+  // Modify the existing animation properties to use the new keyframes and timing
+  // Ensure you've replaced the old prophecyGlowDark/Light keyframes with the new ones above
+  .dark & {
+    // Original: animation: prophecyGlowDark 2.5s infinite alternate;
+    animation: prophecyGlowDark 3s ease-in-out infinite; // Use new keyframe name
+    // filter: drop-shadow(0 0 8px $accent); // Initial filter (now part of keyframe)
+  }
+  .light & {
+    // Original: animation: prophecyGlowLight 2.5s infinite alternate;
+    animation: prophecyGlowLight 3s ease-in-out infinite; // Use new keyframe name
+    // filter: drop-shadow(0 0 8px $light-mode-text); // Initial filter (now part of keyframe)
+  }
+  will-change: filter, transform, opacity; // Performance hint
+}

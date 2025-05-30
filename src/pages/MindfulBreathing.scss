@@ -266,3 +266,322 @@
     text-stroke: 0.4px #000;
   }
 } 
+
+@keyframes subtlePageBackgroundFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes breathingCircleAuraBase { // For the new ::after element
+  0%, 100% { transform: scale(0.95); opacity: 0.4; }
+  50% { transform: scale(1.05); opacity: 0.6; }
+}
+
+@keyframes breathingRingBasePulse { // For the ::before border element
+  0%, 100% { box-shadow: 0 0 5px rgba($accent, 0.2), 0 0 2px rgba($accent,0.1) inset; }
+  50% { box-shadow: 0 0 10px rgba($accent, 0.3), 0 0 4px rgba($accent,0.15) inset; }
+}
+
+@keyframes controlButtonActivePulse {
+  0% { transform: scale(1) translateY(var(--translateY, 0)); }
+  50% { transform: scale(0.95) translateY(var(--translateY, 0)); }
+  100% { transform: scale(1) translateY(var(--translateY, 0)); }
+}
+
+@keyframes sectionCardEntry {
+  from { opacity: 0; transform: translateY(50px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes cardHoverBorderShine { // Reusable for section cards
+  0% { background-position: 0% 50%; }
+  100% { background-position: 250% 50%; }
+}
+
+@keyframes inputFocusBreathe {
+  0% { box-shadow: 0 0 0 2px rgba($accent, 0.2); }
+  50% { box-shadow: 0 0 0 4px rgba($accent, 0.4), 0 0 10px rgba($accent, 0.1); }
+  100% { box-shadow: 0 0 0 2px rgba($accent, 0.2); }
+}
+
+@keyframes benefitListItemEntry {
+  from { opacity: 0; transform: translateX(-20px) scale(0.98); }
+  to { opacity: 1; transform: translateX(0) scale(1); }
+}
+
+
+// --- 2. Style Enhancements (Integrate into your existing SCSS) ---
+
+// --- Animated Page Background ---
+.mindful-breathing-page {
+  // ... your existing max-width, margin, padding, min-height, color ...
+  .dark & { // Assuming $background is for dark mode
+    background: linear-gradient(260deg, darken($background, 3%), $background, darken($background, 1%), rgba($primary, 0.02));
+    background-size: 400% 400%;
+    animation: subtlePageBackgroundFlow 60s ease infinite;
+  }
+  .light & {
+    // ... your existing background, color, text-stroke ...
+    background: linear-gradient(260deg, lighten($light-mode-bg, 1%), $light-mode-bg, lighten($light-mode-bg, 0.5%), rgba($accent, 0.015));
+    background-size: 400% 400%;
+    animation: subtlePageBackgroundFlow 70s ease infinite;
+  }
+  will-change: background-position;
+}
+
+// --- Breathing Circle Enhancements ---
+.breathing-circle {
+  // ... your existing width, height, radius, margin, display, align, justify, background, shadow, transition, position, overflow ...
+  // ... your existing .light & ...
+  will-change: transform, box-shadow; // Add box-shadow for potential direct animation
+
+  // Enhanced ::before (Outer Ring)
+  &::before {
+    // ... your existing content, position, top, left, right, bottom, radius, border, opacity, transition ...
+    will-change: border-color, opacity, box-shadow;
+    // Base pulsing animation for the ring
+    animation: breathingRingBasePulse 4s ease-in-out infinite;
+    // Initial box-shadow set by keyframe
+  }
+
+  // ADDED: ::after for Inner Aura/Energy
+  &::after {
+    content: '';
+    position: absolute;
+    // inset: 10px; // Slightly smaller than the main circle
+    top: 5%; left: 5%; right: 5%; bottom: 5%; // Covers 90% of the circle
+    border-radius: 50%;
+    transition: all 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94); // Slower, smoother transition for aura
+    opacity: 0; // Start subtle
+    transform-origin: center;
+    will-change: transform, opacity, background;
+    animation: breathingCircleAuraBase 5s ease-in-out infinite 0.5s; // Base aura pulse
+    
+    // Default aura styling
+    .dark & { background: radial-gradient(circle, rgba($accent, 0.25) 0%, transparent 65%); }
+    .light & { background: radial-gradient(circle, rgba($accent, 0.2) 0%, transparent 65%); }
+  }
+
+  // Phase-specific enhancements
+  &[data-phase="inhale"] {
+    // transform: scale(1.2); // Exists
+    box-shadow: 0 0 30px rgba($highlight, 0.2), 0 0 50px rgba($highlight, 0.15) inset; // Enhanced glow for the whole circle
+    &::before {
+      // border-color: $highlight; // Exists
+      // opacity: 0.6; // Exists
+      box-shadow: 0 0 15px 2px $highlight, 0 0 8px 0px $highlight inset; // Brighter, thicker glow for ring
+      animation-name: none; // Pause base ring pulse if a specific one isn't defined for inhale
+    }
+    &::after {
+      transform: scale(1.15); // Aura expands more
+      opacity: 0.7;
+      .dark & { background: radial-gradient(circle, rgba($highlight, 0.4) 0%, transparent 70%); }
+      .light & { background: radial-gradient(circle, rgba($highlight, 0.35) 0%, transparent 70%); }
+      animation-duration: 3s; // Faster pulse for aura during inhale
+    }
+  }
+
+  &[data-phase="hold"] {
+    // transform: scale(1.2); // Exists
+    box-shadow: 0 0 35px rgba($accent, 0.25), 0 0 60px rgba($accent, 0.2) inset;
+    &::before {
+      // border-color: $accent; // Exists
+      // opacity: 0.8; // Exists
+      box-shadow: 0 0 20px 3px $accent, 0 0 10px 0px $accent inset; // Strongest glow
+      animation-name: none;
+    }
+    &::after {
+      transform: scale(1.1); // Aura stays expanded
+      opacity: 0.85;
+      .dark & { background: radial-gradient(circle, rgba($accent, 0.5) 0%, transparent 65%); }
+      .light & { background: radial-gradient(circle, rgba($accent, 0.45) 0%, transparent 65%); }
+      animation-duration: 1.5s; // Intense, quick pulse for aura during hold
+    }
+  }
+
+  &[data-phase="exhale"] {
+    // transform: scale(1); // Exists
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); // Back to near base
+    &::before {
+      // border-color: $highlight; // Exists
+      // opacity: 0.4; // Exists
+      box-shadow: 0 0 10px 1px $highlight, 0 0 5px 0px $highlight inset; // Fading glow
+      animation-name: breathingRingBasePulse; // Resume base pulse
+      animation-duration: 4s;
+    }
+    &::after {
+      transform: scale(0.9); // Aura recedes
+      opacity: 0.3;
+      .dark & { background: radial-gradient(circle, rgba($highlight, 0.2) 0%, transparent 70%); }
+      .light & { background: radial-gradient(circle, rgba($highlight, 0.15) 0%, transparent 70%); }
+      animation-name: breathingCircleAuraBase; // Resume base pulse
+      animation-duration: 6s; // Slower aura pulse
+    }
+  }
+
+  &[data-phase="rest"] {
+    // transform: scale(1); // Exists
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); // Base shadow
+    &::before {
+      // border-color: $accent; // Exists
+      // opacity: 0.2; // Exists
+      animation-name: breathingRingBasePulse; // Ensure base pulse is running
+      animation-duration: 4s;
+      // box-shadow set by keyframe
+    }
+    &::after {
+      transform: scale(1);
+      opacity: 0.4; // Base aura opacity
+      .dark & { background: radial-gradient(circle, rgba($accent, 0.25) 0%, transparent 65%); }
+      .light & { background: radial-gradient(circle, rgba($accent, 0.2) 0%, transparent 65%); }
+      animation-name: breathingCircleAuraBase;
+      animation-duration: 5s;
+    }
+  }
+
+  .circle-content {
+    // ... existing styles ...
+    position: relative; // To ensure it's above pseudo-elements
+    z-index: 1;
+  }
+}
+
+// --- Controls Buttons Enhancements ---
+.controls {
+  // ... existing margin ...
+  button {
+    // ... existing padding, font-size, border, radius, cursor, transition, font-weight ...
+    will-change: background, transform, box-shadow;
+    position: relative;
+    overflow: hidden; // For potential shimmer/gradient effects on hover
+
+    // Enhanced hover (common for both)
+    &:hover {
+      // transform: translateY(-2px); // Exists, can be enhanced
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+    }
+    // Active state (common for both)
+    &:active {
+      --translateY: -1px; // For pulse animation if it lands on active
+      animation: controlButtonActivePulse 0.3s ease-out;
+      transform: translateY(-1px) scale(0.98);
+    }
+
+    &.start-button {
+      // ... existing background, color ...
+      &:hover {
+        background: darken($highlight, 10%); // Exists
+        // specific shadow if needed
+        .dark & { box-shadow: 0 6px 15px rgba(darken($highlight, 15%), 0.3); }
+        .light & { box-shadow: 0 6px 15px rgba(darken($highlight, 20%), 0.25); }
+      }
+      &:active { background: darken($highlight, 15%); }
+    }
+
+    &.stop-button {
+      // ... existing background, color ...
+      &:hover {
+        background: darken($accent, 10%); // Exists
+        .dark & { box-shadow: 0 6px 15px rgba(darken($accent, 15%), 0.3); }
+        .light & { box-shadow: 0 6px 15px rgba(darken($accent, 20%), 0.25); }
+      }
+      &:active { background: darken($accent, 15%); }
+    }
+  }
+}
+
+
+// --- Section Cards (.customization, .benefits) Enhancements ---
+.customization, .benefits {
+  // ... your existing margin, padding, background, radius, shadow ...
+  // ... your existing .light & ...
+  opacity: 0; // Start hidden for animation
+  animation: sectionCardEntry 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  will-change: transform, opacity, box-shadow;
+  position: relative; // For ::before border
+  transition: transform 0.35s ease, box-shadow 0.35s ease; // Add transition for hover
+
+  // Stagger animation if multiple similar sections appear
+  &:nth-of-type(1) { animation-delay: 0.1s; } // .customization
+  &:nth-of-type(2) { animation-delay: 0.25s; } // .benefits
+
+  // Animated border on hover
+  &::before {
+    content: "";
+    position: absolute;
+    top: -2px; left: -2px; right: -2px; bottom: -2px;
+    z-index: -1;
+    border-radius: inherit; // e.g., 12px
+    background: linear-gradient(130deg, rgba($accent,0.8), rgba($highlight,0.6), rgba($primary,0.4));
+    background-size: 300% 300%;
+    opacity: 0;
+    transition: opacity 0.4s ease-out;
+    animation: cardHoverBorderShine 3.5s linear infinite paused;
+    will-change: opacity, background-position;
+  }
+
+  &:hover {
+    transform: translateY(-8px) perspective(1000px) rotateX(2deg) rotateY(1deg);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+    .dark & { box-shadow: 0 15px 35px rgba(0,0,0,0.2); }
+    .light & { box-shadow: 0 15px 35px rgba(0,0,0,0.1); }
+
+    &::before {
+      opacity: 1;
+      animation-play-state: running;
+    }
+  }
+}
+
+// --- Duration Input Focus ---
+.duration-input {
+  input {
+    // ... your existing styles ...
+    &:focus {
+      border-color: $accent; // Keep for immediate feedback
+      outline: none;
+      // MODIFIED: Use animation for the box-shadow glow
+      animation: inputFocusBreathe 1.5s ease-in-out infinite;
+    }
+  }
+}
+
+// --- Benefits List Item Enhancements ---
+.benefits {
+  ul {
+    // ... your existing styles ...
+    li {
+      // ... your existing color, padding, background, radius, text-align, transition ...
+      // ... your existing .light & ...
+      opacity: 0; // Start hidden for animation
+      animation: benefitListItemEntry 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+      will-change: transform, opacity, box-shadow;
+      position: relative; // For potential border/accent on hover
+
+      // Stagger list items
+      @for $i from 1 through 10 { // Adjust count as needed
+        &:nth-child(#{$i}) {
+          animation-delay: #{0.3 + $i * 0.08}s; // Start after parent card entry
+        }
+      }
+      
+      // Enhance existing hover
+      &:hover {
+        // transform: translateY(-2px); // Exists
+        // box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); // Exists
+        transform: translateY(-5px) scale(1.02);
+        box-shadow: 0 8px 15px rgba(0,0,0,0.12);
+        .dark & {
+          background-color: lighten($background, 3%);
+          box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+        }
+        .light & {
+          background-color: lighten($light-mode-bg, 3%);
+          box-shadow: 0 8px 15px rgba(0,0,0,0.08);
+        }
+      }
+    }
+  }
+}
