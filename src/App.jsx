@@ -23,7 +23,6 @@ import Guidebook from './pages/Guidebook';
 import MindfulBreathing from './pages/MindfulBreathing';
 import GamesAndChallenges from './pages/GamesAndChallenges';
 import CalmTunes from './pages/CalmTunes';
-import MindCanvas from './pages/MindCanvas';
 
 // Global Styles
 import './main.scss';
