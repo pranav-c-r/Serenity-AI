@@ -4,6 +4,7 @@ import { AuthProvider } from './context/AuthContext';
 import { ThemeProvider } from './context/ThemeContext';
 import PrivateRoute from './components/common/PrivateRoute';
 import Layout from './components/layout/Layout';
+import { Analytics } from "@vercel/analytics/react";
 
 // Auth Pages
 import Signup from './components/auth/Signup';
@@ -76,6 +77,7 @@ function App() {
             {/* 404 Page */}
             <Route path="*" element={<NotFound />} />
           </Routes>
+          <Analytics />
         </AuthProvider>
       </ThemeProvider>
     </Router>
