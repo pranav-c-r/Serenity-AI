@@ -110,12 +110,8 @@ Create a `.env` file in the root directory:
 
 ```env
 VITE_FIREBASE_API_KEY=your_api_key
-VITE_FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
-VITE_FIREBASE_PROJECT_ID=your_project_id
-VITE_FIREBASE_STORAGE_BUCKET=your_project.appspot.com
-VITE_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
-VITE_FIREBASE_APP_ID=your_app_id
-VITE_FIREBASE_MEASUREMENT_ID=your_measurement_id
+VITE_GEMINI_API_KEY=your_gemini_api_key
+REACT_APP_YOUTUBE_API_KEY=your_youtube_api_key
 ```
 
 ---
@@ -155,23 +151,6 @@ Serenity-AI/
 * Listen to calming sounds through Calm Tunes.
 * Play games to boost focus and emotional awareness.
 * Talk or chat with Serena for mental support.
-
----
-
-## Deployment
-
-To deploy on Vercel:
-
-1. Push to GitHub
-2. Connect repository to Vercel
-3. Add environment variables
-4. Click Deploy
-
----
-
-## Contributing
-
-We welcome contributions! Feel free to fork the repo, open issues, or submit pull requests.
 
 ---
 
