@@ -106,7 +106,6 @@ useEffect(() => {
     `;
   }, [moodText, username]);
 
-  // Initial welcome message
   useEffect(() => {
     if(username){
       const welcomeMessage = {
@@ -119,7 +118,6 @@ useEffect(() => {
     }
   }, [username]);
 
-  // Initialize speech recognition
   useEffect(() => {
     const initSpeechRecognition = () => {
       if ('webkitSpeechRecognition' in window) {
@@ -193,14 +191,12 @@ useEffect(() => {
     };
   }, []);
 
-  // Load voices when component mounts
   useEffect(() => {
     const loadVoices = () => {
       const availableVoices = window.speechSynthesis.getVoices();
       setVoices(availableVoices);
     };
 
-    // Chrome loads voices asynchronously
     if (window.speechSynthesis.onvoiceschanged !== undefined) {
       window.speechSynthesis.onvoiceschanged = loadVoices;
     }
@@ -216,11 +212,9 @@ useEffect(() => {
       try {
         const utterance = new window.SpeechSynthesisUtterance(text);
         
-        // Get all voices and log them for debugging
         const availableVoices = window.speechSynthesis.getVoices();
         console.log('Available voices:', availableVoices.map(v => v.name));
         
-        // Try to find a female voice with more specific criteria
         const femaleVoice = availableVoices.find(voice => 
           voice.name.toLowerCase().includes('female') || 
           voice.name.toLowerCase().includes('samantha') ||
@@ -305,11 +299,10 @@ useEffect(() => {
 
       setMessages(prev => [...prev, userMessage]);
       setError(null);
-
-      // Pass messages excluding the current one, to keep history, plus system prompt
+        
       const response = await sendMessageToGemini(
         text,
-        messages, // conversation history
+        messages, 
         SYSTEM_PROMPT
       );
 

@@ -92,7 +92,6 @@
     }
   }
 
-  // Force light mode for feature cards
   &.light .features-grid .feature-card {
     background-color: $light-mode-card !important;
     color: $light-mode-text !important;
@@ -439,7 +438,6 @@
     position: relative;
 }
 
-// Keyframes for prophecy icon glow
 @keyframes prophecyGlowDark {
   from { filter: drop-shadow(0 0 8px $accent); }
   to   { filter: drop-shadow(0 0 18px lighten($accent, 10%)); }
@@ -561,8 +559,7 @@
   }
 }
 
-// Revised Keyframes for prophecy icon glow (breathing effect)
-// (Replace existing prophecyGlowDark & prophecyGlowLight keyframes with these)
+ 
 @keyframes prophecyGlowDark { // Renamed from original to avoid conflict if you merge manually
   0%   { filter: drop-shadow(0 0 7px $accent) drop-shadow(0 0 3px $accent); opacity: 0.75; transform: scale(1); }
   50%  { filter: drop-shadow(0 0 22px lighten($accent, 12%)) drop-shadow(0 0 12px lighten($accent, 7%)); opacity: 1; transform: scale(1.08); }
@@ -575,11 +572,8 @@
 }
 
 
-// --- 2. Animated Dashboard Background ---
+
 .dashboard {
-  // Add these background and animation properties
-  // Assumes $background and $light-mode-bg are defined in your variables.scss
-  // $background: your dark mode background; $light-mode-bg: your light mode background
   .dark & {
     background: linear-gradient(250deg, darken($background, 2%), $background, darken($background, 4%), rgba($secondary, 0.3));
     background-size: 300% 300%;
@@ -593,15 +587,12 @@
   }
 }
 
-
-// --- 3. Enhanced Dashboard Card Grid & Cards ---
 .dashboard-grid {
   .dashboard-card {
-    // Add animation properties
+    
     animation: cardEntryAnimation 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-    opacity: 0; // Start hidden for animation
+    opacity: 0; 
 
-    // Stagger animation for cards (adjust count as needed)
     @for $i from 1 through 15 {
       &:nth-child(#{$i}) {
         animation-delay: #{$i * 0.08}s;
@@ -609,13 +600,10 @@
     }
 
     &:hover {
-      // Enhance existing hover with a subtle glow
       .dark & {
-        // Existing: border-color: $primary;
         box-shadow: $shadow-lg, 0 0 28px rgba($primary, 0.25), 0 0 12px rgba($accent, 0.15);
       }
       .light & {
-        // Existing: border-color: $light-mode-text;
         box-shadow: $shadow-lg, 0 0 28px rgba($light-mode-text, 0.18), 0 0 12px rgba($accent, 0.1);
       }
     }
@@ -623,61 +611,48 @@
 }
 
 
-// --- 4. Animated Page Header H1 ---
 .page-header h1 {
-  // Add these properties for text shimmer
-  // Note: This will make the text color transparent to show the gradient.
-  // Original color rules inside .dark & and .light & for h1 will be overridden.
-  position: relative; // Good practice for text effects
+  position: relative; 
 
   .dark & {
-    // Original: color: $primary;
     background: linear-gradient(to right, lighten($primary,10%) 20%, $accent 40%, $accent 60%, lighten($primary,10%) 80%);
     background-size: 250% auto;
     color: transparent;
     background-clip: text;
     -webkit-background-clip: text;
     animation: textShimmerEffect 4s linear infinite;
-    will-change: background-position; // Performance hint
+    will-change: background-position; 
   }
 
   .light & {
-    // Original: color: $light-mode-text;
     background: linear-gradient(to right, $light-mode-text 20%, lighten($accent,5%) 40%, lighten($accent,5%) 60%, $light-mode-text 80%);
     background-size: 250% auto;
     color: transparent;
     background-clip: text;
     -webkit-background-clip: text;
     animation: textShimmerEffect 4.5s linear infinite;
-    will-change: background-position; // Performance hint
+    will-change: background-position; 
   }
 }
 
-
-// --- 5. Pulsing Quote Card Icon ---
 .quote-card {
   &::before {
-    // Add animation to the existing ::before pseudo-element
-    // Original styles for ::before should be kept
     animation: quoteIconPulseEffect 5s ease-in-out infinite 0.8s;
-    transform-origin: center center; // Ensure scaling and rotation are centered
-    will-change: transform, opacity; // Performance hint
+    transform-origin: center center; 
+    will-change: transform, opacity; 
   }
 }
 
 
-// --- 6. Ethereal Aura for Prophecy Quote Card ---
 .prophecy-quote-card {
-  // Add a new pseudo-element for the aura
-  &::before { // Or ::after if ::before is already in use for something else
+  &::before { 
     content: '';
     position: absolute;
-    // Make it slightly larger than the card and adjust border-radius accordingly
     top: -12px; right: -12px; bottom: -12px; left: -12px;
-    border-radius: calc(1.5rem + 12px); // Original card radius + offset
-    pointer-events: none; // So it doesn't interfere with interaction
-    z-index: -1; // Place it behind the card content
-    opacity: 0; // Animation will control opacity
+    border-radius: calc(1.5rem + 12px); 
+    pointer-events: none; 
+    z-index: -1; 
+    opacity: 0; 
 
     .dark & {
       animation: prophecyCardAuraDark 6s ease-in-out infinite 1s;
@@ -685,24 +660,17 @@
     .light & {
       animation: prophecyCardAuraLight 6s ease-in-out infinite 1s;
     }
-    will-change: box-shadow, opacity; // Performance hint
+    will-change: box-shadow, opacity; 
   }
 }
 
 
-// --- 7. Update Prophecy Icon Animation ---
 .prophecy-icon {
-  // Modify the existing animation properties to use the new keyframes and timing
-  // Ensure you've replaced the old prophecyGlowDark/Light keyframes with the new ones above
   .dark & {
-    // Original: animation: prophecyGlowDark 2.5s infinite alternate;
-    animation: prophecyGlowDark 3s ease-in-out infinite; // Use new keyframe name
-    // filter: drop-shadow(0 0 8px $accent); // Initial filter (now part of keyframe)
+    animation: prophecyGlowDark 3s ease-in-out infinite;
   }
   .light & {
-    // Original: animation: prophecyGlowLight 2.5s infinite alternate;
-    animation: prophecyGlowLight 3s ease-in-out infinite; // Use new keyframe name
-    // filter: drop-shadow(0 0 8px $light-mode-text); // Initial filter (now part of keyframe)
+    animation: prophecyGlowLight 3s ease-in-out infinite;
   }
-  will-change: filter, transform, opacity; // Performance hint
+  will-change: filter, transform, opacity; 
 }

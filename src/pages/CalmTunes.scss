@@ -275,9 +275,6 @@
   }
 }
 
-// --- ENHANCEMENTS & ANIMATIONS ---
-
-// Card entrance animation
 @keyframes calmTunesCardFadeIn {
   from { opacity: 0; transform: translateY(40px) scale(0.97); }
   to { opacity: 1; transform: translateY(0) scale(1); }
@@ -302,7 +299,6 @@
   }
 }
 
-// Track item shine effect
 .calm-tunes .track-item {
   position: relative;
   overflow: hidden;
@@ -324,7 +320,6 @@
   }
 }
 
-// Mobile optimizations
 @media (max-width: 600px) {
   .calm-tunes {
     padding: 0.5rem;
@@ -356,13 +351,12 @@
   50% { box-shadow: 0 6px 25px rgba($accent, 0.18), 0 0 10px rgba($accent,0.1) inset, 0 0 30px rgba($highlight, 0.08); }
   100% { box-shadow: 0 4px 15px rgba($accent, 0.1), 0 0 5px rgba($accent,0.05) inset; }
 }
-@keyframes nowPlayingBreatheLight { // Respects existing light mode shadow
+@keyframes nowPlayingBreatheLight { 
   0% { box-shadow: 0 2px 12px rgba($accent, 0.08), 0 0 3px rgba($accent,0.03) inset; }
   50% { box-shadow: 0 4px 20px rgba($accent, 0.12), 0 0 8px rgba($accent,0.06) inset, 0 0 25px rgba($highlight, 0.05); }
   100% { box-shadow: 0 2px 12px rgba($accent, 0.08), 0 0 3px rgba($accent,0.03) inset; }
 }
 
-// Simulated equalizer/pulse for .track-icon in .now-playing (if it's a music note or similar)
 @keyframes trackIconPlayingPulse {
   0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.8; }
   20% { transform: scale(1.1) rotate(-3deg); opacity: 1; }
@@ -371,13 +365,12 @@
   80% { transform: scale(0.98) rotate(1deg); opacity: 0.85; }
 }
 
-@keyframes controlButtonActivePulse { // Re-using from previous if consistent
+@keyframes controlButtonActivePulse { 
   0% { transform: scale(1); }
   50% { transform: scale(0.88); }
   100% { transform: scale(1); }
 }
 
-// Staggered entry for track items (replaces calmTunesCardFadeIn for track items)
 @keyframes trackItemEntry {
   from { opacity: 0; transform: translateX(-30px) scale(0.95); }
   to { opacity: 1; transform: translateX(0) scale(1); }
@@ -395,25 +388,21 @@
 
 @keyframes sectionHeaderUnderlineDraw {
   from { width: 0; }
-  to { width: 50%; } // Adjust width as desired
+  to { width: 50%; } 
 }
 
-@keyframes cardShine { // Re-using glint effect
+@keyframes cardShine { 
   0% { transform: translateX(-110%) skewX(-25deg); }
   100% { transform: translateX(110%) skewX(-25deg); }
 }
 
 
-// --- 2. Style Enhancements (Integrate into your existing SCSS) ---
-
-// --- Page Ambiance ---
 .calm-tunes {
-  // ... existing padding ...
+  
   position: relative;
-  overflow-x: hidden; // For background and pseudo-elements
+  overflow-x: hidden; 
 
-  // Animated Background (Dark Mode)
-  & { // Default (dark mode) context
+  & { 
     background: linear-gradient(
       310deg,
       darken($background, 4%),
@@ -426,33 +415,32 @@
   }
   will-change: background-position;
 
-  // Animated "Sound Wave" Decorative Lines
   &::before, &::after {
     content: '';
     position: absolute;
     left: 0;
     width: 100%;
-    height: 40px; // Height of the "wave" area
+    height: 40px; 
     pointer-events: none;
-    z-index: 0; // Behind content
+    z-index: 0; 
     opacity: 0.7;
-    display: flex; // To align items for wave
+    display: flex; 
     justify-content: space-around;
     align-items: flex-end;
   }
 
-  &::before { top: 0; } // Top wave
-  &::after { bottom: 0; transform: scaleY(-1); } // Bottom wave, flipped
+  &::before { top: 0; } 
+  &::after { bottom: 0; transform: scaleY(-1); } 
 
-  &::before > div, &::after > div { // Individual bars of the wave
-    width: 4px; // Width of each bar
-    height: 100%; // Takes full height of pseudo-element
+  &::before > div, &::after > div { 
+    width: 4px; 
+    height: 100%; 
     border-radius: 2px;
     transform-origin: bottom;
     animation-iteration-count: infinite;
     animation-timing-function: ease-in-out;
 
-    .dark & { // Or use current context if always dark by default
+    .dark & { 
         background-color: rgba($accent, 0.15);
         animation-name: soundWavePulseDark;
     }
@@ -461,7 +449,6 @@
         animation-name: soundWavePulseLight;
     }
 
-    // Stagger animation for wave effect (example with 10 bars)
     @for $i from 1 through 10 {
       &:nth-child(#{$i}) {
         animation-duration: #{1.5 + $i * 0.1}s;
@@ -470,16 +457,9 @@
     }
   }
   
-  // JS would be needed to dynamically add the <div> children for the wave bars.
-  // Alternatively, use multiple background gradients for a static but complex wave.
-  // For a CSS-only simple version, you could use a repeating gradient or SVG.
-  // This SCSS sets up the styling IF you add the divs.
 }
 
-// --- Light Mode Background (Already defined, ensure it doesn't conflict with wave) ---
 .light .calm-tunes {
-  // background: $light-mode-bg; // Exists
-  // Animated Background (Light Mode)
   background: linear-gradient(
     310deg,
     lighten($light-mode-bg, 1.5%),
@@ -489,32 +469,22 @@
   );
   background-size: 320% 320%;
   animation: subtlePageBackgroundFlow 70s ease infinite;
-  // color: $light-mode-text; // Exists
 }
 
 
-// --- "Now Playing" Card Enhancements ---
 .now-playing {
-  // ... existing margin-bottom ...
-  .player-card {
-    // Your existing: background-color, radius, padding, display, justify, align, shadow
-    // From your "ENHANCEMENTS" block:
-    // animation: calmTunesCardFadeIn ... (good)
-    // transition: box-shadow 0.3s, transform 0.3s; (will be enhanced)
-    // will-change: transform, box-shadow; (good)
+    .player-card {
 
-    position: relative; // For potential pseudo elements or z-indexing
-    z-index: 2; // Above page waves
-    animation: calmTunesCardFadeIn 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) 0.1s both; // Delay slightly
-    overflow: hidden; // For shine effect
+    position: relative; 
+    z-index: 2; 
+    animation: calmTunesCardFadeIn 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) 0.1s both; 
+    overflow: hidden; 
 
-    // Continuous breathing shadow/glow
     .dark & { animation: calmTunesCardFadeIn 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) 0.1s both,
-                         nowPlayingBreatheDark 4s ease-in-out infinite 0.8s; } // Start after fade-in
+                         nowPlayingBreatheDark 4s ease-in-out infinite 0.8s; } 
     .light & { animation: calmTunesCardFadeIn 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) 0.1s both,
                           nowPlayingBreatheLight 4s ease-in-out infinite 0.8s; }
                           
-    // Glint/Shine Effect on Hover (::after)
     &::after {
         content: '';
         position: absolute;
@@ -527,7 +497,7 @@
         transform: translateX(-110%) skewX(-25deg);
         pointer-events: none;
         transition: transform 0s;
-        z-index: 0; // Behind content
+        z-index: 0; 
     }
 
     &:hover::after {
@@ -535,40 +505,28 @@
     }
 
     .track-info {
-      // ... existing styles ...
       .track-icon {
-        // ... existing font-size ...
-        // Add animation if a "playing" class is added via JS
         &.playing {
           animation: trackIconPlayingPulse 1.5s ease-in-out infinite;
-          // Light mode color is !important, so filter might be better for visual change
           .light & { filter: drop-shadow(0 0 5px rgba($accent, 0.3)); }
         }
       }
     }
 
     .player-controls {
-      // ... existing styles ...
       .control-button {
-        // Your existing: background, border, font-size, cursor, padding, radius, transition
-        // From generic button ENHANCEMENTS:
-        // transition: box-shadow 0.2s, background 0.2s;
-        // &:hover, &:focus { box-shadow: ...; background: lighten($accent, 10%); }
+        transition: background-color 0.2s ease, transform 0.2s ease-out, box-shadow 0.2s ease;
         
-        // Specific control button enhancements
         transition: background-color 0.2s ease, transform 0.2s ease-out, box-shadow 0.2s ease;
         will-change: background-color, transform, box-shadow;
 
         &:hover {
-          // Your existing: background-color: rgba($accent, 0.1);
-          // Merged and enhanced:
-          background-color: rgba($accent, 0.15) !important; // Override generic if needed
+          background-color: rgba($accent, 0.15) !important; 
           transform: scale(1.15);
-          box-shadow: 0 0 10px rgba($accent, 0.2); // Subtle glow
+          box-shadow: 0 0 10px rgba($accent, 0.2); 
 
-          // Light mode hover for .control-button
-          .light .calm-tunes .now-playing .player-card & { // Specific selector
-            background: darken($accent, 5%) !important; // Slightly different from its base $accent
+          .light .calm-tunes .now-playing .player-card & { 
+            background: darken($accent, 5%) !important; 
             color: $background !important;
             box-shadow: 0 0 10px rgba(darken($accent,10%), 0.25);
           }
@@ -586,69 +544,54 @@
   }
 }
 
-// --- Playlist Section & Track Items Enhancements ---
 .playlists-container {
-  // ... existing styles ...
   .playlist-section {
-    z-index: 1; // Above page waves
+    z-index: 1; 
     h2 {
-      // ... existing color, margin-bottom ...
       position: relative;
-      display: inline-block; // For underline
-      padding-bottom: 0.3rem; // Space for underline
+      display: inline-block; 
+      padding-bottom: 0.3rem; 
 
-      &::after { // Animated underline
+      &::after { 
         content: '';
         position: absolute;
         bottom: 0;
-        left: 0; // Or 50% with transform: translateX(-50%) for centered draw
+        left: 0; 
         height: 2px;
         background-color: $accent;
-        width: 0; // Initial width
-        transition: width 0.5s cubic-bezier(0.65, 0, 0.35, 1) 0.2s; // Delayed draw
-        // Trigger with JS on scroll into view, or simply let it run:
+        width: 0; 
+        transition: width 0.5s cubic-bezier(0.65, 0, 0.35, 1) 0.2s; 
         animation: sectionHeaderUnderlineDraw 0.6s cubic-bezier(0.65, 0, 0.35, 1) 0.5s forwards;
       }
     }
 
     .tracks-list {
-      // ... existing display, flex-direction, gap ...
       .track-item {
-        // Your existing: background-color, radius, padding, display, align, gap, cursor
-        // From your "ENHANCEMENTS" block:
-        // animation: calmTunesCardFadeIn ... -> will be replaced by trackItemEntry
-        // transition: transform 0.3s ease, box-shadow 0.3s ease; (will be enhanced)
-        // &:hover { transform: translateX(5px); box-shadow: 0 2px 8px rgba($accent, 0.1); } (will be enhanced)
-        // position: relative; overflow: hidden; &::after (radial shine) (good, keep)
         
-        // Enhanced transition and will-change
         transition: transform 0.3s cubic-bezier(0.25,0.46,0.45,0.94),
                     box-shadow 0.3s cubic-bezier(0.25,0.46,0.45,0.94),
                     border-color 0.3s ease;
         will-change: transform, box-shadow, opacity, border-color;
-        position: relative; // For ::before accent and ::after shine
-        z-index: 1; // Above page waves
+        position: relative; 
+        z-index: 1; 
 
-        // Staggered entry animation (replaces calmTunesCardFadeIn for these items)
-        opacity: 0; // Start hidden for animation
+        opacity: 0; 
         animation: trackItemEntry 0.5s cubic-bezier(0.25,0.46,0.45,0.94) forwards;
 
-        // Stagger the animation (adjust count as needed per playlist)
         @for $i from 1 through 10 {
           &:nth-child(#{$i}) {
-            animation-delay: #{($i * 0.06) + 0.3}s; // Base delay + stagger
+            animation-delay: #{($i * 0.06) + 0.3}s; 
           }
         }
 
-        // Animated border accent on hover
         &::before {
           content: '';
           position: absolute;
           top: 50%;
-          left: 15%; // Initial position for animation
+          left: 15%; 
           transform: translateY(-50%);
-          height: 60%; // Height of the accent line
-          width: 0; // Initial width
+          height: 60%; 
+          width: 0; 
           background-color: $accent;
           border-radius: 2px;
           transition: width 0.35s cubic-bezier(0.25,0.46,0.45,0.94), left 0.35s cubic-bezier(0.25,0.46,0.45,0.94);
@@ -656,37 +599,28 @@
         }
 
         &:hover {
-          // Your existing: transform: translateX(5px); box-shadow: 0 2px 8px rgba($accent, 0.1);
-          // Enhanced hover:
+          
           transform: translateX(8px) scale(1.015) perspective(500px) rotateY(-1deg);
-          // Enhanced shadow (Dark mode)
           .dark & { box-shadow: 0 5px 15px rgba($accent, 0.15), 0 1px 5px rgba($primary, 0.08); }
-          // Light mode shadow is !important, this won't override without specificity or !important here too
           .light & { box-shadow: 0 5px 15px rgba($accent, 0.1) !important; }
           
-          // Your existing ::after radial shine activation: &:hover::after { opacity: 1; } (Keep this)
           
-          &::before { // Animate border accent
-            width: 4px; // Fixed width for the line
-            left: 0.8rem; // Position it near the left edge
+          &::before { 
+            width: 4px; 
+            left: 0.8rem; 
           }
 
           .play-button {
-            // Your existing hover: background-color: rgba($accent, 0.1);
-            .dark & { background-color: rgba($accent, 0.15) !important; } // Ensure it overrides generic button hover
-            // Light mode already has its own :hover !important
-
-            // Animate the icon (assuming it's an icon font or SVG)
-            > * { // Target direct child (e.g., <i> or <svg>)
+            .dark & { background-color: rgba($accent, 0.15) !important; } 
+            > * { animation: playIconHoverRotate 0.3s ease-out forwards; }
+            
+            > * { 
               animation: playIconHoverRotate 0.3s ease-out forwards;
             }
           }
         }
         
         .play-button {
-          // ... existing styles ...
-          // Light mode already has specific background/color with !important
-          // This is for dark mode if not covered by generic button ENHANCEMENTS
           .dark & { color: $accent; }
           > * { transition: transform 0.2s ease-out; will-change: transform; }
         }

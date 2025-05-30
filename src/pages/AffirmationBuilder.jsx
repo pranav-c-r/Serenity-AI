@@ -18,7 +18,6 @@ const AffirmationBuilder = () => {
   ];
 
   useEffect(() => {
-    // Load saved affirmations from localStorage
     const savedAffirmations = localStorage.getItem('affirmations');
     const savedFavorites = localStorage.getItem('favorites');
     
@@ -31,7 +30,6 @@ const AffirmationBuilder = () => {
   }, []);
 
   useEffect(() => {
-    // Save affirmations to localStorage
     localStorage.setItem('affirmations', JSON.stringify(affirmations));
     localStorage.setItem('favorites', JSON.stringify(favorites));
   }, [affirmations, favorites]);

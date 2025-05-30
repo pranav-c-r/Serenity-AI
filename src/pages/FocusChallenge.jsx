@@ -1,4 +1,3 @@
-// FocusChallenge.jsx
 import React, { useEffect, useState } from 'react';
 import './FocusChallenge.scss';
 

@@ -5,13 +5,10 @@ import { doc, getDoc } from 'firebase/firestore';
 import { signOut } from 'firebase/auth';
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import './Dashboard.scss';
-// Removed: import { useAuth } from '../context/AuthContext'; 
-// (currentUser from useAuth wasn't being used in fetchUserData, auth.currentUser was)
-// If you intend to use currentUser from context, you can re-add it and adjust fetchUserData.
+
 
 const Dashboard = () => {
   const [username, setUsername] = useState('');
-  // const [email, setEmail] = useState(''); // email was fetched but not used
   const [motivationalQuote, setMotivationalQuote] = useState('');
   const [quoteLoading, setQuoteLoading] = useState(true);
   const [quoteError, setQuoteError] = useState(null);
@@ -45,8 +42,7 @@ const Dashboard = () => {
 
       try {
         const genAI = new GoogleGenerativeAI(apiKey);
-        // As per your request, using "gemini-2.0-flash". 
-        // If this model ID is not found, you might need to use "gemini-1.5-flash-latest" or another valid model ID.
+        
         const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" }); 
         const prompt = `
 You are a highly creative and insightful quote generator. Your goal is to produce *original* motivational quotes that can uplift, inspire, and provoke thoughtful reflection across a wide range of themes. Each quote should be succinct, emotionally resonant, and meaningful.
@@ -97,20 +93,19 @@ Only return the quote text. No category, no metadata, no author.
         const result = await model.generateContent(prompt);
         const response = await result.response;
         let text = response.text();
-        
-        // Extract only the quote part (first non-empty line, ignoring any intro or category info)
+
         const lines = text.split('\n').map(line => line.trim()).filter(Boolean);
         let quoteLine = lines[0];
-        // If the first line looks like a label (e.g., 'Category: ...'), use the next line
+
         if (/^category\s*:/i.test(quoteLine) && lines.length > 1) {
           quoteLine = lines[1];
         }
-        // Clean up the quote (remove leading/trailing quotes and asterisks if any)
+        
         quoteLine = quoteLine.replace(/^['"“"']+|['"""']+$/g, '').replace(/^\*+|\*+$/g, '').trim();
         setMotivationalQuote(quoteLine);
       } catch (err) {
         console.error("Error fetching motivational quote from Gemini:", err);
-        // Check for specific API errors if needed (e.g., model not found)
+        
         if (err.message && err.message.includes("not found") && err.message.includes("gemini-2.0-flash")) {
             setQuoteError("The specified AI model (gemini-2.0-flash) might not be available. Please check your model ID or try 'gemini-1.5-flash-latest'.");
         } else {
@@ -123,11 +118,11 @@ Only return the quote text. No category, no metadata, no author.
     };
 
     fetchMotivationalQuote();
-  }, []); // Empty dependency array: runs once on mount
+  }, []); 
 
   useEffect(() => {
     const fetchUserData = async () => {
-      const currentUserAuth = auth.currentUser; // Using auth.currentUser directly as in original code
+      const currentUserAuth = auth.currentUser; 
 
       if (currentUserAuth) {
         const userRef = doc(database, "Users", currentUserAuth.uid);
@@ -135,8 +130,7 @@ Only return the quote text. No category, no metadata, no author.
         if (userSnap.exists()) {
           const userData = userSnap.data();
           setUsername(userData.username || 'User');
-          // setEmail(userData.email || 'No email found'); // email not used in UI
-        } else {
+          
           console.log("User document not found, redirecting to signin.");
           navigate("/signin");
         }
@@ -149,7 +143,7 @@ Only return the quote text. No category, no metadata, no author.
     fetchUserData();
   }, [navigate]);
 
-  const logout = async () => { // This function is defined but not used in the provided JSX
+  const logout = async () => { 
     try {
       await signOut(auth);
       navigate("/");
@@ -193,8 +187,7 @@ Only return the quote text. No category, no metadata, no author.
           </div>
         ))}
       </div>
-      {/* Example Button for Logout if you want to add it somewhere */}
-      {/* <button onClick={logout} className="logout-button">Logout</button> */}
+      
     </div>
   );
 };

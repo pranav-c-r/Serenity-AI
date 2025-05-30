@@ -26,11 +26,9 @@ const EmotionRecognition = () => {
     const randomEmotion = emotions[Math.floor(Math.random() * emotions.length)];
     setCurrentEmotion(randomEmotion);
     
-    // Generate 3 random options including the correct one
     const shuffledEmotions = [...emotions].sort(() => Math.random() - 0.5);
     const selectedOptions = shuffledEmotions.slice(0, 3);
     
-    // If the correct emotion is not in the selected options, replace one
     if (!selectedOptions.find(option => option.name === randomEmotion.name)) {
       selectedOptions[0] = randomEmotion;
     }

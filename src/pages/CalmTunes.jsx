@@ -60,7 +60,6 @@ const CalmTunes = () => {
     }
   };
 
-  // Play new track when selected
   useEffect(() => {
     if (currentTrack && audioRef.current) {
       audioRef.current.src = currentTrack.src;
@@ -68,7 +67,6 @@ const CalmTunes = () => {
     }
   }, [currentTrack]);
 
-  // Pause/play based on state
   useEffect(() => {
     if (audioRef.current) {
       if (isPlaying) {
@@ -132,7 +130,7 @@ const CalmTunes = () => {
         ))}
       </div>
 
-      {/* Hidden audio element */}
+    
       <audio 
         ref={audioRef} 
         onEnded={() => setIsPlaying(false)} 

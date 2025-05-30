@@ -255,9 +255,7 @@
   }
 }
 
-// --- ENHANCEMENTS & ANIMATIONS ---
 
-// Card entrance animation
 @keyframes comfortZoneCardFadeIn {
   from { opacity: 0; transform: translateY(40px) scale(0.97); }
   to { opacity: 1; transform: translateY(0) scale(1); }
@@ -282,7 +280,6 @@
   }
 }
 
-// Conversation history shine effect
 .comfort-zone .conversation-history {
   position: relative;
   overflow: hidden;
@@ -304,7 +301,6 @@
   }
 }
 
-// Mobile optimizations
 @media (max-width: 600px) {
   .comfort-zone {
     padding: 0.5rem;
