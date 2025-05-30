@@ -6,11 +6,11 @@ import PrivateRoute from './components/common/PrivateRoute';
 import Layout from './components/layout/Layout';
 import { Analytics } from "@vercel/analytics/react";
 
-// Auth Pages
+
 import Signup from './components/auth/Signup';
 import ForgotPassword from './components/auth/ForgotPassword';
 
-// Feature Pages
+
 import Dashboard from './pages/Dashboard';
 import Journal from './pages/Journal';
 import MoodTracker from './pages/MoodTracker';
@@ -25,7 +25,6 @@ import MindfulBreathing from './pages/MindfulBreathing';
 import GamesAndChallenges from './pages/GamesAndChallenges';
 import CalmTunes from './pages/CalmTunes';
 
-// Game Components
 import CardApp from './pages/cardApp';
 import WordPuzzleApp from './pages/WordPuzzleApp';
 import FocusChallenge from './pages/FocusChallenge';
@@ -35,7 +34,6 @@ import MeditationTimer from './pages/MeditationTimer';
 import EmotionRecognition from './pages/EmotionRecognition';
 import AffirmationBuilder from './pages/AffirmationBuilder';
 
-// Global Styles
 import './main.scss';
 
 function App() {
@@ -44,12 +42,11 @@ function App() {
       <ThemeProvider>
         <AuthProvider>
           <Routes>
-            {/* Public Routes */}
+            
             <Route path="/" element={<Landing />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
 
-            {/* Protected Routes with Layout */}
             <Route element={<PrivateRoute><Layout /></PrivateRoute>}>
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/journal" element={<Journal />} />
@@ -63,7 +60,7 @@ function App() {
               <Route path="/games" element={<GamesAndChallenges />} />
               <Route path="/calm-tunes" element={<CalmTunes />} />
               
-              {/* Game Routes */}
+              
               <Route path="/cardApp" element={<CardApp />} />
               <Route path="/wordPuzzle" element={<WordPuzzleApp />} />
               <Route path="/focusChallenge" element={<FocusChallenge />} />
@@ -74,7 +71,7 @@ function App() {
               <Route path="/affirmationBuilder" element={<AffirmationBuilder />} />
             </Route>
 
-            {/* 404 Page */}
+              
             <Route path="*" element={<NotFound />} />
           </Routes>
           <Analytics />

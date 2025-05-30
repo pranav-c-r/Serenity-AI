@@ -1,6 +1,5 @@
 @import './variables.scss';
 
-// Reset and base styles
 * {
   margin: 0;
   padding: 0;
@@ -17,7 +16,6 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-// Global styles
 body {
   margin: 0;
   min-width: 320px;
@@ -34,7 +32,6 @@ body {
   }
 }
 
-// Card styles
 .card {
   .dark & {
     background-color: $card-bg;
@@ -52,7 +49,6 @@ body {
   margin-bottom: $spacing-md;
 }
 
-// Typography
 h1, h2, h3, h4, h5, h6 {
   .dark & {
     color: $primary;
@@ -94,7 +90,6 @@ p {
   line-height: 1.6;
 }
 
-// Links
 a {
   .dark & {
     color: $highlight;
@@ -118,7 +113,6 @@ a {
   }
 }
 
-// Buttons
 button {
   border-radius: $border-radius-md;
   border: 1px solid transparent;
@@ -147,7 +141,6 @@ button {
   }
 }
 
-// Form elements
 input, textarea, select {
   font-family: inherit;
   font-size: 1rem;
@@ -183,7 +176,6 @@ input, textarea, select {
   }
 }
 
-// Scrollbar
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -215,7 +207,6 @@ input, textarea, select {
   }
 }
 
-// Utility classes
 .container {
   width: 100%;
   max-width: $breakpoint-xl;
@@ -237,7 +228,6 @@ input, textarea, select {
 .mb-3 { margin-bottom: $spacing-lg; }
 .mb-4 { margin-bottom: $spacing-xl; }
 
-// Animations
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -251,7 +241,6 @@ input, textarea, select {
   animation: fadeIn $transition-normal;
 }
 
-// Responsive design
 @media (max-width: $breakpoint-md) {
   h1 {
     font-size: 2rem;
