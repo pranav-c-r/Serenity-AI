@@ -186,17 +186,6 @@ const Landing = () => {
         </div>
       </section>
 
-      {/* Contact Section */}
-      <section id="contact" className="contact section-padding">
-        <h2 data-scroll-animate>Contact Us</h2>
-        <form className="contact-form" data-scroll-animate>
-          <input type="text" placeholder="Your Name" />
-          <input type="email" placeholder="Your Email" />
-          <textarea placeholder="Your Message"></textarea>
-          <button type="submit" className="btn btn-primary">Send Message</button>
-        </form>
-      </section>
-
       {/* Support Section */}
       <section id="support" className="support section-padding">
         <h2 data-scroll-animate>Support</h2>
@@ -218,11 +207,24 @@ const Landing = () => {
           </div>
         </div>
       </section>
+  
+        
 
       {/* Signature */}
       <div className="de4dscope-signature">
         <span>with love, <b>TEAM DE4DSCOPE</b></span>
       </div>
+
+      {/* Contact Section */}
+      <section id="contact" className="contact section-padding">
+        <h2 data-scroll-animate>Contact Us</h2>
+        <div className="social-links" data-scroll-animate>
+          <a href="https://www.linkedin.com/in/pranav-c-r/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+          <a href="https://x.com/pranav__c_r" target="_blank" rel="noopener noreferrer">X</a>
+          <a href="https://github.com/pranav-c-r/Serenity-AI" target="_blank" rel="noopener noreferrer">GitHub</a>
+          <a href="mailto:knightowl00007@gmail.com">Gmail</a>
+        </div>
+      </section>
 
       {/* Footer */}
       <footer className="footer">
@@ -248,9 +250,9 @@ const Landing = () => {
           <div className="footer-section">
             <h4>Connect</h4>
             <div className="social-links">
-              <Link to="https://twitter.com" target="_blank" rel="noopener noreferrer">Twitter</Link>
-              <Link to="https://linkedin.com" target="_blank" rel="noopener noreferrer">LinkedIn</Link>
-              <Link to="https://github.com" target="_blank" rel="noopener noreferrer">GitHub</Link>
+              <Link to="https://x.com/pranav__c_r" target="_blank" rel="noopener noreferrer">Twitter</Link>
+              <Link to="https://www.linkedin.com/in/pranav-c-r/" target="_blank" rel="noopener noreferrer">LinkedIn</Link>
+              <Link to="https://github.com/pranav-c-r/Serenity-AI" target="_blank" rel="noopener noreferrer">GitHub</Link>
             </div>
           </div>
         </div>
