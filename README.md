@@ -47,16 +47,16 @@ Serenity AI is a modern and intuitive mental wellness web application that seaml
 > *To add screenshots, place image files inside the `public/screenshots/` directory and reference them below:*
 
 ```
-![Dashboard](public/screenshots/dashboard.png)
-![Journal](public/screenshots/journal.png)
-![Mood Tracker](public/screenshots/mood-tracker.png)
-![Serena Chat](public/screenshots/serena-chat.png)
-![Serena Chat](public/screenshots/serena-voice.png)
-![Serena Chat](public/screenshots/wellness-resources.png)
-![Serena Chat](public/screenshots/mental-health-guidebook.png)
-![Serena Chat](public/screenshots/games-and-challenges.png)
-![Serena Chat](public/screenshots/memory-match.png)
-![Serena Chat](public/screenshots/mindful-breathing.png)
+![Dashboard](./public/screenshots/dashboard.png)
+![Journal](./public/screenshots/journal.png)
+![Mood Tracker](./public/screenshots/mood-tracker.png)
+![Serena Chatbot with voice](./public/screenshots/serena-chat.png)
+![Serena Voicetalk](./public/screenshots/serena-voice.png)
+![Wellness Resources](./public/screenshots/wellness-resources.png)
+![Mental Health Guidebook](./public/screenshots/mental-health-guidebook.png)
+![Games and Challenges](./public/screenshots/games-and-challenges.png)
+![Memory Match](./public/screenshots/memory-match.png)
+![Mindful Breathing](./public/screenshots/mindful-breathing.png)
 ```
 
 ---
