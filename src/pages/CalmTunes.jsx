@@ -1,36 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import './CalmTunes.scss';
-
 const CalmTunes = () => {
   const [currentTrack, setCurrentTrack] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
+  const audioRef = useRef(null);
 
   const playlists = [
     {
       title: "Nature Sounds",
       tracks: [
-        { name: "Gentle Rain", duration: "10:00", icon: "🌧️" },
-        { name: "Forest Stream", duration: "15:00", icon: "🌲" },
-        { name: "Ocean Waves", duration: "20:00", icon: "🌊" },
-        { name: "Mountain Wind", duration: "12:00", icon: "🏔️" }
+        { name: "Gentle Rain", duration: "8:50", icon: "🌧️", src: 'src/assets/music/gentlerain.mp3' },
+        { name: "Forest Stream", duration: "7:46", icon: "🌲", src: "src/assets/music/foreststream.mp3" },
+        { name: "Ocean Waves", duration: "5:33", icon: "🌊", src: "src/assets/music/oceanwaves.mp3" },
+        { name: "Mountain Wind", duration: "12:00", icon: "🏔️", src: "src/assets/music/mountainwind.mp3" }
       ]
     },
     {
       title: "Meditation Music",
       tracks: [
-        { name: "Zen Garden", duration: "30:00", icon: "🎵" },
-        { name: "Mindful Journey", duration: "45:00", icon: "🎵" },
-        { name: "Inner Peace", duration: "20:00", icon: "🎵" },
-        { name: "Tranquil Space", duration: "25:00", icon: "🎵" }
+        { name: "Mindful Journey", duration: "0:16", icon: "🎵", src: "src/assets/music/space.mp3" },
+        { name: "Inner Peace", duration: "0:16", icon: "🎵", src: "src/assets/music/space.mp3" },
       ]
     },
     {
       title: "Sleep Sounds",
       tracks: [
-        { name: "Lullaby", duration: "40:00", icon: "🌙" },
-        { name: "Night Forest", duration: "60:00", icon: "🌲" },
-        { name: "White Noise", duration: "30:00", icon: "⚪" },
-        { name: "Dreamscape", duration: "45:00", icon: "✨" }
+        { name: "Lullaby", duration: "01:03", icon: "🌙", src: "src/assets/music/lullaby.mp3" },
+        { name: "Dreamscape", duration: "00:42", icon: "✨", src: "src/assets/music/dream.mp3" }
       ]
     }
   ];
@@ -39,6 +35,34 @@ const CalmTunes = () => {
     setCurrentTrack(track);
     setIsPlaying(true);
   };
+
+  const handleStop = () => {
+    setIsPlaying(false);
+    setCurrentTrack(null);
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+    }
+  };
+
+  // Play new track when selected
+  useEffect(() => {
+    if (currentTrack && audioRef.current) {
+      audioRef.current.src = currentTrack.src;
+      audioRef.current.play();
+    }
+  }, [currentTrack]);
+
+  // Pause/play based on state
+  useEffect(() => {
+    if (audioRef.current) {
+      if (isPlaying) {
+        audioRef.current.play();
+      } else {
+        audioRef.current.pause();
+      }
+    }
+  }, [isPlaying]);
 
   return (
     <div className="calm-tunes">
@@ -61,7 +85,7 @@ const CalmTunes = () => {
               <button className="control-button" onClick={() => setIsPlaying(!isPlaying)}>
                 {isPlaying ? '⏸️' : '▶️'}
               </button>
-              <button className="control-button" onClick={() => setCurrentTrack(null)}>
+              <button className="control-button" onClick={handleStop}>
                 ⏹️
               </button>
             </div>
@@ -92,8 +116,15 @@ const CalmTunes = () => {
           </div>
         ))}
       </div>
+
+      {/* Hidden audio element */}
+      <audio 
+        ref={audioRef} 
+        onEnded={() => setIsPlaying(false)} 
+        preload="auto"
+      />
     </div>
   );
 };
 
-export default CalmTunes; 
+export default CalmTunes;
