@@ -19,8 +19,6 @@ Serenity AI is a modern and intuitive mental wellness web application that seaml
   * [Environment Variables](#environment-variables)
 * [Project Structure](#project-structure)
 * [Usage Guide](#usage-guide)
-* [Deployment](#deployment)
-* [Contributing](#contributing)
 * [License](#license)
 
 ---
@@ -44,9 +42,6 @@ Serenity AI is a modern and intuitive mental wellness web application that seaml
 
 ## Screenshots
 
-> *To add screenshots, place image files inside the `public/screenshots/` directory and reference them below:*
-
-```
 ![Dashboard](./public/screenshots/dashboard.png)
 ![Journal](./public/screenshots/journal.png)
 ![Mood Tracker](./public/screenshots/mood-tracker.png)
@@ -57,7 +52,6 @@ Serenity AI is a modern and intuitive mental wellness web application that seaml
 ![Games and Challenges](./public/screenshots/games-and-challenges.png)
 ![Memory Match](./public/screenshots/memory-match.png)
 ![Mindful Breathing](./public/screenshots/mindful-breathing.png)
-```
 
 ---
 
