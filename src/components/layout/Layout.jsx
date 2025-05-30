@@ -14,6 +14,7 @@ const Layout = () => {
   const location = useLocation();
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
+  const [isSidebarVisible, setIsSidebarVisible] = useState(true);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -46,9 +47,18 @@ const Layout = () => {
     return location.pathname === path;
   };
 
+  const toggleSidebar = () => {
+    setIsSidebarVisible(!isSidebarVisible);
+  };
+
   return (
     <div className={`layout ${isDarkMode ? 'dark' : 'light'}`}>
-      <nav className="sidebar">
+      <button className="sidebar-toggle" onClick={toggleSidebar} aria-label="Toggle sidebar">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <nav className={`sidebar ${isSidebarVisible ? 'visible' : 'hidden'}`}>
         <div className="logo">
           <Logo size={32} className="logo-icon" />
           <span>Serenity AI</span>
