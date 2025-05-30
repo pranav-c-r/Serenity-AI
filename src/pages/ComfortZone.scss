@@ -253,4 +253,63 @@
       }
     }
   }
+}
+
+// --- ENHANCEMENTS & ANIMATIONS ---
+
+// Card entrance animation
+@keyframes comfortZoneCardFadeIn {
+  from { opacity: 0; transform: translateY(40px) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.comfort-zone .voice-interface, .comfort-zone .conversation-history, .comfort-zone .track-item {
+  animation: comfortZoneCardFadeIn 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) both;
+  transition: box-shadow 0.3s, transform 0.3s;
+  will-change: transform, box-shadow;
+  &:hover {
+    box-shadow: 0 8px 32px 0 rgba($accent, 0.18), 0 1.5px 8px 0 rgba($primary, 0.10);
+    transform: translateY(-6px) scale(1.03) rotateZ(-1deg);
+    z-index: 2;
+  }
+}
+
+.comfort-zone .voice-button {
+  transition: box-shadow 0.2s, background 0.2s;
+  &:hover, &:focus {
+    box-shadow: 0 0 0 3px rgba($accent, 0.18), 0 2px 8px rgba($accent, 0.10);
+    background: lighten($accent, 10%);
+  }
+}
+
+// Conversation history shine effect
+.comfort-zone .conversation-history {
+  position: relative;
+  overflow: hidden;
+  &::after {
+    content: '';
+    position: absolute;
+    left: -50%;
+    top: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba($accent,0.08) 0%, transparent 70%);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s;
+    z-index: 1;
+  }
+  &:hover::after {
+    opacity: 1;
+  }
+}
+
+// Mobile optimizations
+@media (max-width: 600px) {
+  .comfort-zone {
+    padding: 0.5rem;
+    .comfort-zone-header { margin-bottom: 1.2rem; h1 { font-size: 1.2rem; } p { font-size: 1rem; } }
+    .voice-interface { padding: 0.7rem; }
+    .conversation-history { padding: 0.5rem; }
+  }
 } 

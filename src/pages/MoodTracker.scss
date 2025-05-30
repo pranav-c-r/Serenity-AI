@@ -120,4 +120,289 @@
       }
     }
   }
+}
+
+// --- ENHANCEMENTS & ANIMATIONS ---
+
+// Card entrance animation
+@keyframes moodCardFadeIn {
+  from { opacity: 0; transform: translateY(40px) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.mood-tracker, .mood-selector, .mood-history, .history-item {
+  animation: moodCardFadeIn 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) both;
+  transition: box-shadow 0.3s, transform 0.3s;
+  will-change: transform, box-shadow;
+}
+
+.mood-button {
+  transition: box-shadow 0.2s, background 0.2s, transform 0.2s;
+  &:hover, &:focus {
+    box-shadow: 0 0 0 3px rgba($accent, 0.18), 0 2px 8px rgba($accent, 0.10);
+    background: lighten($accent, 10%);
+    transform: scale(1.08) rotateZ(-2deg);
+  }
+}
+
+// History item shine effect
+.history-item {
+  position: relative;
+  overflow: hidden;
+  &::after {
+    content: '';
+    position: absolute;
+    left: -50%;
+    top: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba($accent,0.08) 0%, transparent 70%);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s;
+    z-index: 1;
+  }
+  &:hover::after {
+    opacity: 1;
+  }
+}
+
+// Mobile optimizations
+@media (max-width: 600px) {
+  .mood-tracker {
+    padding: 0.5rem;
+    h1 { font-size: 1.2rem; }
+    h2 { font-size: 1.1rem; }
+  }
+  .mood-selector, .mood-history { padding: 0.7rem; }
+  .mood-button { font-size: 0.95rem; .emoji { font-size: 1.3rem; } .label { font-size: 0.85rem; } }
+  .history-item { padding: 0.5rem; font-size: 0.9rem; }
 } 
+
+@keyframes moodButtonStaggerEntry {
+  from {
+    opacity: 0;
+    transform: translateY(25px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes emojiPopAndGlowDark {
+  0% { transform: scale(1); filter: drop-shadow(0 0 0px rgba($accent, 0)); }
+  50% { transform: scale(1.25) rotate(-5deg); filter: drop-shadow(0 0 8px rgba($accent, 0.5)) drop-shadow(0 0 3px rgba($primary, 0.3)); }
+  100% { transform: scale(1); filter: drop-shadow(0 0 0px rgba($accent, 0)); }
+}
+@keyframes emojiPopAndGlowLight {
+  0% { transform: scale(1); filter: drop-shadow(0 0 0px rgba($accent, 0)); }
+  50% { transform: scale(1.25) rotate(-5deg); filter: drop-shadow(0 0 8px rgba($accent, 0.4)) drop-shadow(0 0 3px rgba(darken($light-mode-text,15%), 0.2)); }
+  100% { transform: scale(1); filter: drop-shadow(0 0 0px rgba($accent, 0)); }
+}
+
+@keyframes selectedMoodBorderDance {
+  0% { border-image-slice: 1; border-image-source: linear-gradient(45deg, $accent, lighten($accent, 15%)); }
+  25% { border-image-slice: 1; border-image-source: linear-gradient(135deg, $accent, lighten($accent, 15%)); }
+  50% { border-image-slice: 1; border-image-source: linear-gradient(225deg, $accent, lighten($accent, 15%)); }
+  75% { border-image-slice: 1; border-image-source: linear-gradient(315deg, $accent, lighten($accent, 15%)); }
+  100% { border-image-slice: 1; border-image-source: linear-gradient(45deg, $accent, lighten($accent, 15%)); }
+}
+@keyframes selectedMoodBgPulse {
+    0%, 100% { background-color: rgba($accent, 0.2); }
+    50% { background-color: rgba($accent, 0.3); }
+}
+
+@keyframes cardHoverBorderShine {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+@keyframes historyEmojiBob {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  25% { transform: translateY(-3px) rotate(-2deg); }
+  75% { transform: translateY(2px) rotate(1deg); }
+}
+
+
+// --- 2. Style Enhancements (Integrate into your existing SCSS) ---
+
+// --- Page Titles (No text shimmer) ---
+.mood-tracker {
+  // ... existing padding ...
+  h1 {
+    color: $primary; // Original color
+    margin-bottom: 2rem;
+    .light & {
+      color: $light-mode-text; // Original color
+    }
+  }
+
+  h2 {
+    color: $primary; // Original color
+    margin-bottom: 1rem;
+    .light & {
+      color: $light-mode-text; // Original color
+    }
+  }
+}
+
+// --- Enhanced Card Hover for .mood-selector and .mood-history ---
+.mood-selector, .mood-history {
+  // Your existing: animation: moodCardFadeIn ...
+  // Your existing: transition: box-shadow 0.3s, transform 0.3s;
+  // Your existing: will-change: transform, box-shadow;
+  
+  position: relative; // For the ::before border
+  overflow: visible; // Allow shadow from tilt to be seen
+  
+  // Add ::before for animated border on hover
+  &::before {
+    content: "";
+    position: absolute;
+    top: -2px; left: -2px; right: -2px; bottom: -2px;
+    z-index: -1;
+    border-radius: inherit; // Use card's border-radius (8px)
+    background: linear-gradient(120deg, rgba($accent,0.7), rgba($highlight,0.5), rgba($primary,0.3), rgba($accent,0.7));
+    background-size: 300% 300%;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    animation: cardHoverBorderShine 4s linear infinite paused; // Paused by default
+    will-change: opacity, background-position;
+  }
+
+  &:hover {
+    transform: translateY(-6px) perspective(800px) rotateX(3deg) rotateY(-2deg) scale(1.02);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.2), 0 5px 15px rgba($accent, 0.1); // More pronounced shadow
+    
+    .dark & {
+      box-shadow: 0 12px 28px rgba(0,0,0,0.25), 0 5px 15px rgba($accent, 0.15);
+    }
+    .light & {
+      box-shadow: 0 12px 28px rgba(0,0,0,0.15), 0 5px 15px rgba(darken($accent,10%), 0.1);
+    }
+
+    &::before { // Activate border on hover
+      opacity: 1;
+      animation-play-state: running;
+    }
+  }
+}
+
+// --- Staggered Entry & Enhanced Mood Buttons ---
+.mood-grid {
+  // ... existing display, grid-template-columns, gap ...
+  perspective: 800px; // For 3D effect on children if desired in animation
+}
+
+.mood-button {
+  // Your existing: display, flex-direction, align-items, padding, background-color, border, radius, cursor
+  transition: background-color 0.3s, border-color 0.3s, transform 0.3s ease-out, box-shadow 0.3s ease-out;
+  will-change: background-color, border-color, transform, box-shadow;
+
+  opacity: 0;
+  animation: moodButtonStaggerEntry 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+
+  @for $i from 1 through 10 {
+    &:nth-child(#{$i}) {
+      animation-delay: #{$i * 0.07}s;
+    }
+  }
+
+  &:hover {
+    // Your original hover background-color: rgba($accent, 0.1); can be kept or merged if different from below
+    background-color: rgba($accent, 0.1); // Ensuring this is present from original intent
+    transform: scale(1.1) rotateZ(-3deg) translateY(-4px);
+    box-shadow: 0 6px 15px rgba($accent, 0.2), 0 0 0 2px rgba($accent, 0.1);
+
+    .emoji {
+      .dark & { animation: emojiPopAndGlowDark 0.4s ease-out forwards; }
+      .light & { animation: emojiPopAndGlowLight 0.4s ease-out forwards; }
+    }
+  }
+
+  &.selected {
+    // Your existing: border-color: $accent; background-color: rgba($accent, 0.2);
+    border-width: 2px;
+    border-style: solid;
+    animation: selectedMoodBorderDance 2s linear infinite, selectedMoodBgPulse 1.5s ease-in-out infinite;
+    box-shadow: 0 0 15px rgba($accent, 0.3), 0 0 5px rgba($accent, 0.2);
+
+    .emoji {
+      transform: scale(1.15);
+      filter: drop-shadow(0 0 6px rgba($accent, 0.4));
+    }
+  }
+
+  .emoji {
+    // ... existing font-size, margin-bottom ...
+    transition: transform 0.3s ease, filter 0.3s ease;
+    will-change: transform, filter;
+  }
+
+  .label { // Make sure label color is correctly applied as per original code
+    color: $primary;
+    font-size: 0.9rem;
+    .light & {
+      color: $light-mode-text;
+    }
+  }
+}
+
+
+// --- Enhanced History Items ---
+.history-list {
+  // ... existing display, flex-direction, gap ...
+  perspective: 800px;
+}
+
+.history-item {
+  // Your existing: animation: moodCardFadeIn ...
+  // Your existing: transition: box-shadow 0.3s, transform 0.3s;
+  // Your existing: will-change: transform, box-shadow;
+  // Your existing: position: relative; overflow: hidden;
+  // Your existing: &::after for radial shine on hover
+
+  transition: background-color 0.3s, transform 0.3s ease-out, box-shadow 0.3s ease-out;
+  
+  &:hover {
+    transform: translateX(5px) scale(1.01);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    .dark & { box-shadow: 0 4px 12px rgba(0,0,0,0.18); }
+    .light & { box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+    
+    // Your existing: &:hover::after { opacity: 1; }
+
+    // MODIFIED: Only color change for mood label on hover, no text-shadow
+    .entry-details .mood-label {
+      color: $accent;
+    }
+  }
+
+  .emoji {
+    // ... existing font-size, margin-right ...
+    animation: historyEmojiBob 3s ease-in-out infinite;
+    animation-delay: calc(var(--animation-order, 0) * 0.2s);
+    will-change: transform;
+  }
+
+  .entry-details {
+    // ... existing styles ...
+    .mood-label {
+      // ... existing color, font-weight ...
+      transition: color 0.3s ease; // Transition only for color now
+      .light & {
+        // ... existing color ...
+      }
+    }
+    .timestamp {
+        // ... existing styles ...
+    }
+  }
+}
+
+// --- Adjusting generic fade-in animation application ---
+.mood-selector, .mood-history, .history-item {
+  // Keep your existing: animation: moodCardFadeIn 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) both;
+  // Keep transition and will-change from your "ENHANCEMENTS & ANIMATIONS" block
+}

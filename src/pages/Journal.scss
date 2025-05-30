@@ -179,3 +179,298 @@
     color: $light-mode-text;
   }
 }
+// -----------------------------------------------------------------------------
+// START: New Animations & Effects Snippet for Journal
+// -----------------------------------------------------------------------------
+
+// --- New Keyframes ---
+
+@keyframes subtleGradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes pageTitleGlowDark {
+  0%, 100% { text-shadow: 0 0 4px rgba($primary, 0.3), 0 0 8px rgba($accent, 0.15), 0 0 12px rgba($accent, 0.1); }
+  50% { text-shadow: 0 0 8px rgba($primary, 0.5), 0 0 16px rgba($accent, 0.3), 0 0 24px rgba(lighten($accent, 10%), 0.2); }
+}
+
+@keyframes pageTitleGlowLight {
+  0%, 100% { text-shadow: 0 0 4px rgba($light-mode-text, 0.15), 0 0 8px rgba($accent, 0.1), 0 0 12px rgba(darken($accent,5%), 0.05); }
+  50% { text-shadow: 0 0 8px rgba($light-mode-text, 0.25), 0 0 16px rgba($accent, 0.2), 0 0 24px rgba($accent, 0.15); }
+}
+
+@keyframes textareaFocusShine {
+  0% { box-shadow: 0 0 0 0 rgba($accent, 0); }
+  100% { box-shadow: 0 0 0 3px rgba($accent, 0.3), 0 0 10px 2px rgba($accent, 0.15); }
+}
+
+@keyframes buttonActivePulse {
+  0% { transform: scale(1) translateY(var(--translateY, 0)); } /* Use CSS var for hover Y pos */
+  50% { transform: scale(0.96) translateY(var(--translateY, 0)); }
+  100% { transform: scale(1) translateY(var(--translateY, 0)); }
+}
+
+@keyframes journalEntryLoad {
+  from {
+    opacity: 0;
+    transform: perspective(600px) rotateX(-15deg) translateY(25px) scale(0.98);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+  }
+  to {
+    opacity: 1;
+    transform: perspective(600px) rotateX(0deg) translateY(0) scale(1);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1); // Enhanced final shadow
+  }
+}
+
+@keyframes loadingSpinner {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes popupOverlayFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes popupContentEnter {
+  from {
+    opacity: 0;
+    transform: scale(0.92) translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+// --- Journal Page Title (h1) ---
+.journal {
+  // ... existing padding ...
+  h1 {
+    // ... existing color, margin-bottom ...
+    animation-duration: 3s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+    will-change: text-shadow; // ADDED: Performance hint
+
+    .dark & { // ADDED: For dark mode
+      animation-name: pageTitleGlowDark;
+    }
+    .light & {
+      // ... existing color ...
+      animation-name: pageTitleGlowLight; // ADDED: For light mode
+    }
+  }
+}
+
+// --- Journal Form Textarea ---
+.journal-form {
+  // ... existing margin-bottom ...
+
+  textarea {
+    // ... existing width, padding, border, radius, bg, color, resize, margin, font ...
+    transition: border-color 0.3s ease, box-shadow 0.3s ease; // ADDED: transition for box-shadow
+    will-change: border-color, box-shadow; // ADDED: Performance hint
+
+    // ... existing .light & ...
+
+    &:focus {
+      outline: none;
+      border-color: $accent;
+      // ADDED: Apply focus shine animation
+      animation: textareaFocusShine 0.4s forwards ease-out;
+    }
+  }
+
+  // --- Journal Form Button (and other buttons) ---
+  // This general button enhancement can be applied to:
+  // .journal-form button, .journal-entry button, .popup-content button
+  // Example for .journal-form button:
+  button {
+    // ... existing background-color, color, border, padding, radius, cursor, font-weight ...
+    // MODIFIED: transition for more properties
+    transition: background-color 0.3s, transform 0.2s ease-out, box-shadow 0.2s ease-out;
+    will-change: background-color, transform, box-shadow; // ADDED
+
+    &:hover {
+      background-color: darken($accent, 10%);
+      transform: translateY(-3px) scale(1.03); // ADDED/MODIFIED
+      box-shadow: 0 5px 12px rgba(darken($accent, 20%), 0.25); // ADDED
+    }
+
+    &:active { // ADDED
+      --translateY: -3px; // Capture hover Y position for pulse
+      animation: buttonActivePulse 0.3s ease-out;
+      background-color: darken($accent, 15%); // Slightly darker on active
+      transform: translateY(-1px) scale(1); // Less pronounced than hover after pulse
+      box-shadow: 0 2px 5px rgba(darken($accent, 20%), 0.15); // Reduced shadow on active
+    }
+  }
+}
+
+// --- Journal Entries List ---
+.journal-entries {
+  // ... existing display, flex-direction, gap ...
+  perspective: 1000px; // ADDED: For 3D effect on children entry
+}
+
+// --- Individual Journal Entry ---
+.journal-entry {
+  // ... existing padding, radius, box-shadow (will be overridden by animation initially), position ...
+  // MODIFIED: Add gradient background and animations
+  background-size: 250% 250%;
+  animation: journalEntryLoad 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards,
+             subtleGradientShift 20s ease infinite 0.6s; // Start gradient shift after load
+  opacity: 0; // Start hidden for animation
+  will-change: transform, opacity, box-shadow, background-position;
+  transition: transform 0.35s ease, box-shadow 0.35s ease; // For hover
+
+  .dark & {
+    // MODIFIED: from background-color to linear-gradient
+    background-image: linear-gradient(140deg, $card-bg 0%, lighten($card-bg, 2%) 50%, $card-bg 100%);
+  }
+  .light & {
+    // MODIFIED: from background-color to linear-gradient
+    background-image: linear-gradient(140deg, $light-mode-card 0%, lighten($light-mode-card, 1.5%) 50%, $light-mode-card 100%);
+  }
+
+  // ADDED: Stagger animation for entries (adjust count as needed)
+  @for $i from 1 through 20 {
+    &:nth-child(#{$i}) {
+      animation-delay: #{$i * 0.08}s, #{$i * 0.08 + 0.6}s; // Delay both animations
+    }
+  }
+
+  &:hover { // ADDED: Enhanced hover effect
+    transform: translateY(-8px) scale(1.02);
+    z-index: 10; // Bring to front on hover
+    .dark & {
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2), 0 0 20px -5px rgba($accent, 0.2);
+    }
+    .light & {
+      box-shadow: 0 10px 25px rgba(0,0,0,0.12), 0 0 20px -5px rgba(darken($accent, 10%), 0.15);
+    }
+
+    // Animate underline for date h3 on card hover
+    .entry-date h3::after {
+      width: 70%; // Or 100% if you prefer full underline
+    }
+  }
+
+  // ADDED: Decorative animated top border accent
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 4px;
+    width: 0%;
+    background: $accent;
+    border-radius: 0 0 4px 4px;
+    transition: width 0.4s ease-in-out 0.1s;
+    z-index: 1;
+  }
+
+  &:hover::before {
+    width: 60%; // Control width of accent border on hover
+  }
+
+  .entry-date {
+    // ... existing color, font-size, margin-bottom ...
+    position: relative; // ADDED: For h3::after positioning context
+    // ... existing .light & ...
+
+    h3 { // Target the h3 inside .entry-date for the animated underline
+        // ... existing font-size, font-weight, margin ...
+        position: relative; // ADDED
+        display: inline-block; // ADDED: To make ::after work correctly for underline
+        padding-bottom: 0.1rem; // ADDED: Space for underline
+
+        &::after { // ADDED: Animated underline
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 1.5px;
+            width: 0%; // Initial width
+            background-color: $accent;
+            transition: width 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.2s; // Delay slightly
+        }
+    }
+  }
+
+  .entry-content {
+    // ... existing color, line-height, white-space, font-size, margin-bottom ...
+    // ... existing .light & ...
+  }
+
+  button { // Apply general button enhancements (defined above in .journal-form)
+    // ... existing position, bottom, right, and specific styles if any ...
+    // If this button has specific transitions/hovers, merge carefully
+    // For this example, assuming it uses the global button style from above.
+    // If not, copy the hover/active/transition enhancements here.
+  }
+}
+
+// --- Loading Overlay ---
+.loading-overlay {
+  // ... existing position, top, left, right, bottom, display, justify-content, align-items, font-size, z-index ...
+  background: rgba(darken($background, 5%), 0.88); // MODIFIED: Use $background variable, slightly darker
+  color: $accent; // MODIFIED: Spinner color, text can be overridden if needed
+  flex-direction: column; // ADDED: To stack spinner and optional text
+  animation: popupOverlayFadeIn 0.3s ease forwards; // ADDED: Fade in
+
+  &::before { // ADDED: The spinner
+    content: '';
+    display: block;
+    width: 55px;
+    height: 55px;
+    border: 5px solid currentColor; // Uses .loading-overlay's color ($accent)
+    border-left-color: transparent; // Makes it look like a C-shape spinner
+    border-right-color: transparent;
+    border-radius: 50%;
+    animation: loadingSpinner 0.7s linear infinite;
+  }
+
+  // If you have text inside .loading-overlay, style it e.g.:
+  // > * { margin-top: 1rem; color: $primary; }
+}
+
+
+// --- Popup Overlay & Content ---
+.popup-overlay {
+  // ... existing position, top, left, width, height, background, display, align-items, justify-content, z-index ...
+  animation: popupOverlayFadeIn 0.3s ease-out forwards; // ADDED
+}
+
+.popup-content {
+  // ... existing background-color, padding, border-radius, max-width, width, max-height, overflow-y, color ...
+  animation: popupContentEnter 0.4s cubic-bezier(0.38, 0.94, 0.32, 1.28) forwards 0.1s; // ADDED (slight overshoot)
+  opacity: 0; // ADDED: Start hidden for animation
+  will-change: transform, opacity, box-shadow; // ADDED
+  // ADDED: Enhanced shadow for depth
+  .dark & {
+    box-shadow: 0 10px 30px -5px rgba(0,0,0,0.3), 0 0 0 1px rgba($primary, 0.1);
+  }
+  .light & {
+    box-shadow: 0 10px 30px -5px rgba(0,0,0,0.15), 0 0 0 1px rgba($light-mode-text, 0.1);
+  }
+
+  h3 {
+    // ... existing color, margin-bottom ...
+  }
+
+  p {
+    // ... existing line-height, margin-bottom ...
+  }
+
+  button { // Apply general button enhancements (defined above in .journal-form)
+    // ... existing styles ...
+    // As with .journal-entry button, ensure hover/active styles are applied/merged.
+  }
+
+  // ... existing .light & for background-color, color ...
+}

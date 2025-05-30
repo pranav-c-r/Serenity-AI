@@ -388,3 +388,49 @@
   -webkit-text-stroke: 1px #000;
   text-stroke: 1px #000;
 }
+
+// --- ENHANCEMENTS & ANIMATIONS ---
+
+// Message entrance animation
+@keyframes chatMessageFadeIn {
+  from { opacity: 0; transform: translateY(30px) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.chat-messages .message {
+  animation: chatMessageFadeIn 0.6s cubic-bezier(0.25, 0.8, 0.25, 1) both;
+}
+
+// Input focus/active effect
+.input-container {
+  transition: box-shadow 0.2s, border-color 0.2s;
+  &:focus-within {
+    box-shadow: 0 0 0 3px rgba($accent, 0.18), 0 2px 8px rgba($accent, 0.10);
+    border-color: $accent !important;
+  }
+}
+
+// Send/voice button hover glow
+.input-actions button {
+  transition: box-shadow 0.2s, background 0.2s;
+  &:hover, &:focus {
+    box-shadow: 0 0 0 3px rgba($accent, 0.18), 0 2px 8px rgba($accent, 0.10);
+    background: lighten($accent, 10%);
+  }
+}
+
+// Typing indicator bounce
+.typing-indicator span {
+  animation: bounce 1.4s infinite ease-in-out, chatMessageFadeIn 0.6s;
+}
+
+// Mobile optimizations
+@media (max-width: 600px) {
+  .chat-container { padding: 0.5rem; }
+  .chat-header { padding: 0.7rem; }
+  .chat-messages { padding: 0.7rem; gap: 0.5rem; }
+  .message-content { padding: 0.7rem; font-size: 0.98rem; }
+  .chat-input { padding: 0.5rem; }
+  .input-container { padding: 0.5rem; }
+}
+
