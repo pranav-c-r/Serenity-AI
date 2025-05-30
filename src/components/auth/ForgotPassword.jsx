@@ -10,7 +10,6 @@ const ForgotPassword = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Placeholder for password reset logic
       setMessage('Password reset link has been sent to your email');
       setError('');
     } catch (err) {

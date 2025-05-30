@@ -18,7 +18,6 @@ const Chat = () => {
   const recognitionRef = useRef(null);
   const speechSynthesisRef = useRef(window.speechSynthesis);
 
-  // Initial welcome message
   useEffect(() => {
     const welcomeMessage = {
       text: `Hi ${username}! I'm Serena, your AI assistant. How can I help you today?`,
@@ -29,7 +28,6 @@ const Chat = () => {
     speakText(welcomeMessage.text);
   }, []);
 
-  // Scroll to bottom when new messages arrive
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
@@ -39,7 +37,6 @@ const Chat = () => {
   }, [messages]);
 
   useEffect(() => {
-    // Initialize speech recognition
     const initSpeechRecognition = () => {
       if ('webkitSpeechRecognition' in window) {
         recognitionRef.current = new window.webkitSpeechRecognition();
@@ -68,7 +65,6 @@ const Chat = () => {
             }
           }
 
-          // Update input with both final and interim results
           setInputText(finalTranscript || interimTranscript || 'Listening...');
         };
 
@@ -96,7 +92,6 @@ const Chat = () => {
           console.log('Speech recognition ended');
           setIsRecording(false);
           
-          // If we have a final transcript, send it
           if (finalTranscript) {
             handleSubmit(finalTranscript);
           }
@@ -126,11 +121,9 @@ const Chat = () => {
       try {
         const utterance = new window.SpeechSynthesisUtterance(text);
         
-        // Get all voices and log them for debugging
         const availableVoices = window.speechSynthesis.getVoices();
         console.log('Available voices:', availableVoices.map(v => v.name));
         
-        // Try to find a female voice with more specific criteria
         const femaleVoice = availableVoices.find(voice => 
           voice.name.toLowerCase().includes('female') || 
           voice.name.toLowerCase().includes('samantha') ||
@@ -162,12 +155,11 @@ const Chat = () => {
         if (femaleVoice) {
           console.log('Selected female voice:', femaleVoice.name);
           utterance.voice = femaleVoice;
-          utterance.pitch = 1.2;  // Higher pitch for more feminine sound
-          utterance.rate = 0.9;   // Slightly slower rate for clarity
+          utterance.pitch = 1.2;  
+          utterance.rate = 0.9;   
         } else {
           console.log('No female voice found, using default voice with feminine settings');
-          // If no female voice is found, try to set a higher pitch to make it sound more feminine
-          utterance.pitch = 1.2;
+          utterance.pitch = 1.3;
           utterance.rate = 0.9;
         }
 
@@ -181,14 +173,12 @@ const Chat = () => {
     }
   };
 
-  // Load voices when component mounts
   useEffect(() => {
     const loadVoices = () => {
       const availableVoices = window.speechSynthesis.getVoices();
       console.log('Available voices:', availableVoices.map(v => v.name));
     };
 
-    // Chrome loads voices asynchronously
     if (window.speechSynthesis.onvoiceschanged !== undefined) {
       window.speechSynthesis.onvoiceschanged = loadVoices;
     }
@@ -276,7 +266,6 @@ const Chat = () => {
   `;
 }, [moodText, username]);
 
-  // Handle text input submission
   const handleSubmit = async (text = inputText) => {
     if (!text.trim() || text === 'Listening...') return;
 
@@ -313,7 +302,6 @@ const Chat = () => {
     }
   };
 
-  // Handle key down for shift+enter
   const handleKeyPress = (e) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();

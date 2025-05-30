@@ -300,7 +300,6 @@
   }
 }
 
-// Add custom scrollbar styles
 .chat-messages::-webkit-scrollbar {
   width: 8px;
   margin-right: 1rem;
@@ -321,7 +320,6 @@
   background-color: rgba($secondary, 0.5);
 }
 
-// Responsive Design
 @media (max-width: $breakpoint-md) {
   .chat-container {
     margin: 0;
@@ -389,9 +387,8 @@
   text-stroke: 1px #000;
 }
 
-// --- ENHANCEMENTS & ANIMATIONS ---
 
-// Message entrance animation
+
 @keyframes chatMessageFadeIn {
   from { opacity: 0; transform: translateY(30px) scale(0.97); }
   to { opacity: 1; transform: translateY(0) scale(1); }
@@ -401,7 +398,7 @@
   animation: chatMessageFadeIn 0.6s cubic-bezier(0.25, 0.8, 0.25, 1) both;
 }
 
-// Input focus/active effect
+
 .input-container {
   transition: box-shadow 0.2s, border-color 0.2s;
   &:focus-within {
@@ -410,7 +407,6 @@
   }
 }
 
-// Send/voice button hover glow
 .input-actions button {
   transition: box-shadow 0.2s, background 0.2s;
   &:hover, &:focus {
@@ -419,12 +415,10 @@
   }
 }
 
-// Typing indicator bounce
 .typing-indicator span {
   animation: bounce 1.4s infinite ease-in-out, chatMessageFadeIn 0.6s;
 }
 
-// Mobile optimizations
 @media (max-width: 600px) {
   .chat-container { padding: 0.5rem; }
   .chat-header { padding: 0.7rem; }
