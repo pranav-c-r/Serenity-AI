@@ -188,13 +188,13 @@ Serenity-AI/
 
 ![Listening](./public/screenshots/listening.png)
 
-![Mobile1](./public/screenshots/mobile1.png)
+![Mobile1](./public/screenshots/mobile1.jpg)
 
-![Mobile2](./public/screenshots/mobile2.png)
+![Mobile2](./public/screenshots/mobile2.jpg)
 
-![Mobile3](./public/screenshots/mobile3.png)
+![Mobile3](./public/screenshots/mobile3.jpg)
 
-![Mobile4](./public/screenshots/mobile4.png)
+![Mobile4](./public/screenshots/mobile4.jpg)
 
 
 
