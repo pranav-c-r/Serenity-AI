@@ -147,12 +147,26 @@
     background: $card-bg;
     border-radius: 1rem;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    overflow-y: auto;
-    max-height: 400px;
+    overflow-y: scroll;
+    height: 400px;
     color: $primary;
     .light & {
       background: $light-mode-card;
       color: $light-mode-text;
+    }
+
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.1);
+      border-radius: 3px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 3px;
     }
 
     .message {
