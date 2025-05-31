@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Play, Pause, RotateCcw } from 'lucide-react';
-import './MindfulBreathing.scss'; // Import your SCSS file
+import './MindfulBreathing.scss';
 
 export default function BreathingExercise() {
   const [isActive, setIsActive] = useState(false);
-  const [phase, setPhase] = useState('rest'); // 'inhale', 'hold', 'exhale', 'rest'
+  const [phase, setPhase] = useState('rest');
   const [timeLeft, setTimeLeft] = useState(0);
   const [cycle, setCycle] = useState(0);
   const [totalCycles, setTotalCycles] = useState(5);
   
-  // Customizable breathing pattern (in seconds)
   const [breathingPattern, setBreathingPattern] = useState({
     inhale: 4,
     hold: 4,
@@ -25,7 +24,6 @@ export default function BreathingExercise() {
         setTimeLeft(timeLeft - 1);
       }, 1000);
     } else if (isActive && timeLeft === 0) {
-      // Move to next phase
       if (phase === 'inhale') {
         setPhase('hold');
         setTimeLeft(breathingPattern.hold);
@@ -53,7 +51,6 @@ export default function BreathingExercise() {
 
   const handleStart = () => {
     if (!isActive && phase === 'rest' && timeLeft === 0) {
-      // Starting fresh
       setPhase('inhale');
       setTimeLeft(breathingPattern.inhale);
     }
@@ -104,7 +101,6 @@ export default function BreathingExercise() {
           Find your center with guided diaphragmatic breathing
         </p>
 
-        {/* Breathing Circle */}
         <div className="breathing-circle" data-phase={phase}>
           <div className="circle-content">
             <h2>{getPhaseText()}</h2>
@@ -114,17 +110,14 @@ export default function BreathingExercise() {
           </div>
         </div>
 
-        {/* Instructions */}
         <p style={{ fontSize: '1.1rem', margin: '1rem 0', color: 'var(--secondary)' }}>
           {getInstructions()}
         </p>
         
-        {/* Progress */}
         <p style={{ color: 'var(--secondary)', marginBottom: '2rem' }}>
           {isActive || cycle > 0 ? `Cycle ${cycle + 1} of ${totalCycles}` : ''}
         </p>
 
-        {/* Controls */}
         <div className="controls">
           <button
             onClick={handleStart}
@@ -153,7 +146,6 @@ export default function BreathingExercise() {
           </button>
         </div>
 
-        {/* Customization */}
         <div className="customization">
           <h3>Customize Your Breathing Pattern</h3>
           <div className="duration-controls">
@@ -224,7 +216,6 @@ export default function BreathingExercise() {
           </div>
         </div>
 
-        {/* Benefits */}
         <div className="benefits">
           <h3>Benefits of Mindful Breathing</h3>
           <ul>
@@ -236,8 +227,7 @@ export default function BreathingExercise() {
             <li>Increases mindfulness and presence</li>
           </ul>
         </div>
-
-        {/* Completion Message */}
+                
         {cycle >= totalCycles && !isActive && cycle > 0 && (
           <div style={{
             marginTop: '2rem',

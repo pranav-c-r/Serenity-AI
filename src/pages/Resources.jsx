@@ -10,7 +10,6 @@ const Resources = () => {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [expandedCards, setExpandedCards] = useState(new Set());
 
-  // Categories for filtering
   const categories = [
     'All',
     'Mindfulness',
@@ -22,20 +21,17 @@ const Resources = () => {
     'Articles'
   ];
 
-  // Fetch resources from multiple APIs
   useEffect(() => {
     const fetchResources = async () => {
       try {
         setIsLoading(true);
         
-        // Fetch from multiple sources in parallel
         const [youtubeResults, booksResults, articlesResults] = await Promise.all([
           fetchYouTubeResources(),
           fetchBooksResources(),
           fetchFreeArticles()
         ]);
 
-        // Combine and format all resources
         const allResources = [
           ...youtubeResults,
           ...booksResults,
@@ -55,18 +51,15 @@ const Resources = () => {
     fetchResources();
   }, []);
 
-  // Filter resources based on search term and category
   useEffect(() => {
     let results = resources;
 
-    // Apply category filter
     if (selectedCategory !== 'All') {
       results = results.filter(resource => 
         resource.category === selectedCategory || resource.type === selectedCategory
       );
     }
 
-    // Apply search filter
     if (searchTerm.trim()) {
       const searchLower = searchTerm.toLowerCase();
       results = results.filter(resource =>
@@ -87,7 +80,6 @@ const Resources = () => {
     setSelectedCategory(category);
   };
 
-  // Fetch YouTube videos
   const fetchYouTubeResources = async () => {
     if (!import.meta.env.VITE_YOUTUBE_API_KEY) {
       console.warn('YouTube API key not found');
@@ -136,7 +128,6 @@ const Resources = () => {
     return results;
   };
 
-  // Fetch books from Google Books API
   const fetchBooksResources = async () => {
     const searchTerms = [
       'mental health wellness',
@@ -177,11 +168,8 @@ const Resources = () => {
     return results;
   };
 
-  // Fetch free articles from various sources
   const fetchFreeArticles = async () => {
-    // Curated list of free mental health and wellness articles
     const freeArticles = [
-      // Mindfulness Articles
       {
         id: 'mindful-1',
         title: 'Getting Started with Mindfulness',
@@ -200,7 +188,6 @@ const Resources = () => {
         link: 'https://www.mindful.org/mindful-breathing/',
         image: 'https://images.unsplash.com/photo-1545205597-3d9d02c29597?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60'
       },
-      // Wellness Articles
       {
         id: 'psychology-today-1',
         title: 'The Science of Stress Management',
@@ -219,7 +206,6 @@ const Resources = () => {
         link: 'https://www.psychologytoday.com/us/basics/resilience',
         image: 'https://images.unsplash.com/photo-1544947950-fa07a98d237f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60'
       },
-      // Personal Growth Articles
       {
         id: 'helpguide-1',
         title: 'Improving Emotional Intelligence',
@@ -238,7 +224,6 @@ const Resources = () => {
         link: 'https://www.helpguide.org/articles/relationships-communication/effective-communication.htm',
         image: 'https://images.unsplash.com/photo-1548286978-f218023f8d18?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60'
       },
-      // Health Articles
       {
         id: 'healthline-1',
         title: 'Self-Care Strategies for Mental Health',
@@ -257,7 +242,6 @@ const Resources = () => {
         link: 'https://www.healthline.com/health/mental-health/sleep-and-mental-health',
         image: 'https://images.unsplash.com/photo-1548286978-f218023f8d18?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60'
       },
-      // Additional Wellness Articles
       {
         id: 'verywell-1',
         title: 'Building Healthy Habits',
@@ -281,7 +265,6 @@ const Resources = () => {
     return freeArticles;
   };
 
-  // Helper function to categorize resources based on title
   const getCategoryFromTitle = (title) => {
     const titleLower = title.toLowerCase();
     if (titleLower.includes('mindfulness') || titleLower.includes('meditation')) {

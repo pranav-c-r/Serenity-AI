@@ -122,9 +122,7 @@
   }
 }
 
-// --- ENHANCEMENTS & ANIMATIONS ---
 
-// Card entrance animation
 @keyframes moodCardFadeIn {
   from { opacity: 0; transform: translateY(40px) scale(0.97); }
   to { opacity: 1; transform: translateY(0) scale(1); }
@@ -145,7 +143,6 @@
   }
 }
 
-// History item shine effect
 .history-item {
   position: relative;
   overflow: hidden;
@@ -167,7 +164,6 @@
   }
 }
 
-// Mobile optimizations
 @media (max-width: 600px) {
   .mood-tracker {
     padding: 0.5rem;
@@ -225,55 +221,50 @@
 }
 
 
-// --- 2. Style Enhancements (Integrate into your existing SCSS) ---
 
-// --- Page Titles (No text shimmer) ---
 .mood-tracker {
-  // ... existing padding ...
   h1 {
-    color: $primary; // Original color
+    color: $primary;
     margin-bottom: 2rem;
     .light & {
-      color: $light-mode-text; // Original color
+      color: $light-mode-text;
     }
   }
 
   h2 {
-    color: $primary; // Original color
+    color: $primary;
     margin-bottom: 1rem;
     .light & {
-      color: $light-mode-text; // Original color
+      color: $light-mode-text;
     }
   }
 }
 
-// --- Enhanced Card Hover for .mood-selector and .mood-history ---
 .mood-selector, .mood-history {
-  // Your existing: animation: moodCardFadeIn ...
-  // Your existing: transition: box-shadow 0.3s, transform 0.3s;
-  // Your existing: will-change: transform, box-shadow;
+  animation: moodCardFadeIn 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) both;
+  transition: box-shadow 0.3s, transform 0.3s;
+  will-change: transform, box-shadow;
   
-  position: relative; // For the ::before border
-  overflow: visible; // Allow shadow from tilt to be seen
+  position: relative;
+  overflow: visible;
   
-  // Add ::before for animated border on hover
   &::before {
     content: "";
     position: absolute;
     top: -2px; left: -2px; right: -2px; bottom: -2px;
     z-index: -1;
-    border-radius: inherit; // Use card's border-radius (8px)
+    border-radius: inherit;
     background: linear-gradient(120deg, rgba($accent,0.7), rgba($highlight,0.5), rgba($primary,0.3), rgba($accent,0.7));
     background-size: 300% 300%;
     opacity: 0;
     transition: opacity 0.4s ease;
-    animation: cardHoverBorderShine 4s linear infinite paused; // Paused by default
+    animation: cardHoverBorderShine 4s linear infinite paused;
     will-change: opacity, background-position;
   }
 
   &:hover {
     transform: translateY(-6px) perspective(800px) rotateX(3deg) rotateY(-2deg) scale(1.02);
-    box-shadow: 0 12px 28px rgba(0,0,0,0.2), 0 5px 15px rgba($accent, 0.1); // More pronounced shadow
+    box-shadow: 0 12px 28px rgba(0,0,0,0.2), 0 5px 15px rgba($accent, 0.1);
     
     .dark & {
       box-shadow: 0 12px 28px rgba(0,0,0,0.25), 0 5px 15px rgba($accent, 0.15);
@@ -282,21 +273,18 @@
       box-shadow: 0 12px 28px rgba(0,0,0,0.15), 0 5px 15px rgba(darken($accent,10%), 0.1);
     }
 
-    &::before { // Activate border on hover
+    &::before {
       opacity: 1;
       animation-play-state: running;
     }
   }
 }
 
-// --- Staggered Entry & Enhanced Mood Buttons ---
 .mood-grid {
-  // ... existing display, grid-template-columns, gap ...
-  perspective: 800px; // For 3D effect on children if desired in animation
+  perspective: 800px;
 }
 
 .mood-button {
-  // Your existing: display, flex-direction, align-items, padding, background-color, border, radius, cursor
   transition: background-color 0.3s, border-color 0.3s, transform 0.3s ease-out, box-shadow 0.3s ease-out;
   will-change: background-color, border-color, transform, box-shadow;
 
@@ -310,8 +298,7 @@
   }
 
   &:hover {
-    // Your original hover background-color: rgba($accent, 0.1); can be kept or merged if different from below
-    background-color: rgba($accent, 0.1); // Ensuring this is present from original intent
+    background-color: rgba($accent, 0.1);
     transform: scale(1.1) rotateZ(-3deg) translateY(-4px);
     box-shadow: 0 6px 15px rgba($accent, 0.2), 0 0 0 2px rgba($accent, 0.1);
 
@@ -322,7 +309,6 @@
   }
 
   &.selected {
-    // Your existing: border-color: $accent; background-color: rgba($accent, 0.2);
     border-width: 2px;
     border-style: solid;
     animation: selectedMoodBorderDance 2s linear infinite, selectedMoodBgPulse 1.5s ease-in-out infinite;
@@ -335,12 +321,11 @@
   }
 
   .emoji {
-    // ... existing font-size, margin-bottom ...
     transition: transform 0.3s ease, filter 0.3s ease;
     will-change: transform, filter;
   }
 
-  .label { // Make sure label color is correctly applied as per original code
+  .label {
     color: $primary;
     font-size: 0.9rem;
     .light & {
@@ -350,20 +335,13 @@
 }
 
 
-// --- Enhanced History Items ---
 .history-list {
-  // ... existing display, flex-direction, gap ...
   perspective: 800px;
 }
 
 .history-item {
-  // Your existing: animation: moodCardFadeIn ...
-  // Your existing: transition: box-shadow 0.3s, transform 0.3s;
-  // Your existing: will-change: transform, box-shadow;
-  // Your existing: position: relative; overflow: hidden;
-  // Your existing: &::after for radial shine on hover
-
   transition: background-color 0.3s, transform 0.3s ease-out, box-shadow 0.3s ease-out;
+
   
   &:hover {
     transform: translateX(5px) scale(1.01);
@@ -371,38 +349,37 @@
     .dark & { box-shadow: 0 4px 12px rgba(0,0,0,0.18); }
     .light & { box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
     
-    // Your existing: &:hover::after { opacity: 1; }
+   
 
-    // MODIFIED: Only color change for mood label on hover, no text-shadow
     .entry-details .mood-label {
       color: $accent;
     }
   }
 
   .emoji {
-    // ... existing font-size, margin-right ...
     animation: historyEmojiBob 3s ease-in-out infinite;
     animation-delay: calc(var(--animation-order, 0) * 0.2s);
     will-change: transform;
   }
 
   .entry-details {
-    // ... existing styles ...
     .mood-label {
-      // ... existing color, font-weight ...
-      transition: color 0.3s ease; // Transition only for color now
+      transition: color 0.3s ease;
       .light & {
-        // ... existing color ...
+        color: $light-mode-text;
       }
     }
     .timestamp {
-        // ... existing styles ...
+      color: $secondary;
+      .light & {
+        color: $light-mode-text;
+      }
     }
   }
 }
 
-// --- Adjusting generic fade-in animation application ---
 .mood-selector, .mood-history, .history-item {
-  // Keep your existing: animation: moodCardFadeIn 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) both;
-  // Keep transition and will-change from your "ENHANCEMENTS & ANIMATIONS" block
+  animation: moodCardFadeIn 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) both;
+  transition: box-shadow 0.3s, transform 0.3s;
+  will-change: transform, box-shadow;
 }

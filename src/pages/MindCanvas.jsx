@@ -17,8 +17,6 @@ const MindCanvas = () => {
     setError(null);
 
     try {
-      // TODO: Implement actual image generation API call
-      // This is a placeholder for the API integration
       const response = await fetch('YOUR_IMAGE_GENERATION_API_ENDPOINT', {
         method: 'POST',
         headers: {
