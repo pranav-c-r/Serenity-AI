@@ -114,4 +114,28 @@
       text-decoration: underline;
     }
   }
+}
+
+@media (max-width: 600px) {
+  .auth-container, .auth-card, .auth-form {
+    min-width: 0 !important;
+    width: 100% !important;
+    max-width: 100vw !important;
+    padding: 1rem !important;
+  }
+  .auth-header {
+    padding: 0.5rem !important;
+    text-align: left !important;
+  }
+  input, .input, textarea, select {
+    font-size: 1em !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box;
+  }
+  .google-button {
+    width: 100% !important;
+    font-size: 1em !important;
+    padding: 0.8em 0.5em !important;
+  }
 } 

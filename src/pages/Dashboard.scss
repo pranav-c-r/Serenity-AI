@@ -484,11 +484,7 @@
   text-stroke: 0.4px #000;
 }
 
-// -----------------------------------------------------------------------------
-// START: New Animations & Effects Snippet
-// -----------------------------------------------------------------------------
 
-// --- 1. New Keyframes ---
 
 @keyframes animatedGradientMovement {
   0% { background-position: 0% 50%; }
@@ -673,4 +669,27 @@
     animation: prophecyGlowLight 3s ease-in-out infinite;
   }
   will-change: filter, transform, opacity; 
+}
+
+@media (max-width: 600px) {
+  .dashboard-header {
+    padding: 0.5rem !important;
+    text-align: left !important;
+  }
+  .dashboard-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 1rem !important;
+    width: 100% !important;
+  }
+  .dashboard-card {
+    width: 100% !important;
+    min-width: 0 !important;
+    font-size: 1em !important;
+    padding: 1em 0.5em !important;
+  }
+  .prophecy-quote-card {
+    font-size: 1em !important;
+    padding: 0.5em !important;
+  }
 }

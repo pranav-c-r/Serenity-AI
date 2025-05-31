@@ -269,4 +269,40 @@
   &.visible {
     display: block;
   }
+}
+
+@media (max-width: 600px) {
+  .layout {
+    flex-direction: column !important;
+    padding: 0.5rem !important;
+  }
+  .sidebar {
+    position: fixed !important;
+    left: 0; top: 0; right: 0;
+    width: 100vw !important;
+    min-width: 0 !important;
+    z-index: 1000;
+    background: #181c20;
+    padding: 1rem 0.5rem !important;
+    display: none !important;
+  }
+  .sidebar.visible {
+    display: block !important;
+  }
+  .sidebar-toggle {
+    display: block !important;
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    z-index: 1100;
+  }
+  .main-content {
+    padding: 0.5rem !important;
+    width: 100vw !important;
+    min-width: 0 !important;
+  }
+  .user-info {
+    font-size: 0.95em !important;
+    padding: 0.5em 0 !important;
+  }
 } 
