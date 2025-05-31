@@ -28,7 +28,8 @@ const Layout = () => {
           setUsername(userData.username || 'No Username');
           setEmail(userData.email || 'No email found');
         } else {
-          navigate("/signin");
+          await auth.signOut();
+          navigate("/signup");
         }
       } else {
         navigate("/");

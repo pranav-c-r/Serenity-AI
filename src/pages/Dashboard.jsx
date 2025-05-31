@@ -130,9 +130,10 @@ Only return the quote text. No category, no metadata, no author.
         if (userSnap.exists()) {
           const userData = userSnap.data();
           setUsername(userData.username || 'User');
-          
-          console.log("User document not found, redirecting to signin.");
-          navigate("/signin");
+        } else {
+          // User document not found, sign out and redirect to signup
+          await signOut(auth);
+          navigate("/signup");
         }
       } else {
         console.log("No current user, redirecting to home.");
