@@ -189,11 +189,12 @@ Serenity-AI/
 ![Listening](./public/screenshots/listening.png)
 
 <p float="left">
-  <img src="./public/screenshots/mobile1.jpg" width="200"/>
-  <img src="./public/screenshots/mobile2.jpg" width="200"/>
-  <img src="./public/screenshots/mobile3.jpg" width="200"/>
+  <img src="./public/screenshots/mobile1.jpg" width="200" style="margin-right: 10px;"/>
+  <img src="./public/screenshots/mobile2.jpg" width="200" style="margin-right: 10px;"/>
+  <img src="./public/screenshots/mobile3.jpg" width="200" style="margin-right: 10px;"/>
   <img src="./public/screenshots/mobile4.jpg" width="200"/>
 </p>
+
 
 
 
