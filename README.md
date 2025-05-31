@@ -177,14 +177,26 @@ Serenity-AI/
 ## More Screenshots
 
 ![Light mode1](./public/screenshots/lightmode1.png)
+
 ![Light mode2](./public/screenshots/lightmode2.png)
+
 ![Light mode3](./public/screenshots/lightmode3.png)
+
+![Light mode4](./public/screenshots/lightmode4.png)
+
+![puzzle](./public/screenshots/puzzle.png)
+
+![Listening](./public/screenshots/listening.png)
+
 ![Mobile1](./public/screenshots/mobile1.png)
+
 ![Mobile2](./public/screenshots/mobile2.png)
+
 ![Mobile3](./public/screenshots/mobile3.png)
+
 ![Mobile4](./public/screenshots/mobile4.png)
 
----
+
 
 with 💖, TEAM DE4DSCOPE
 
