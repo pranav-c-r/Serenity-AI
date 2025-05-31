@@ -155,21 +155,21 @@ const Landing = () => {
         <div className="team-grid">
           <div className="team-card" data-scroll-animate data-animation-delay="0s">
             <div className="team-image-wrapper">
-              <img src="public/pfp.jpg" alt="Pranav C R" className="team-image" />
+              <img src="/pfp.jpg" alt="Pranav C R" className="team-image" />
             </div>
             <h3>Pranav C R</h3>
             <p>Frontend Developer</p>
           </div>
           <div className="team-card" data-scroll-animate data-animation-delay="0.1s">
             <div className="team-image-wrapper">
-              <img src="public/pfp.jpg" alt="Kesavan G" className="team-image" />
+              <img src="/pfp.jpg" alt="Kesavan G" className="team-image" />
             </div>
             <h3>Kesavan G</h3>
             <p>Backend Developer</p>
           </div>
           <div className="team-card" data-scroll-animate data-animation-delay="0.2s">
             <div className="team-image-wrapper">
-              <img src="public/pfp.jpg" alt="Adwaith J" className="team-image" />
+              <img src="/pfp.jpg" alt="Adwaith J" className="team-image" />
             </div>
             <h3>Adwaith J</h3>
             <p>AIML Developer</p>
