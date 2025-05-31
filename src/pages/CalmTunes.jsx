@@ -1,5 +1,26 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './CalmTunes.scss';
+
+// Import audio files
+import gentleRain from '../assets/music/gentlerain.mp3';
+import forestStream from '../assets/music/foreststream.mp3';
+import oceanWaves from '../assets/music/oceanwaves.mp3';
+import mountainWind from '../assets/music/mountainwind.mp3';
+import stormClouds from '../assets/music/stormclouds.mp3';
+import transcendence from '../assets/music/transcendence.mp3';
+import magicalMoments from '../assets/music/magicalmoments.mp3';
+import echoesInBlue from '../assets/music/echoesinblue.mp3';
+import space from '../assets/music/space.mp3';
+import lullaby from '../assets/music/lullaby.mp3';
+import dream from '../assets/music/dream.mp3';
+import moonlight from '../assets/music/moonlight.mp3';
+import purpleDream from '../assets/music/purpledream.mp3';
+import daydreams from '../assets/music/daydreams.mp3';
+import morningRoutine from '../assets/music/morningroutine.mp3';
+import springFlowers from '../assets/music/springflowers.mp3';
+import sunsetDrive from '../assets/music/sunsetdrive.mp3';
+import colorfulFlowers from '../assets/music/colorfulflowers.mp3';
+
 const CalmTunes = () => {
   const [currentTrack, setCurrentTrack] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -9,39 +30,39 @@ const CalmTunes = () => {
     {
       title: "Nature Sounds",
       tracks: [
-        { name: "Gentle Rain", duration: "8:50", icon: "🌧️", src: 'src/assets/music/gentlerain.mp3' },
-        { name: "Forest Stream", duration: "7:46", icon: "🌲", src: "src/assets/music/foreststream.mp3" },
-        { name: "Ocean Waves", duration: "5:33", icon: "🌊", src: "src/assets/music/oceanwaves.mp3" },
-        { name: "Mountain Wind", duration: "12:00", icon: "🏔️", src: "src/assets/music/mountainwind.mp3" },
-        { name: "Storm Clouds", duration: "6:40", icon: "⛈️", src: "src/assets/music/stormclouds.mp3" }
+        { name: "Gentle Rain", duration: "8:50", icon: "🌧️", src: gentleRain },
+        { name: "Forest Stream", duration: "7:46", icon: "🌲", src: forestStream },
+        { name: "Ocean Waves", duration: "5:33", icon: "🌊", src: oceanWaves },
+        { name: "Mountain Wind", duration: "12:00", icon: "🏔️", src: mountainWind },
+        { name: "Storm Clouds", duration: "6:40", icon: "⛈️", src: stormClouds }
       ]
     },
     {
       title: "Meditation Music",
       tracks: [
-        { name: "Transcendence", duration: "31:00", icon: "✨", src: "src/assets/music/transcendence.mp3" },
-        { name: "Magical Moments", duration: "5:48", icon: "🎵", src: "src/assets/music/magicalmoments.mp3" },
-        { name: "Echoes in Blue", duration: "2:30", icon: "🎵", src: "src/assets/music/echoesinblue.mp3" },
-        { name: "Space Journey", duration: "0:16", icon: "🚀", src: "src/assets/music/space.mp3" }
+        { name: "Transcendence", duration: "31:00", icon: "✨", src: transcendence },
+        { name: "Magical Moments", duration: "5:48", icon: "🎵", src: magicalMoments },
+        { name: "Echoes in Blue", duration: "2:30", icon: "🎵", src: echoesInBlue },
+        { name: "Space Journey", duration: "0:16", icon: "🚀", src: space }
       ]
     },
     {
       title: "Sleep Sounds",
       tracks: [
-        { name: "Lullaby", duration: "01:03", icon: "🌙", src: "src/assets/music/lullaby.mp3" },
-        { name: "Dreamscape", duration: "00:42", icon: "✨", src: "src/assets/music/dream.mp3" },
-        { name: "Moonlight", duration: "9:42", icon: "🌕", src: "src/assets/music/moonlight.mp3" },
-        { name: "Purple Dream", duration: "5:06", icon: "💜", src: "src/assets/music/purpledream.mp3" }
+        { name: "Lullaby", duration: "01:03", icon: "🌙", src: lullaby },
+        { name: "Dreamscape", duration: "00:42", icon: "✨", src: dream },
+        { name: "Moonlight", duration: "9:42", icon: "🌕", src: moonlight },
+        { name: "Purple Dream", duration: "5:06", icon: "💜", src: purpleDream }
       ]
     },
     {
       title: "Relaxing Melodies",
       tracks: [
-        { name: "Daydreams", duration: "2:18", icon: "☁️", src: "src/assets/music/daydreams.mp3" },
-        { name: "Morning Routine", duration: "1:48", icon: "🌅", src: "src/assets/music/morningroutine.mp3" },
-        { name: "Spring Flowers", duration: "3:18", icon: "🌸", src: "src/assets/music/springflowers.mp3" },
-        { name: "Sunset Drive", duration: "9:06", icon: "🌇", src: "src/assets/music/sunsetdrive.mp3" },
-        { name: "Colorful Flowers", duration: "9:18", icon: "🌺", src: "src/assets/music/colorfulflowers.mp3" }
+        { name: "Daydreams", duration: "2:18", icon: "☁️", src: daydreams },
+        { name: "Morning Routine", duration: "1:48", icon: "🌅", src: morningRoutine },
+        { name: "Spring Flowers", duration: "3:18", icon: "🌸", src: springFlowers },
+        { name: "Sunset Drive", duration: "9:06", icon: "🌇", src: sunsetDrive },
+        { name: "Colorful Flowers", duration: "9:18", icon: "🌺", src: colorfulFlowers }
       ]
     }
   ];
