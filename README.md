@@ -19,6 +19,7 @@ Serenity AI is a modern and intuitive mental wellness web application that seaml
   * [Environment Variables](#environment-variables)
 * [Project Structure](#project-structure)
 * [Usage Guide](#usage-guide)
+* [More screenshots](#more-screenshots)
 * [License](#license)
 
 ---
@@ -42,16 +43,37 @@ Serenity AI is a modern and intuitive mental wellness web application that seaml
 
 ## Screenshots
 
+![Landing](./public/screenshots/landing.png)
+
+![Signup](./public/screenshots/signup.png)
+
 ![Dashboard](./public/screenshots/dashboard.png)
+
+![Dashboard2](./public/screenshots/dashboard2.png)
+
 ![Journal](./public/screenshots/journal.png)
-![Mood Tracker](./public/screenshots/mood-tracker.png)
-![Serena Chatbot with voice](./public/screenshots/serena-chat.png)
-![Serena Voicetalk](./public/screenshots/serena-voice.png)
-![Wellness Resources](./public/screenshots/wellness-resources.png)
-![Mental Health Guidebook](./public/screenshots/mental-health-guidebook.png)
-![Games and Challenges](./public/screenshots/games-and-challenges.png)
-![Memory Match](./public/screenshots/memory-match.png)
-![Mindful Breathing](./public/screenshots/mindful-breathing.png)
+
+![Journal 2](./public/screenshots/journal2.png)
+
+![Mood Tracker](./public/screenshots/moodtracker.png)
+
+![Serena Chatbot with voice](./public/screenshots/chatbot.png)
+
+![Serena Voicetalk](./public/screenshots/voicetalk.png)
+
+![Wellness Resources](./public/screenshots/resources.png)
+
+![Mental Health Guidebook](./public/screenshots/guidebook.png)
+
+![Games and Challenges](./public/screenshots/games.png)
+
+![Memory Match](./public/screenshots/memorymatch.png)
+
+![Mindful Breathing](./public/screenshots/breathing.png)
+
+![Mindful Breathing 2](./public/screenshots/breathing2.png)
+
+![CalmTunes](./public/screenshots/calmtunes.png)
 
 ---
 
@@ -148,10 +170,28 @@ Serenity-AI/
 
 ---
 
+**Live Demo:** [https://the-serenity-ai.vercel.app/](https://the-serenity-ai.vercel.app/)
+
+---
+
+## More Screenshots
+
+![Light mode1](./public/screenshots/lightmode1.png)
+![Light mode2](./public/screenshots/lightmode2.png)
+![Light mode3](./public/screenshots/lightmode3.png)
+![Mobile1](./public/screenshots/mobile1.png)
+![Mobile2](./public/screenshots/mobile2.png)
+![Mobile3](./public/screenshots/mobile3.png)
+![Mobile4](./public/screenshots/mobile4.png)
+
+---
+
+with 💖, TEAM DE4DSCOPE
+
+---
+
 ## License
 
 This project is licensed under the MIT License.
 
 ---
-
-**Live Demo:** [https://the-serenity-ai.vercel.app/](https://the-serenity-ai.vercel.app/)
