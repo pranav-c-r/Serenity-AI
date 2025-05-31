@@ -879,42 +879,5 @@
   pointer-events: none;
 }
 
-@media (max-width: 600px) {
-  .landing {
-    padding: 0.5rem !important;
-  }
-  .nav {
-    flex-direction: column !important;
-    padding: 0.5rem 0.2rem !important;
-    font-size: 1em !important;
-  }
-  .nav-menu, .nav-buttons {
-    flex-direction: column !important;
-    gap: 0.5rem !important;
-    width: 100%;
-  }
-  .btn, .btn-primary, .btn-secondary, .btn-login {
-    width: 100% !important;
-    font-size: 1em !important;
-    padding: 0.8em 0.5em !important;
-  }
-  .hero-content {
-    padding: 1rem 0.2rem !important;
-    text-align: left !important;
-  }
-  .features-grid, .support-grid {
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 1rem !important;
-  }
-  .feature-card, .support-card {
-    width: 100% !important;
-    min-width: 0 !important;
-    font-size: 1em !important;
-  }
-  .footer, .footer-bottom {
-    font-size: 0.95em !important;
-    padding: 0.5rem !important;
-  }
-}
+
 
