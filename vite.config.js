@@ -44,7 +44,10 @@ export default defineConfig({
     sourcemap: false
   },
   server: {
-    port: 3000
+    port: 3001, // Try different port
+    hmr: {
+      port: 3001
+    }
   },
   optimizeDeps: {
     include: ['react', 'react-dom', 'react-router-dom'],
